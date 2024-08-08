@@ -1,0 +1,300 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+'relationships between base classes
+Patient <|. Doctor
+Patient o-- BloodPressureMeasurement
+Patient o-- BodyTemperatureMeasurement
+Patient o-- WeightMeasurement
+Patient o-- BalanceMeasurement
+
+
+'relationships between repositories and base classes
+PatientRepository "1" - "0..*" Patient
+DoctorRepository "1" - "0..*" Doctor
+
+BloodPressureMeasurementRepository "1" - "0..*" BloodPressureMeasurement
+BodyTemperatureMeasurementRepository "1" - "0..*" BodyTemperatureMeasurement
+WeightMeasurementRepository "1" - "0..*" WeightMeasurement
+BalanceMeasurementRepository "1" - "0..*" BalanceMeasurement
+
+
+'relationships between services and repositories
+PatientRepository -- PatientService
+DoctorRepository -- DoctorService
+BloodPressureMeasurementRepository -- BloodPressureMeasurementService
+BodyTemperatureMeasurementRepository -- BodyTemperatureMeasurementService
+WeightMeasurementRepository -- WeightMeasurementService
+BalanceMeasurementRepository -- BalanceMeasurementService
+
+'relationships between controllers and Actors
+PatientServiceImpl -- PatientController
+DoctorServiceImpl -- DoctorController
+'relationships between controllers and measurements
+BloodPressureMeasurementServiceImpl -- PatientController
+BodyTemperatureMeasurementServiceImpl -- PatientController
+WeightMeasurementServiceImpl -- PatientController
+BalanceMeasurementServiceImpl -- PatientController
+BloodPressureMeasurementServiceImpl -- DoctorController
+BodyTemperatureMeasurementServiceImpl -- DoctorController
+WeightMeasurementServiceImpl -- DoctorController
+BalanceMeasurementServiceImpl -- DoctorController
+
+
+
+
+
+class PatientController {
+    -PatientService patientService
+    +registerPatient(Patient patient, String password): void
+    +loginPatient(String nationalNumber, String password): void
+    +getPatientInfo(String nationalNumber): void
+    +addBloodPressureMeasurement(String nationalNumber, BloodPressureMeasurement bloodPressureMeasurement): void
+    +addBodyTemperatureMeasurement(String nationalNumber, BodyTemperatureMeasurement bodyTemperatureMeasurement): void
+    +addWeightMeasurement(String nationalNumber, WeightMeasurement weightMeasurement): void
+    +addBalanceMeasurement(String nationalNumber, BalanceMeasurement balanceMeasurement): void
+}
+
+class DoctorController {
+    -DoctorService doctorService
+    +registerDoctor(Doctor doctor, String password): void
+    +loginDoctor(String rizivNumber, String password): void
+    +getListOfPatients(String rizivNumber): void
+    +getPatientInfo(String nationalNumber): void
+}
+
+
+
+
+class PatientServiceImpl implements PatientService {
+    +registerPatient(Patient patient, String password): void
+    +loginPatient(String nationalNumber, String password): void
+    +getPatientInfo(String nationalNumber): void
+    +addBloodPressureMeasurement(String nationalNumber, BloodPressureMeasurement bloodPressureMeasurement): void
+    +addBodyTemperatureMeasurement(String nationalNumber, BodyTemperatureMeasurement bodyTemperatureMeasurement): void
+    +addWeightMeasurement(String nationalNumber, WeightMeasurement weightMeasurement): void
+    +addBalanceMeasurement(String nationalNumber, BalanceMeasurement balanceMeasurement): void
+}
+
+
+class DoctorServiceImpl implements DoctorService {
+    +registerDoctor(Doctor doctor, String password): void
+    +loginDoctor(String rizivNumber, String password): void
+    +getListOfPatients(String rizivNumber): void
+    +getPatientInfo(String nationalNumber): void
+}
+
+
+class BloodPressureMeasurementServiceImpl implements BloodPressureMeasurementService {
+    +addBloodPressureMeasurement(BloodPressureMeasurement bloodPressureMeasurement): void
+    +getBloodPressureMeasurements(): void
+}
+
+
+class BodyTemperatureMeasurementServiceImpl implements BodyTemperatureMeasurementService {
+    +addBodyTemperatureMeasurement(BodyTemperatureMeasurement bodyTemperatureMeasurement): void
+    +getBodyTemperatureMeasurements(): void
+}
+
+
+class WeightMeasurementServiceImpl implements WeightMeasurementService {
+    +addWeightMeasurement(WeightMeasurement weightMeasurement): void
+    +getWeightMeasurements(): void
+}
+
+
+class BalanceMeasurementServiceImpl implements BalanceMeasurementService {
+    +addBalanceMeasurement(BalanceMeasurement balanceMeasurement): void
+    +getBalanceMeasurements(): void
+}
+
+
+
+interface PatientService {
+    +registerPatient(Patient patient, String password): void
+    +loginPatient(String nationalNumber, String password): void
+    +getPatientInfo(String nationalNumber): void
+    +addBloodPressureMeasurement(String nationalNumber, BloodPressureMeasurement bloodPressureMeasurement): void
+    +addBodyTemperatureMeasurement(String nationalNumber, BodyTemperatureMeasurement bodyTemperatureMeasurement): void
+    +addWeightMeasurement(String nationalNumber, WeightMeasurement weightMeasurement): void
+    +addBalanceMeasurement(String nationalNumber, BalanceMeasurement balanceMeasurement): void
+}
+
+interface DoctorService {
+    +registerDoctor(Doctor doctor, String password): void
+    +loginDoctor(String rizivNumber, String password): void
+    +getListOfPatients(String rizivNumber): void
+    +getPatientInfo(String nationalNumber): void
+}
+
+interface BloodPressureMeasurementService {
+    +addBloodPressureMeasurement(BloodPressureMeasurement bloodPressureMeasurement): void
+    +getBloodPressureMeasurements(): void
+}
+
+
+interface BodyTemperatureMeasurementService {
+    +addBodyTemperatureMeasurement(BodyTemperatureMeasurement bodyTemperatureMeasurement): void
+    +getBodyTemperatureMeasurements(): void
+}
+
+
+interface WeightMeasurementService {
+    +addWeightMeasurement(WeightMeasurement weightMeasurement): void
+    +getWeightMeasurements(): void
+}
+
+interface BalanceMeasurementService {
+    +addBalanceMeasurement(BalanceMeasurement balanceMeasurement): void
+    +getBalanceMeasurements(): void
+}
+
+
+
+
+
+class PatientRepository {
+    -List<Patient> patients
+    +PatientRepository()
+    +getPatients(): List<Patient>
+    +addPatient(Patient patient): void
+}
+
+
+class DoctorRepository {
+    -List<Doctor> doctors
+    +DoctorRepository()
+    +getDoctors(): List<Doctor>
+    +addDoctor(Doctor doctor): void
+   }
+
+class BloodPressureMeasurementRepository {
+    -List<BloodPressureMeasurement> bloodPressureMeasurements
+    +BloodPressureMeasurementRepository()
+    +getBloodPressureMeasurements(): List<BloodPressureMeasurement>
+    +addBloodPressureMeasurement(BloodPressureMeasurement bloodPressureMeasurement): void
+}
+
+class BodyTemperatureMeasurementRepository {
+    -List<BodyTemperatureMeasurement> bodyTemperatureMeasurements
+    +BodyTemperatureMeasurementRepository()
+    +getBodyTemperatureMeasurements(): List<BodyTemperatureMeasurement>
+    +addBodyTemperatureMeasurement(BodyTemperatureMeasurement bodyTemperatureMeasurement): void
+}
+
+class WeightMeasurementRepository {
+    -List<WeightMeasurement> weightMeasurements
+    +BodyWeightMeasurementRepository()
+    +getWeightMeasurements(): List<WeightMeasurement>
+    +addWeightMeasurement(WeightMeasurement weightMeasurement): void
+}
+
+class BalanceMeasurementRepository {
+    -List<BalanceMeasurement> balanceMeasurements
+    +BalanceMeasurementRepository()
+    +getBalanceMeasurements(): List<BalanceMeasurement>
+    +addBalanceMeasurement(BalanceMeasurement balanceMeasurement): void
+}
+
+
+
+
+class BloodPressureMeasurement {
+    -int systolic
+    -int diastolic
+    -LocalDateTime dateTime
+    -String comment
+    +BloodPressureMeasurement(int systolic, int diastolic, LocalDateTime dateTime, String comment)
+    +getSystolic(): int
+    +getDiastolic(): int
+    +getDateTime(): LocalDateTime
+    +getComment(): String
+    +setSystolic(int systolic): void
+    +setDiastolic(int diastolic): void
+    +setDateTime(LocalDateTime dateTime): void
+    +setComment(String comment): void
+}
+
+class BodyTemperatureMeasurement {
+    -double temperature
+    -LocalDateTime dateTime
+    -String comment
+    +BodyTemperatureMeasurement(double temperature, LocalDateTime dateTime, String comment)
+    +getTemperature(): double
+    +getDateTime(): LocalDateTime
+    +getComment(): String
+    +setTemperature(double temperature): void
+    +setDateTime(LocalDateTime dateTime): void
+    +setComment(String comment): void
+}
+
+class WeightMeasurement {
+    -double weight
+    -LocalDateTime dateTime
+    -String comment
+    +WeightMeasurement(double weight, LocalDateTime dateTime, String comment)
+    +getWeight(): double
+    +getDateTime(): LocalDateTime
+    +getComment(): String
+    +setWeight(double weight): void
+    +setDateTime(LocalDateTime dateTime): void
+    +setComment(String comment): void
+}
+
+class BalanceMeasurement {
+    -double secondsInBalance
+    -LocalDateTime dateTime
+    -String comment
+    +BalanceMeasurement(double secondsInBalance, LocalDateTime dateTime, String comment)
+    +getBalance(): double
+    +getDateTime(): LocalDateTime
+    +getComment(): String
+    +setBalance(double balance): void
+    +setDateTime(LocalDateTime dateTime): void
+    +setComment(String comment): void
+}
+
+class Patient {
+    -String familyName
+    -String firstName
+    -String nationalNumber
+    -String password
+    -List<BloodPressureMeasurement> bloodPressureMeasurements
+    -List<BodyTemperatureMeasurement> bodyTemperatureMeasurements
+    -List<WeightMeasurement> weightMeasurements
+    +Patient(String familyName, String firstName, String nationalNumber, String password)
+    +getFamilyName(): String
+    +getFirstName(): String
+    +getNationalNumber(): String
+    +getPassword(): String
+    +getBloodPressureMeasurements(): List<BloodPressureMeasurement>
+    +getBodyTemperatureMeasurements(): List<BodyTemperatureMeasurement>
+    +getWeightMeasurements(): List<WeightMeasurement>
+    +setFamilyName(String familyName): void
+    +setFirstName(String firstName): void
+    +setNationalNumber(String nationalNumber): void
+    +setPassword(String password): void
+    +addBloodPressureMeasurement(BloodPressureMeasurement bloodPressureMeasurement): void
+    +addBodyTemperatureMeasurement(BodyTemperatureMeasurement bodyTemperatureMeasurement): void
+    +addWeightMeasurement(WeightMeasurement weightMeasurement): void
+}
+
+class Doctor {
+    -String familyName
+    -String firstName
+    -String rizivNumber
+    -String password
+    +Doctor(String familyName, String firstName, String rizivNumber, String password)
+    +getFamilyName(): String
+    +getFirstName(): String
+    +getRizivNumber(): String
+    +getPassword(): String
+    +setFamilyName(String familyName): void
+    +setFirstName(String firstName): void
+    +setRizivNumber(String rizivNumber): void
+    +setPassword(String password): void
+}
+
+
+
+@enduml
