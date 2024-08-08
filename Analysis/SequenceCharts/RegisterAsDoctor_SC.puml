@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+
+
+Doctor -> Controller:Enter FamilyName, FirstName, RizivNumber and password
+
+
+Controller -> CYH_Service: checkUnique(<Doctor>)
+
+CYH_Service -> CYH_Repository: checkUnique(<Doctor>)
+alt Doctor does not exist
+CYH_Repository -> CYH_Repository: saveDoctorWithPassword(<Doctor>, password)
+CYH_Repository --> CYH_Service: Boolean
+CYH_Service --> Controller: Boolean
+
+else Doctor already exists
+CYH_Repository --> CYH_Service: Boolean
+CYH_Service --> Controller: Boolean
+Controller --> Doctor: Boolean
+end
+
+@enduml

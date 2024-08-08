@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+
+:Enter RizivNumber and Password;
+if (RizivNumber and Password are correct) then (correct)
+    :Log in as Doctor;
+    :show list of patients that have authorised you;
+    label SelectPatient
+    while (select patient);
+    : show patient information;
+
+        endwhile (Quit);
+        end
+
+
+
+
+
+else (incorrect)
+
+:Incorrect RizivNumber or Password;
+    switch (menu)
+        case (retry)
+        :Enter RizivNumber and Password;
+
+        case (register)
+        :Register as Doctor;
+
+        case (quit)
+        :Quit;
+    endswitch
+
+end
+
+
+@enduml

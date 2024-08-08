@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+
+
+Doctor -> CYH_Controller:Enter RizivNumber and password
+
+
+CYH_Controller -> CYH_Service: checkDoctorPassword(rizivNumber), Password)
+
+CYH_Service -> CYH_Repository: checkDoctorPassword(RizivNumber, Password)
+alt Doctor does not exist
+
+CYH_Repository --> CYH_Service: Boolean
+CYH_Service --> CYH_Controller: Boolean
+else Doctor already exists
+CYH_Repository --> CYH_Service: <Doctor>>
+CYH_Service --> CYH_Controller: <Doctor>
+CYH_Controller -> CYH_Service: getListOfPatients(rizivNumber)
+CYH_Service -> CYH_Repository: getListOfPatients(rizivNumber)
+CYH_Repository --> CYH_Service: List<Patient>
+CYH_Service --> CYH_Controller: List<Patient>
+CYH_Controller --> Doctor: List<Patient>
+Doctor -> CYH_Controller: getPatientInfo(patientId)
+CYH_Controller -> CYH_Service: getPatientInfo(patientId)
+CYH_Service -> CYH_Repository: getPatientInfo(patientId)
+CYH_Repository --> CYH_Service: List<PatientInfo>
+CYH_Service --> CYH_Controller: List<PatientInfo>
+CYH_Controller --> Doctor: List<PatientInfo>
+
+
+end
+
+@enduml

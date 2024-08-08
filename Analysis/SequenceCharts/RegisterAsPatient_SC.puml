@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+
+
+Patient -> Controller:Enter patient personal details and password
+
+
+Controller -> CYH_Service: checkUniquePatientAndPassword(<Patient>,passWord)
+
+CYH_Service -> CYH_Repository: checkUniquePatientAndPassword(<Patient>, passWord)
+alt Patient does not exist
+CYH_Repository -> CYH_Repository: savePatientWithPassword(<Patient>, password)
+CYH_Repository --> CYH_Service: Boolean
+CYH_Service --> Controller: Boolean
+else Patient already exists
+CYH_Repository --> CYH_Service: Boolean
+CYH_Service --> Controller: Boolean
+Controller --> Patient: Boolean
+end
+
+@enduml

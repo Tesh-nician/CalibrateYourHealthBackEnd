@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+repeat :input FamilyName, FirstName, RizivNumber;
+
+    if (FamilyName and FirstName and RizivNumber are unique?) then (is unique)
+        :Enter Password;
+
+            if (Password is conform?) then (true)
+
+
+                if (OK to save?) then (yes)
+
+                    :Save doctor to database;
+                    stop
+
+                else (no)
+                :return to main menu;
+                end
+
+                endif
+
+            else (no)
+
+                if (do you want to quit?) then (yes)
+                    end;
+                else (no)
+                :Enter Password;
+                endif
+            endif
+
+    else (is not unique)
+        : This combination already exits;
+    endif
+
+repeat while (FamilyName and FirstName and RizivNumber are not unique)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml

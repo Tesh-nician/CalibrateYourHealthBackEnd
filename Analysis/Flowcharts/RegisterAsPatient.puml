@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+
+label EnterDetails
+:Enter FamilyName, FirstName, Password;
+
+if (this is unique) then (no)
+    :This combination already exists;
+    :Re-enter information;
+    end
+
+else (yes)
+    if (OK to Save?) then (yes)
+    :Save patient to database;
+    end
+    else (no)
+        if (Quit?) then (no)
+        :Re-enter information;
+        end
+
+        else (yes)
+        end;
+        endif
+    endif
+endif
+
+
+@enduml
