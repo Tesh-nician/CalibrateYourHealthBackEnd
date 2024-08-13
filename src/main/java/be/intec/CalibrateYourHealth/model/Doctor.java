@@ -1,0 +1,70 @@
+package be.intec.CalibrateYourHealth.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
+import lombok.Getter;
+
+@Data
+@Entity
+@Table(name = "doctor")
+public class Doctor {
+    @Getter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Getter
+    @NotBlank(message = "First name is required")
+    private String firstName;
+
+    @Getter
+    @NotBlank(message = "Last name is required")
+    private String lastName;
+
+    @Getter
+    @Column(unique = true)
+    @NotBlank(message = "RIZIV number is required")
+    private long rizivNumber;
+
+    @NotBlank(message = "Password is required")
+    @Pattern(
+            regexp = "^(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{1,6}$",
+            message = "Your password must contain at least one capital letter, one number, one lowercase letter and must be at least 6 characters long."
+    )
+    @Column(length = 60)
+    private String password;
+
+    @Transient
+    @NotBlank(message = "Confirm Password is required")
+    private String confirmPassword;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Patient> myPatients = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Doctor doctor = (Doctor) o;
+        return getRizivNumber() == doctor.getRizivNumber() && Objects.equals(getId(), doctor.getId()) && Objects.equals(getFirstName(), doctor.getFirstName()) && Objects.equals(getLastName(), doctor.getLastName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getRizivNumber());
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", rizivNumber=" + rizivNumber +
+                '}';
+    }
+}

@@ -1,4 +1,4 @@
-package org.example;
+package be.intec.CalibrateYourHealth;
 
 public class Main {
     public static void main(String[] args) {
