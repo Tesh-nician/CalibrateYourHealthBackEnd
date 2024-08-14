@@ -15,11 +15,11 @@ public interface BloodPressureRepository extends JpaRepository<BloodPressureMeas
 
     List<BloodPressureMeasurement> findAll(); //for admin and doctor
 
-    List<BloodPressureMeasurement> findBloodPressureByPatientId(Long patientId); // for patient and doctor
+    List<BloodPressureMeasurement> findBloodPressureByPatientID(Long patientID); // for patient and doctor
 
-    BloodPressureMeasurement save(BloodPressureMeasurement bloodPressure); // for patient
+    BloodPressureMeasurement add(BloodPressureMeasurement bloodPressure); // for patient
 
-    void deleteBloodPressureFromPatientByBloodPressureID(Long id);// for patient
+    void deleteBloodPressureFromPatientByBloodPressureID(Long bloodPressureID);// for patient
 
 
 }

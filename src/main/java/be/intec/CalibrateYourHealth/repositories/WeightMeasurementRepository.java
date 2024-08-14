@@ -14,9 +14,9 @@ public interface WeightMeasurementRepository extends JpaRepository<WeightMeasure
 
     List<WeightMeasurement> findAll(); //for admin and doctor
 
-    List<WeightMeasurement> findWeightMeasurementByPatientId(Long patientId); // for patient and doctor
+    List<WeightMeasurement> findWeightMeasurementByPatient_Id(Long patientId); // for patient and doctor
 
-    WeightMeasurement save(WeightMeasurement weightMeasurement); // for patient
+    WeightMeasurement add(WeightMeasurement weightMeasurement); // for patient
 
     void deleteWeightMeasurementByWeightID(Long id);// for patient, delete by weightID
 
