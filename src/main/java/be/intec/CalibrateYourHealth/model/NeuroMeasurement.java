@@ -15,7 +15,7 @@ public class NeuroMeasurement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long neuroID;
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Balance measurement in seconds must be a number between 0 and 300")
@@ -33,8 +33,7 @@ public class NeuroMeasurement {
     public NeuroMeasurement() {
     }
 
-    public NeuroMeasurement(Long id, int neuroMeasurement, LocalDate date, String neuroComment) {
-        this.id = id;
+    public NeuroMeasurement( int neuroMeasurement, LocalDate date, String neuroComment) {
         this.neuroMeasurement = neuroMeasurement;
         this.date = date;
         this.neuroComment = neuroComment;
@@ -43,7 +42,7 @@ public class NeuroMeasurement {
     @Override
     public String toString() {
         return "NeuroMeasurement{" +
-                "id=" + id +
+                "neuroID=" + neuroID +
                 ", neuroMeasurement=" + neuroMeasurement +
                 ", neuroComment='" + neuroComment + '\'' +
                 ", date=" + date +

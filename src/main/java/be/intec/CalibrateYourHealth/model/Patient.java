@@ -64,12 +64,29 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(Long id, String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors) {
-        this.id = id;
+    public Patient(String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.myDoctors = myDoctors;
+    }
+
+    //TODO: check later if Constructor with patientID is necessary
+
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", myDoctors=" + myDoctors +
+                ", myBloodPressureMeasurements=" + myBloodPressureMeasurements +
+                '}';
     }
 }

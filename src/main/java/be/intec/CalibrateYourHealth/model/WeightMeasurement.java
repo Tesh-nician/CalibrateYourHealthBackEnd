@@ -14,7 +14,7 @@ import lombok.Setter;
 public class WeightMeasurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long weightID;
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Weight in kg must be a number between 0 and 300")
@@ -35,17 +35,19 @@ public class WeightMeasurement {
     public WeightMeasurement() {
     }
 
-    public WeightMeasurement(Long id, int weight, LocalDate date, String weightComment) {
-        this.id = id;
+    public WeightMeasurement( int weight, LocalDate date, String weightComment) {
+
         this.weight = weight;
         this.date = date;
         this.weightComment = weightComment;
     }
 
+    //TODO: check later if Constructor with weightID is necessary
+
     @Override
     public String toString() {
         return "WeightMeasurement{" +
-                "id=" + id +
+                "weightID=" + weightID +
                 ", weight=" + weight +
                 ", weightComment='" + weightComment + '\'' +
                 ", date=" + date +

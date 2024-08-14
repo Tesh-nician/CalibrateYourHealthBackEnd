@@ -15,7 +15,7 @@ public class BloodPressureMeasurement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long bloodPressureID;
 
 
     @NotBlank
@@ -41,14 +41,13 @@ public class BloodPressureMeasurement {
 
 
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_")
     private Patient patient;
 
     public BloodPressureMeasurement() {
     }
 
-    public BloodPressureMeasurement(Long id, int systolicPressure, int diastolicPressure, int pulse, LocalDate date, String bloodPressurebComment) {
-        this.id = id;
+    public BloodPressureMeasurement(int systolicPressure, int diastolicPressure, int pulse, LocalDate date, String bloodPressurebComment) {
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
         this.pulse = pulse;
@@ -56,13 +55,15 @@ public class BloodPressureMeasurement {
         this.date = date;
     }
 
+    //TODO: check later if Constructor with bloodPressureID is necessary
+
 
     // Getters and setters via lombok annotation to class
 
     @Override
     public String toString() {
         return "BloodPressureMeasurement{" +
-                "id=" + id +
+                "id=" + bloodPressureID +
                 ", systolicPressure=" + systolicPressure +
                 ", diastolicPressure=" + diastolicPressure +
                 ", pulse=" + pulse +

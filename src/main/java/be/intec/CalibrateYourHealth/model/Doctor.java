@@ -15,7 +15,7 @@ public class Doctor {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long doctorID;
 
     @Getter
     @NotBlank(message = "First name is required")
@@ -50,18 +50,18 @@ public class Doctor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Doctor doctor = (Doctor) o;
-        return getRizivNumber() == doctor.getRizivNumber() && Objects.equals(getId(), doctor.getId()) && Objects.equals(getFirstName(), doctor.getFirstName()) && Objects.equals(getLastName(), doctor.getLastName());
+        return getRizivNumber() == doctor.getRizivNumber() && Objects.equals(getDoctorID(), doctor.getDoctorID()) && Objects.equals(getFirstName(), doctor.getFirstName()) && Objects.equals(getLastName(), doctor.getLastName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getRizivNumber());
+        return Objects.hash(getDoctorID(), getFirstName(), getLastName(), getRizivNumber());
     }
 
     @Override
     public String toString() {
         return "Doctor{" +
-                "id=" + id +
+                "id=" + doctorID +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", rizivNumber=" + rizivNumber +
