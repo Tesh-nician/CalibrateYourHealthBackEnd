@@ -22,5 +22,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     void deleteDoctorFromPatientById(Long id);// for admin and patient
 
-    Doctor updateDoctorPassword(Doctor doctor, String password); //for admin:if patient forgets password, reset password.
+    //Doctor updateDoctorPassword(Doctor doctor, String password); //for admin:if patient forgets password, reset password.
+
+
 }

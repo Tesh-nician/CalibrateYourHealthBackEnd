@@ -1,5 +1,7 @@
 package be.intec.CalibrateYourHealth.model;
 import jakarta.persistence.*;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import jakarta.validation.constraints.NotBlank;
@@ -49,6 +51,11 @@ public class NeuroMeasurement {
                 ", patient=" + patient +
                 '}';
     }
+
+    public LocalDate getMeasurementDate() {
+        return this.date;
+    }
+
 
     // Getters and setters via lombok annotation to class
 }
