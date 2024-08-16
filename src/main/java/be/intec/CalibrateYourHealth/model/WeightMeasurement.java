@@ -1,5 +1,7 @@
 package be.intec.CalibrateYourHealth.model;
 import jakarta.persistence.*;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import jakarta.validation.constraints.NotBlank;
@@ -42,7 +44,10 @@ public class WeightMeasurement {
         this.weightComment = weightComment;
     }
 
+
     //TODO: check later if Constructor with weightID is necessary
+
+
 
     @Override
     public String toString() {
@@ -54,6 +59,12 @@ public class WeightMeasurement {
                 ", patient=" + patient +
                 '}';
     }
+    //get the measurement date, needed to calculate the average weight of a patient
+    public LocalDate getMeasurementDate() {
+        return this.date;
+    }
+
+
 
     // Getters and setters via lombok annotation to class
 

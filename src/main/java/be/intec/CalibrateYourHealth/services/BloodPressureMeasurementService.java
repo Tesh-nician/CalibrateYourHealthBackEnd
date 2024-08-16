@@ -11,7 +11,7 @@ public interface BloodPressureMeasurementService {
     List<BloodPressureMeasurement> getAllBloodPressureMeasurements();
 
     //get average bloodpressuremeasurements for the last month by PatientID
-    List<BloodPressureMeasurement> getAverageBloodPressureMeasurementsByPatientId(Long patientId);
+    BloodPressureMeasurement getAverageBloodPressureMeasurementsByPatientIdForMonth(Long patientId);
 
     //get average bloodpressuremeasurements for the last year by PatientID
     List<BloodPressureMeasurement> getAverageBloodPressureMeasurementsByPatientIdForYear(Long patientId);

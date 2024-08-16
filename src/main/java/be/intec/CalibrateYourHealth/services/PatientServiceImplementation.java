@@ -60,7 +60,8 @@ public class PatientServiceImplementation implements PatientService {
 
     @Override
     public Patient updatePatientPassword(Patient patient, String password) {
-        return newpatientRepository.updatePatientPassword(patient, password);
+        patient.setPassword(password);
+        return newpatientRepository.save(patient);
     }
 
     @Override

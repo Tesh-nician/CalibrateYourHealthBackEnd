@@ -19,7 +19,9 @@ public interface BloodPressureRepository extends JpaRepository<BloodPressureMeas
 
     BloodPressureMeasurement add(BloodPressureMeasurement bloodPressure); // for patient
 
+
     void deleteBloodPressureFromPatientByBloodPressureID(Long bloodPressureID);// for patient
+
 
 
 }

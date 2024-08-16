@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class Admin {
     @Getter
@@ -48,4 +49,10 @@ public class Admin {
     public int hashCode() {
         return Objects.hash(getId(), getUserName());
     }
+
+    public void setPassword(String password) {
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    this.password = encoder.encode(password);
+    }
+
 }

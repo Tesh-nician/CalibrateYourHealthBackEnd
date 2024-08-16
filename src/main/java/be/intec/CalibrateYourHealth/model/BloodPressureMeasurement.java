@@ -1,5 +1,7 @@
 package be.intec.CalibrateYourHealth.model;
 import jakarta.persistence.*;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import jakarta.validation.constraints.NotBlank;
@@ -20,17 +22,17 @@ public class BloodPressureMeasurement {
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Systolic (high) pressure must be in mm/Hg, i.e. a number between 0 and 300")
-    private int systolicPressure;
+    private double systolicPressure;
 
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Diastolic (low) pressure must be in mm/Hg, i.e. a number between 0 and 300")
-    private int diastolicPressure;
+    private double diastolicPressure;
 
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Pulse must be a number between 0 and 300")
-    private int pulse;
+    private double pulse;
 
 
     @NotBlank
@@ -57,6 +59,14 @@ public class BloodPressureMeasurement {
 
     //TODO: check later if Constructor with bloodPressureID is necessary
 
+    //BloodPressureMeasurement constructor with systolic, diastolic and pulse.
+    // Used to return the average blood pressure in the service.
+    public BloodPressureMeasurement(double systolicPressure, double diastolicPressure, double pulse) {
+        this.systolicPressure = systolicPressure;
+        this.diastolicPressure = diastolicPressure;
+        this.pulse = pulse;
+    }
+
 
     // Getters and setters via lombok annotation to class
 
@@ -71,5 +81,9 @@ public class BloodPressureMeasurement {
                 ", patient=" + patient +
                 ", date=" + date +
                 '}';
+    }
+
+    public LocalDate getMeasurementDate() {
+        return this.date;
     }
 }
