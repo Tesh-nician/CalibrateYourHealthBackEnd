@@ -53,6 +53,19 @@ public class Doctor {
         return getRizivNumber() == doctor.getRizivNumber() && Objects.equals(getDoctorID(), doctor.getDoctorID()) && Objects.equals(getFirstName(), doctor.getFirstName()) && Objects.equals(getLastName(), doctor.getLastName());
     }
 
+    //add patient to List <Patients> myPatients
+    public void addPatient(Patient patient) {
+        myPatients.add(patient);
+        patient.addDoctor(this); //add doctor to patient's list of doctors
+    }
+
+
+    //remove patient from List <Patients> myPatients
+    public void removePatient(Patient patient) {
+        myPatients.remove(patient);
+        patient.removeDoctor(this); //remove doctor from patient's list of doctors
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(getDoctorID(), getFirstName(), getLastName(), getRizivNumber());

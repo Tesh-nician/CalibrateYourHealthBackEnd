@@ -20,5 +20,4 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 
     Admin updateAdminPassword(Admin admin, String newPassword); //for admin:if admin forgets password, reset password.
 
-
 }

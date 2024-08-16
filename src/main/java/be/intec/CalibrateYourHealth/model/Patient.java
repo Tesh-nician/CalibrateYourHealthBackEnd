@@ -60,7 +60,6 @@ public class Patient {
   private List<BloodPressureMeasurement> myBloodPressureMeasurements;
 
 
-
     public Patient() {
     }
 
@@ -73,7 +72,22 @@ public class Patient {
         this.myDoctors = myDoctors;
     }
 
-    //TODO: check later if Constructor with patientID is necessary
+        //TODO: check later if Constructor with patientID is necessary
+
+    //standard getters and setters have been added to this class with lombok annotation
+
+
+    //add a doctor to List<Doctors> myDoctors
+    public void addDoctor(Doctor doctor) {
+        myDoctors.add(doctor);
+        doctor.addPatient(this); //add patient to doctor's list of patients
+    }
+
+    //remove a doctor from List<Doctors> myDoctors
+    public void removeDoctor(Doctor doctor) {
+        myDoctors.remove(doctor);
+    }
+
 
 
     @Override
@@ -88,5 +102,15 @@ public class Patient {
                 ", myDoctors=" + myDoctors +
                 ", myBloodPressureMeasurements=" + myBloodPressureMeasurements +
                 '}';
+    }
+
+    public Doctor getDoctor(long doctorID) {
+        for (Doctor doctor : myDoctors) {
+            if (doctor.getDoctorID() == doctorID) {
+                return doctor;
+            }
+        }
+        return null;
+
     }
 }
