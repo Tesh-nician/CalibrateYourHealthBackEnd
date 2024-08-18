@@ -35,6 +35,11 @@ public class DoctorServiceImplementation implements DoctorService {
     }
 
     @Override
+    public Optional<List<Doctor>> getDoctorsByLastnameContaining(String lastnameContains) {
+        return Optional.of(newDoctorRepository.findDoctorsByLastNameContaining(lastnameContains));
+    }
+
+    @Override
     public List<Patient> getPatientsByDoctorId(Long doctorId) {
         return newPatientRepository.findPatientsByDoctorId(doctorId);
     }

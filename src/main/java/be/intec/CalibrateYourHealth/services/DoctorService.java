@@ -13,6 +13,7 @@ public interface DoctorService {
 
     Optional<Doctor> getDoctorById(Long id);
 
+    Optional <List<Doctor>> getDoctorsByLastnameContaining(String lastnameContains);
     List<Patient> getPatientsByDoctorId(Long doctorId);
 
     Patient addPatientToDoctor(Long doctorId, Long patientId);
