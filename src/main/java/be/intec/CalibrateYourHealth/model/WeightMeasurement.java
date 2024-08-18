@@ -20,7 +20,7 @@ public class WeightMeasurement {
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Weight in kg must be a number between 0 and 300")
-    private int weight;
+    private double weight;
 
 
     private String weightComment;
@@ -37,7 +37,7 @@ public class WeightMeasurement {
     public WeightMeasurement() {
     }
 
-    public WeightMeasurement( int weight, LocalDate date, String weightComment) {
+    public WeightMeasurement( double weight, LocalDate date, String weightComment) {
 
         this.weight = weight;
         this.date = date;

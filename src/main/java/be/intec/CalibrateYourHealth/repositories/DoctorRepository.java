@@ -18,6 +18,8 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     List<Doctor> findDoctorsByPatientId(Long patientID); // for patient and patient
 
+    List<Doctor> findDoctorsByLastNameContaining(String lastnameContains); // for patient and patient
+
     Doctor add(Doctor doctor); // for Doctor
 
     void deleteDoctorFromPatientById(Long id);// for admin and patient

@@ -57,6 +57,24 @@ public class AdminController {
         return "adminDashboard";
     }
 
+    //Admin logs out
+    @GetMapping("/logout")
+    public String logout() {
+        //Admin logs out
+        //Redirect to login page
+        return "redirect:/login";
+    }
+
+//Admin cannot update patient password, only reset password
+    @PostMapping("/resetPatientPassword")
+    public String resetPatientPassword() {
+        // Admin clicks on patient to reset password
+        //Admin resets patient password
+        //Redirect to admin dashboard
+        return "adminDashboard";
+    }
+
+
 
 
 
