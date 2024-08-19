@@ -7,6 +7,7 @@ import be.intec.CalibrateYourHealth.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +28,13 @@ public class PatientServiceImplementation implements PatientService {
     // Implementing methods for CRUD operations on Patient entities here
 
     @Override
-    public List<Patient> getAllPatients() {
-        return newpatientRepository.findAll();
+    public Optional<List<Patient>> getAllPatients() {
+
+        List<Patient> patients =newpatientRepository.findAll();
+        if(patients.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(patients);
     }
 
     @Override
@@ -37,8 +43,12 @@ public class PatientServiceImplementation implements PatientService {
     }
 
     @Override
-    public List<Patient> getPatientsByDoctorId(Long doctorId) {
-        return newpatientRepository.findPatientsByDoctorId(doctorId);
+    public Optional<List<Patient>> getPatientsByDoctorId(Long doctorId) {
+        List<Patient> patients = newpatientRepository.findPatientsByDoctorId(doctorId);
+        if (patients.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(patients);
     }
 
     @Override

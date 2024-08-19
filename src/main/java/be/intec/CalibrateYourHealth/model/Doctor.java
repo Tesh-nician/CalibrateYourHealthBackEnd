@@ -46,6 +46,23 @@ public class Doctor {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Patient> myPatients = new ArrayList<>();
 
+
+    //Constructor without password or patients
+    public Doctor(String firstName, String lastName, long rizivNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.rizivNumber = rizivNumber;
+    }
+
+    //Constructor with password and patients
+    public Doctor(String firstName, String lastName, long rizivNumber, String password, List<Patient> myPatients) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.rizivNumber = rizivNumber;
+        this.setPassword(password);
+        this.myPatients = myPatients;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -7,11 +7,11 @@ import java.util.Optional;
 
 public interface PatientService {
 
-    List<Patient> getAllPatients();
+    Optional<List<Patient>> getAllPatients();
 
     Optional<Patient> getPatientById(Long id);
 
-    List<Patient> getPatientsByDoctorId(Long doctorId);
+    Optional<List<Patient>> getPatientsByDoctorId(Long doctorId);
 
     Doctor addDoctorToPatient(Long patientId, Long doctorId);
 

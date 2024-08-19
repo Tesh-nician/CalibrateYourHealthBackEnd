@@ -73,6 +73,13 @@ public class Patient {
         this.myDoctors = myDoctors;
     }
 
+    //Constructor without password or doctors
+    public Patient(String firstName, String lastName, LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+    }
+
         //TODO: check later if Constructor with patientID is necessary
 
     //standard getters and setters have been added to this class with lombok annotation
