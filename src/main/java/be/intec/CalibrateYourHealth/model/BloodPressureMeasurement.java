@@ -13,7 +13,7 @@ import lombok.Getter;
 @Getter
 @Setter
 @Entity
-//@Table(name = "bloodpressuremeasurement")
+@Table(name = "bloodpressuremeasurement")
 public class BloodPressureMeasurement {
 
     @Id

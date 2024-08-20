@@ -13,6 +13,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "neuromeasurement")
 public class NeuroMeasurement {
 
     @Id
