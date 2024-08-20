@@ -10,16 +10,17 @@ import java.util.Optional;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
-    Optional<Patient> findPatientById(Long id); //for doctor and admin
+
+    Optional<Patient> findPatientByPatientID(Long id); //for doctor and admin
     //Optional list of all patients
 
     List<Patient> findAll(); //for admin and doctor
 
-    List<Patient> findPatientsByDoctorId(Long doctorId); // for patient and doctor
+    List<Patient> findPatientsByI(Long doctorId); // for patient and doctor
 
     Patient add(Patient patient); // for patient
 
-    void deletePatientFromDoctorById(Long id);// for admin and doctor
+    void deletePatientByPatientID(Long id); //for admin and doctor
 
     //Patient updatePatientPassword(Patient patient, String password); //for admin:if patient forgets password, reset password.
 

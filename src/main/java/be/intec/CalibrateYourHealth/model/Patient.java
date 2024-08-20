@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
-@Table(name = "patient")
 public class Patient {
     @Getter
     @Id
@@ -50,19 +49,53 @@ public class Patient {
     @NotBlank(message = "Confirm Password is required")
     private String confirmPassword;
 
-    @Getter
+    /*@Getter
     @Setter
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(mappedBy = "patientID", cascade = CascadeType.ALL)
     private List<Doctor> myDoctors = new ArrayList<>();
+     */
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<BloodPressureMeasurement> myBloodPressureMeasurements;
+    @OneToMany(mappedBy = "patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BloodPressureMeasurement> myBloodPressureMeasurements;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WeightMeasurement> myWeightMeasurements;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "doctorID_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NeuroMeasurement> myNeuroMeasurements;
+
 
 
     public Patient() {
     }
+
+    //Constructor with all fields
+    public Patient(Long patientID, String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors) {
+        this.patientID = patientID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        //this.myDoctors = myDoctors;
+    }
+
+    //Constructor with password and doctors
+    public Patient(String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors, List<BloodPressureMeasurement> myBloodPressureMeasurements) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        //this.myDoctors = myDoctors;
+        this.myBloodPressureMeasurements = myBloodPressureMeasurements;
+    }
+
+
 
     public Patient(String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors) {
 
@@ -70,7 +103,7 @@ public class Patient {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
-        this.myDoctors = myDoctors;
+        //this.myDoctors = myDoctors;
     }
 
     //Constructor without password or doctors
@@ -80,21 +113,24 @@ public class Patient {
         this.dateOfBirth = dateOfBirth;
     }
 
-        //TODO: check later if Constructor with patientID is necessary
 
     //standard getters and setters have been added to this class with lombok annotation
 
 
-    //add a doctor to List<Doctors> myDoctors
+
+   /*
+   //add a doctor to List<Doctors> myDoctors
     public void addDoctor(Doctor doctor) {
-        myDoctors.add(doctor);
+        //myDoctors.add(doctor);
         doctor.addPatient(this); //add patient to doctor's list of patients
     }
 
     //remove a doctor from List<Doctors> myDoctors
     public void removeDoctor(Doctor doctor) {
-        myDoctors.remove(doctor);
+        //myDoctors.remove(doctor);
     }
+
+    */
 
     public void setPassword(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -111,11 +147,12 @@ public class Patient {
                 ", dateOfBirth=" + dateOfBirth +
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
-                ", myDoctors=" + myDoctors +
+                //", myDoctors=" + myDoctors +
                 ", myBloodPressureMeasurements=" + myBloodPressureMeasurements +
                 '}';
     }
 
+    /*
     public Doctor getDoctor(long doctorID) {
         for (Doctor doctor : myDoctors) {
             if (doctor.getDoctorID() == doctorID) {
@@ -124,4 +161,5 @@ public class Patient {
         }
         return null;
     }
+    */
 }

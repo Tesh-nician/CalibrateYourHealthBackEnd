@@ -13,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "weightmeasurements")
 public class WeightMeasurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +32,7 @@ public class WeightMeasurement {
 
 
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_patientID")
     private Patient patient;
 
     public WeightMeasurement() {

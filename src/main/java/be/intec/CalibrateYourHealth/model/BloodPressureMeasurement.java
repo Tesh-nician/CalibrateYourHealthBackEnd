@@ -13,6 +13,7 @@ import lombok.Getter;
 @Getter
 @Setter
 @Entity
+@Table(name = "bloodpressuremeasurement")
 public class BloodPressureMeasurement {
 
     @Id
@@ -41,9 +42,8 @@ public class BloodPressureMeasurement {
     private String bloodPressureComment;
 
 
-
     @ManyToOne
-    @JoinColumn(name = "patient_")
+    @JoinColumn(name = "patient_patientID")
     private Patient patient;
 
     public BloodPressureMeasurement() {

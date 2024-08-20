@@ -29,7 +29,7 @@ public class NeuroMeasurement {
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_patientID")
     private Patient patient;
 
     public NeuroMeasurement() {

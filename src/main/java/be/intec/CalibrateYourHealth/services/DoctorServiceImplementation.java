@@ -31,7 +31,7 @@ public class DoctorServiceImplementation implements DoctorService {
 
     @Override
     public Optional<Doctor> getDoctorById(Long id) {
-        return newDoctorRepository.findByID(id);
+        return newDoctorRepository.findDoctorByDoctorID(id);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class DoctorServiceImplementation implements DoctorService {
         return Optional.of(newDoctorRepository.findDoctorsByLastNameContaining(lastnameContains));
     }
 
-    @Override
+    /*@Override
     public List<Patient> getPatientsByDoctorId(Long doctorId) {
         return newPatientRepository.findPatientsByDoctorId(doctorId);
     }
@@ -57,6 +57,15 @@ public class DoctorServiceImplementation implements DoctorService {
         return null;
     }
 
+     @Override
+    public void deletePatientFromDoctorById(Long id) {
+        newPatientRepository.deletePatientFromDoctorById(id);
+        //newDoctorRepository.deleteDoctorFromPatientById(id);
+    }
+
+
+     */
+
 
     @Override
     public Doctor saveDoctor(Doctor doctor) {
@@ -69,21 +78,12 @@ public class DoctorServiceImplementation implements DoctorService {
         return newDoctorRepository.save(doctor);
     }
 
-    @Override
-    public void deletePatientFromDoctorById(Long id) {
-        newPatientRepository.deletePatientFromDoctorById(id);
-        newDoctorRepository.deleteDoctorFromPatientById(id);
-    }
+
 
     @Override
     public void deleteDoctorById(Long id) {
         newDoctorRepository.deleteById(id);
     }
-
-
-
-
-
 
 
 }

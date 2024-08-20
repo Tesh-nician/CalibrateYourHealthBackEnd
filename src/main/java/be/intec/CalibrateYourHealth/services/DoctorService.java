@@ -14,15 +14,16 @@ public interface DoctorService {
     Optional<Doctor> getDoctorById(Long id);
 
     Optional <List<Doctor>> getDoctorsByLastnameContaining(String lastnameContains);
-    List<Patient> getPatientsByDoctorId(Long doctorId);
 
-    Patient addPatientToDoctor(Long doctorId, Long patientId);
+    //List<Patient> getPatientsByDoctorId(Long doctorId);
+
+    //Patient addPatientToDoctor(Long doctorId, Long patientId);
+
+    //void deletePatientFromDoctorById(Long id);
 
     Doctor saveDoctor(Doctor doctor);
 
     Doctor updateDoctorPassword(Doctor doctor, String password);
-
-    void deletePatientFromDoctorById(Long id);
 
     void deleteDoctorById(Long id);
 }

@@ -39,16 +39,30 @@ public class PatientServiceImplementation implements PatientService {
 
     @Override
     public Optional<Patient> getPatientById(Long id) {
-        return newpatientRepository.findPatientById(id);
+        return newpatientRepository.findPatientByPatientID(id);
     }
 
     @Override
-    public Optional<List<Patient>> getPatientsByDoctorId(Long doctorId) {
-        List<Patient> patients = newpatientRepository.findPatientsByDoctorId(doctorId);
-        if (patients.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(patients);
+    public Patient savePatient(Patient patient) {
+        return newpatientRepository.save(patient);
+    }
+
+    @Override
+    public Patient updatePatientPassword(Patient patient, String password) {
+        patient.setPassword(password);
+        return newpatientRepository.save(patient);
+    }
+
+
+    @Override
+    public void deletePatientById(Long id) {
+        newpatientRepository.deleteById(id);
+    }
+ /*
+    @Override
+    public void deletePatientFromDoctorById(Long id) {
+        newpatientRepository.deletePatientFromDoctorById(id);
+        // newDoctorRepository.deleteDoctorFromPatientById(id);
     }
 
     @Override
@@ -63,27 +77,26 @@ public class PatientServiceImplementation implements PatientService {
         return null;
     }
 
-    @Override
-    public Patient savePatient(Patient patient) {
-        return newpatientRepository.save(patient);
-    }
+
 
     @Override
-    public Patient updatePatientPassword(Patient patient, String password) {
-        patient.setPassword(password);
-        return newpatientRepository.save(patient);
+    public Optional<List<Patient>> getPatientsByDoctorId(Long doctorId) {
+        List<Patient> patients = newpatientRepository.findPatientsByDoctorId(doctorId);
+        if (patients.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(patients);
     }
 
-    @Override
-    public void deletePatientFromDoctorById(Long id) {
-        newpatientRepository.deletePatientFromDoctorById(id);
-        newDoctorRepository.deleteDoctorFromPatientById(id);
-    }
 
-    @Override
-    public void deletePatientById(Long id) {
-        newpatientRepository.deleteById(id);
-    }
+
+
+
+  */
+
+
+
+
 
 
 

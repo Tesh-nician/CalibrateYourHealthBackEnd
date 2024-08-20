@@ -12,17 +12,22 @@ import be.intec.CalibrateYourHealth.model.Doctor;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-    Optional<Doctor> findByID(Long id); //for patient and admin
+    Optional<Doctor> findDoctorByDoctorID(Long id); //for patient and admin
 
     List<Doctor> findAll(); //for admin and patient
 
-    List<Doctor> findDoctorsByPatientId(Long patientID); // for patient and patient
+    // find list of doctors from patientId
+    // Werkt niet: Optional<List<Doctor>> findDoctorsByPatientID(Long patientId); // for patient and patient
+
+    List<Doctor> getDoctor(String id); //for patientId); // for patient and patient
+    List<Doctor> find(Long patientID); // for patient and patient
 
     List<Doctor> findDoctorsByLastNameContaining(String lastnameContains); // for patient and patient
 
     Doctor add(Doctor doctor); // for Doctor
 
-    void deleteDoctorFromPatientById(Long id);// for admin and patient
+
+    //void deleteDoctorFromPatientById(Long id);// for admin and patient
 
     //Doctor updateDoctorPassword(Doctor doctor, String password); //for admin:if patient forgets password, reset password.
 

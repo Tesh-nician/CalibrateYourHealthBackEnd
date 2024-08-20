@@ -11,15 +11,15 @@ public interface PatientService {
 
     Optional<Patient> getPatientById(Long id);
 
-    Optional<List<Patient>> getPatientsByDoctorId(Long doctorId);
+    //Optional<List<Patient>> getPatientsByDoctorId(Long doctorId);
 
-    Doctor addDoctorToPatient(Long patientId, Long doctorId);
+    //Doctor addDoctorToPatient(Long patientId, Long doctorId);
 
     Patient savePatient(Patient patient);
 
     Patient updatePatientPassword(Patient patient, String password);
 
-    void deletePatientFromDoctorById(Long id);
+    //void deletePatientFromDoctorById(Long id);
 
     void deletePatientById(Long id);
 
