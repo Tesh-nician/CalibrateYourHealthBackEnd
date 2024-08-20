@@ -33,7 +33,7 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     @Override
     public double getAverageWeightMeasurementByPatientIdForMonth(Long patientId) {
         List<WeightMeasurement> weightMeasurementsFromTheLastMonth= newWeightMeasurementRepository
-                .findWeightMeasurementByPatient_PatientID(patientId)
+                .findWeightMeasurementByPatientId(patientId)
                         .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate()
                         .isAfter(LocalDate.now().minusMonths(1)))
                         .toList();
@@ -50,7 +50,7 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     @Override
     public double getAverageWeightMeasurementByPatientIdForYear(Long patientId) {
         List<WeightMeasurement> weightMeasurementsFromTheLastYear= newWeightMeasurementRepository
-                .findWeightMeasurementByPatient_PatientID(patientId)
+                .findWeightMeasurementByPatientId(patientId)
                         .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate()
                         .isAfter(LocalDate.now().minusYears(1)))
                         .toList();
@@ -72,7 +72,7 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     }
    @Override
     public List<WeightMeasurement> getWeightMeasurementsByPatientId(Long patientId) {
-        return newWeightMeasurementRepository.findWeightMeasurementByPatient_PatientID(patientId);
+        return newWeightMeasurementRepository.findWeightMeasurementByPatientId(patientId);
     }
 
 

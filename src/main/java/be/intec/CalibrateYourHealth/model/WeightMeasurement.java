@@ -32,7 +32,7 @@ public class WeightMeasurement {
 
 
     @ManyToOne
-    @JoinColumn(name = "patient_patientID")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     public WeightMeasurement() {

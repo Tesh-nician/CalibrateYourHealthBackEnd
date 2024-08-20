@@ -17,7 +17,7 @@ public class Patient {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long patientID;
+    private Long id;
 
     @Getter
     @Setter
@@ -77,7 +77,7 @@ public class Patient {
 
     //Constructor with all fields
     public Patient(Long patientID, String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors) {
-        this.patientID = patientID;
+        this.id = patientID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -141,7 +141,7 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" +
-                "id=" + patientID +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +

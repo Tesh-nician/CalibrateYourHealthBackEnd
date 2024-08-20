@@ -30,7 +30,7 @@ public class NeuroMeasurementServiceImplementation implements NeuroMeasurementSe
     @Override
     public double getAverageNeuroMeasurementByPatientIdForMonth(Long patientId) {
         List<NeuroMeasurement> neuroMeasurementsFromTheLastMonth= neuroMeasurementRepository
-                .findNeuroMeasurementsByPatient_PatientID(patientId)
+                .findNeuroMeasurementsByPatientId(patientId)
                         .stream().filter(neuroMeasurement -> neuroMeasurement.getMeasurementDate()
                         .isAfter(LocalDate.now().minusMonths(1)))
                         .toList();
@@ -46,7 +46,7 @@ public class NeuroMeasurementServiceImplementation implements NeuroMeasurementSe
     @Override
     public double getAverageNeuroMeasurementByPatientIdForYear(Long patientId) {
         List<NeuroMeasurement> neuroMeasurementsFromTheLastYear= neuroMeasurementRepository
-                .findNeuroMeasurementsByPatient_PatientID(patientId)
+                .findNeuroMeasurementsByPatientId(patientId)
                         .stream().filter(neuroMeasurement -> neuroMeasurement.getMeasurementDate()
                         .isAfter(LocalDate.now().minusYears(1)))
                         .toList();
@@ -66,7 +66,7 @@ public class NeuroMeasurementServiceImplementation implements NeuroMeasurementSe
 
     @Override
     public List<NeuroMeasurement> getNeuroMeasurementsByPatientId(Long patientId) {
-        return neuroMeasurementRepository.findNeuroMeasurementsByPatient_PatientID(patientId);
+        return neuroMeasurementRepository.findNeuroMeasurementsByPatientId(patientId);
     }
 
     @Override

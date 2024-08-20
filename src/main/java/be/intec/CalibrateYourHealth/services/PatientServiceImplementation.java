@@ -7,6 +7,7 @@ import be.intec.CalibrateYourHealth.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class PatientServiceImplementation implements PatientService {
 
     @Override
     public Optional<Patient> getPatientById(Long id) {
-        return newpatientRepository.findPatientByPatientID(id);
+        return newpatientRepository.findPatientById(id);
     }
 
     @Override
