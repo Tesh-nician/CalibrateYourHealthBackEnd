@@ -1,5 +1,6 @@
 package be.intec.CalibrateYourHealth.model;
 
+import be.intec.CalibrateYourHealth.model.Patient;
 import jakarta.persistence.*;
 import lombok.Setter;
 

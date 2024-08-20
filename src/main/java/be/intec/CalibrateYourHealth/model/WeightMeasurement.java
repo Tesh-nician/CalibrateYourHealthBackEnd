@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "weightmeasurements")
+//@Table(name = "weightmeasurement")
 public class WeightMeasurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

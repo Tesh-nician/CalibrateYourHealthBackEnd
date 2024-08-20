@@ -57,17 +57,17 @@ public class Patient {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BloodPressureMeasurement> myBloodPressureMeasurements;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WeightMeasurement> myWeightMeasurements;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "doctorID_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NeuroMeasurement> myNeuroMeasurements;
 
 
