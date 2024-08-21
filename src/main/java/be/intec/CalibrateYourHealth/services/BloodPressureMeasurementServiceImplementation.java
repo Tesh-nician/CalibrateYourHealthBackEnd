@@ -14,6 +14,7 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
 
     private final BloodPressureMeasurementService newBloodPressureMeasurementService;
 
+
     @Autowired
     public BloodPressureMeasurementServiceImplementation(BloodPressureMeasurementService newBloodPressureMeasurementService) {
         this.newBloodPressureMeasurementService = newBloodPressureMeasurementService;

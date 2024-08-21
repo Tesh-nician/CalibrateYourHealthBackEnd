@@ -13,30 +13,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
+@Table(name = "tbl_patient")
 public class Patient {
-    @Getter
     @Id
+    @Column(name = "patient_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
+
     @NotBlank(message = "First name is required")
     private String firstName;
 
-    @Getter
-    @Setter
+
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @Getter
-    @Setter
+
     @Column(unique = true)
     @NotBlank(message = "date of birth is required")
     private LocalDate dateOfBirth;
 
-    @Getter
-    @Setter
+
     @NotBlank(message = "Password is required")
     @Pattern(
             regexp = "^(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{1,6}$",
@@ -55,19 +52,16 @@ public class Patient {
     private List<Doctor> myDoctors = new ArrayList<>();
      */
 
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "patient_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "patient_id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BloodPressureMeasurement> myBloodPressureMeasurements;
 
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "patient_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "patient_id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WeightMeasurement> myWeightMeasurements;
 
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "patient_patientID", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "patient_id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NeuroMeasurement> myNeuroMeasurements;
 
 

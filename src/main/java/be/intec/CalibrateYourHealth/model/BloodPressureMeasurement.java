@@ -49,6 +49,9 @@ public class BloodPressureMeasurement {
     public BloodPressureMeasurement() {
     }
 
+
+
+
     public BloodPressureMeasurement(int systolicPressure, int diastolicPressure, int pulse, LocalDate date, String bloodPressurebComment) {
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
@@ -58,6 +61,8 @@ public class BloodPressureMeasurement {
     }
 
     //TODO: check later if Constructor with bloodPressureID is necessary
+
+
 
     //BloodPressureMeasurement constructor with systolic, diastolic and pulse.
     // Used to return the average blood pressure in the service.
