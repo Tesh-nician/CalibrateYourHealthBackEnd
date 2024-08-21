@@ -43,11 +43,14 @@ public class BloodPressureMeasurement {
 
 
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name ="patient_id")
     private Patient patient;
 
     public BloodPressureMeasurement() {
     }
+
+
+
 
     public BloodPressureMeasurement(int systolicPressure, int diastolicPressure, int pulse, LocalDate date, String bloodPressurebComment) {
         this.systolicPressure = systolicPressure;
@@ -58,6 +61,8 @@ public class BloodPressureMeasurement {
     }
 
     //TODO: check later if Constructor with bloodPressureID is necessary
+
+
 
     //BloodPressureMeasurement constructor with systolic, diastolic and pulse.
     // Used to return the average blood pressure in the service.

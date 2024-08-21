@@ -20,6 +20,7 @@ public interface BloodPressureMeasurementService {
 
     Optional<BloodPressureMeasurement> getBloodPressureMeasurementById(Long id);
 
+
     List<BloodPressureMeasurement> getBloodPressureMeasurementsByPatientId(Long patientId);
 
     BloodPressureMeasurement saveBloodPressureMeasurement(BloodPressureMeasurement bloodPressureMeasurement);
