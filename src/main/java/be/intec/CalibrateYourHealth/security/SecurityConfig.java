@@ -15,7 +15,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                /*.authorizeHttpRequests(authorizeRequests ->
+                .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/", "/register", "/login", "/search", "/css/**", "/js/**").permitAll()
                                 .anyRequest().authenticated()
@@ -26,7 +26,7 @@ public class SecurityConfig {
                                 .defaultSuccessUrl("/afterlogin", true)
                                 .permitAll()
                 )
-                */
+
                 .oauth2Login(oauth2Login ->
                         oauth2Login
                                 .loginPage("/login")
@@ -56,4 +56,23 @@ public class SecurityConfig {
             response.sendRedirect("/login?error=true");
         };
     }
+
+
+    //TODO: Add
+    // import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+    //import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+    //import org.springframework.security.oauth2.client.registration.ClientRegistration;
+
+    //Modify application properties:
+    //spring.security.oauth2.client.registration.google.client-id=your-client-id
+    //spring.security.oauth2.client.registration.google.client-secret=your-client-secret
+    //spring.security.oauth2.client.registration.google.scope=openid,profile,email
+    //spring.security.oauth2.client.provider.google.authorization-uri=https://accounts.google.com/o/oauth2/auth
+    //spring.security.oauth2.client.provider.google.token-uri=https://oauth2.googleapis.com/token
+    //spring.security.oauth2.client.provider.google.user-info-uri=https://www.googleapis.com/oauth2/v3/userinfo
+    //spring.security.oauth2.client.provider.google.user-name-attribute=sub
+    //spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
+
+    //
+
 }
