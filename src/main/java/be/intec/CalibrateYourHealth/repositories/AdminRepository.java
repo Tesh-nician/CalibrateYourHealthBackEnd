@@ -14,10 +14,10 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 
     List<Admin> findAll(); //for admin
 
-    Admin add(Admin admin); // for admin
+    // Admin save(Admin admin); // for admin //use save method in implementation class instead
 
     void deleteAdminById(Long id);// for admin
 
-    Admin updateAdminPassword(Admin admin, String newPassword); //for admin:if admin forgets password, reset password.
+    // use method in implementation class instead!!:   //Admin updateAdminPassword(Admin admin, String newPassword); //for admin:if admin forgets password, reset password.
 
 }

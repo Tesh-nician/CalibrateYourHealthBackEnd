@@ -18,7 +18,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     List<Patient> findPatientsById(Long doctorId); // for patient and doctor
 
-    Patient add(Patient patient); // for patient
+
 
     void deletePatientById(Long id); //for admin and doctor
 

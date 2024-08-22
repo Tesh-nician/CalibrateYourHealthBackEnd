@@ -8,31 +8,38 @@ import be.intec.CalibrateYourHealth.services.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
 
     private final BCryptPasswordEncoder newPasswordEncoder;
-    private final String newPassword;
+
 
     @Autowired
-    public PatientController(BCryptPasswordEncoder newPasswordEncoder, String newPassword) {
+    public PatientController(BCryptPasswordEncoder newPasswordEncoder) {
         this.newPasswordEncoder = newPasswordEncoder;
-        this.newPassword = newPassword;
     }
 
-    //Register new Patient
-    @GetMapping("/registerPatient")
-    public String registerPatient() {
-        //Create new patient object
-        //Set patient details
-        return "registerPatient";
-    }
+
+
+
+
+        // Method to create a new patient with a hashed password
+        @PostMapping("/registerPatient")
+        public String registerPatient(@RequestBody Patient patient) {
+            String rawPassword = "your_new_password_here"; // This should be passed in as a parameter
+            String hashedPassword = newPasswordEncoder.encode(rawPassword);
+            patient.setPassword(hashedPassword);
+            // Save patient to the database
+            return "registerPatient";
+        }
+
+
+
+
+
 
     @PostMapping("/savePatient")
     public String savePatient() {

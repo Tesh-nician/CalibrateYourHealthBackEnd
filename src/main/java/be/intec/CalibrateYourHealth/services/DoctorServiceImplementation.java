@@ -1,7 +1,7 @@
 package be.intec.CalibrateYourHealth.services;
 
 import be.intec.CalibrateYourHealth.model.Doctor;
-import be.intec.CalibrateYourHealth.model.Patient;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 public class DoctorServiceImplementation implements DoctorService {
 
     private final DoctorRepository newDoctorRepository;
-    private final PatientRepository newPatientRepository;
+
 
     @Autowired
     public DoctorServiceImplementation(DoctorRepository newDoctorRepository, PatientRepository newPatientRepository) {
         this.newDoctorRepository = newDoctorRepository;
-        this.newPatientRepository = newPatientRepository;
+
     }
 
     // Implementing methods for CRUD operations on Doctor entities here

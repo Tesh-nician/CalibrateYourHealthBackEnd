@@ -19,12 +19,10 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     // find list of doctors from patientId
     // Werkt niet: Optional<List<Doctor>> findDoctorsByPatientID(Long patientId); // for patient and patient
 
-    List<Doctor> getDoctor(String id); //for patientId); // for patient and patient
-    List<Doctor> find(Long patientID); // for patient and patient
 
     List<Doctor> findDoctorsByLastNameContaining(String lastnameContains); // for patient and patient
 
-    Doctor add(Doctor doctor); // for Doctor
+
 
 
     //void deleteDoctorFromPatientById(Long id);// for admin and patient

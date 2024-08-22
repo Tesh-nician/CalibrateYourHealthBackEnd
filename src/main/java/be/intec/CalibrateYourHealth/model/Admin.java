@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Entity
+@Data
+@Table(name = "admins")
 public class Admin {
     @Getter
     @Id

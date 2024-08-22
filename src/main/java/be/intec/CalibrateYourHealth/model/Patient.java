@@ -5,13 +5,12 @@ import java.time.LocalDate;
 import java.util.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @Entity
+@AllArgsConstructor
 @Data
 @Table(name = "tbl_patient")
 public class Patient {
@@ -70,7 +69,7 @@ public class Patient {
     }
 
     //Constructor with all fields
-    public Patient(Long patientID, String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors) {
+    public Patient(Long patientID, String firstName, String lastName, LocalDate dateOfBirth, String password) {
         this.id = patientID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -79,33 +78,17 @@ public class Patient {
         //this.myDoctors = myDoctors;
     }
 
-    //Constructor with password and doctors
-    public Patient(String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors, List<BloodPressureMeasurement> myBloodPressureMeasurements) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.password = password;
-        //this.myDoctors = myDoctors;
-        this.myBloodPressureMeasurements = myBloodPressureMeasurements;
-    }
 
 
 
-    public Patient(String firstName, String lastName, LocalDate dateOfBirth, String password, List<Doctor> myDoctors) {
 
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.password = password;
-        //this.myDoctors = myDoctors;
-    }
-
-    //Constructor without password or doctors
     public Patient(String firstName, String lastName, LocalDate dateOfBirth) {
+
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
+
     }
+
 
 
     //standard getters and setters have been added to this class with lombok annotation
@@ -126,9 +109,11 @@ public class Patient {
 
     */
 
-    public void setPassword(String password) {
+    public void setPassword(String firstName, String lastName, String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         this.password = encoder.encode(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
 
@@ -143,6 +128,8 @@ public class Patient {
                 ", confirmPassword='" + confirmPassword + '\'' +
                 //", myDoctors=" + myDoctors +
                 ", myBloodPressureMeasurements=" + myBloodPressureMeasurements +
+                ", myWeightMeasurements=" + myWeightMeasurements +
+                ", myNeuroMeasurements=" + myNeuroMeasurements +
                 '}';
     }
 
