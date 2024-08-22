@@ -57,7 +57,7 @@ public class NeuroMeasurementServiceImplementationTest {
         NeuroMeasurement neuroMeasurement2 = new NeuroMeasurement(25 , LocalDate.of(2021, 8, 20), "neuro measurement 2");
         NeuroMeasurement neuroMeasurement3 = new NeuroMeasurement(35 , LocalDate.of(2021, 8, 30), "neuro measurement 3");
 
-        when(neuroMeasurementRepository.findNeuroMeasurementsByPatient_PatientID(patientId)).thenReturn(java.util.List.of(neuroMeasurement1, neuroMeasurement2, neuroMeasurement3));
+        when(neuroMeasurementRepository.findNeuroMeasurementsByPatientId(patientId)).thenReturn(java.util.List.of(neuroMeasurement1, neuroMeasurement2, neuroMeasurement3));
 
         // Act
         double result = neuroMeasurementService.getAverageNeuroMeasurementByPatientIdForMonth(patientId);

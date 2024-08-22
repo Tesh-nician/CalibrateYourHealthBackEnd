@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Repository //This was the problem!!!! This annotation was missing
 public interface BloodPressureRepository extends JpaRepository<BloodPressureMeasurement, Long> {
 
     Optional<BloodPressureMeasurement> findBloodPressureByBloodPressureID(Long id); //for doctor and admin

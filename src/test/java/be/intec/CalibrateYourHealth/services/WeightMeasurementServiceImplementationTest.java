@@ -50,7 +50,7 @@ public class WeightMeasurementServiceImplementationTest {
         WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2021, 8, 20), "weightmeasurement 2");
         WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2021, 8, 30), "weightmeasurement 3");
 
-        when(weightMeasurementRepository.findWeightMeasurementByPatient_PatientID(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
+        when(weightMeasurementRepository.findWeightMeasurementByPatientId(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
         double result = weightMeasurementService.getAverageWeightMeasurementByPatientIdForMonth(patientId);
@@ -68,7 +68,7 @@ public class WeightMeasurementServiceImplementationTest {
         WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2024, 8, 30), "weightmeasurement 3");
         WeightMeasurement weightMeasurement4 = new WeightMeasurement(78.5, LocalDate.of(2023, 8, 40), "weightmeasurement 4");
 
-        when(weightMeasurementRepository.findWeightMeasurementByPatient_PatientID(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
+        when(weightMeasurementRepository.findWeightMeasurementByPatientId(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
         double result = weightMeasurementService.getAverageWeightMeasurementByPatientIdForYear(patientId);
@@ -76,9 +76,6 @@ public class WeightMeasurementServiceImplementationTest {
         // Assert
         assertEquals(76.5, result);
     }
-
-
-
 
 
 }
