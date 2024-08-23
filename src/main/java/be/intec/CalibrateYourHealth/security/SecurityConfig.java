@@ -14,28 +14,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/", "/register", "/login", "/search", "/css/**", "/js/**").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .defaultSuccessUrl("/afterlogin", true)
-                                .permitAll()
-                )
-
-                .oauth2Login(oauth2Login ->
-                        oauth2Login
-                                .loginPage("/login")
-                                .successHandler(oauth2SuccessHandler())
-                                .failureHandler(oauth2FailureHandler())
-                );
+        http.csrf(customizer -> customizer.disable());
+        http.authorizeHttpRequests(request -> request.anyRequest().permitAll());
 
         return http.build();
     }
+    //TODO: add filters to the security filter chain
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
