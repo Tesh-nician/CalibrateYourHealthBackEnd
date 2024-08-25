@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/patient")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PatientController {
 
     private final BCryptPasswordEncoder newPasswordEncoder;
-
+    private final String password;
+    private final PatientService patientService;
+    private final @CrossOrigin(origins = "http://localhost:4200")
 
     @Autowired
     public PatientController(BCryptPasswordEncoder newPasswordEncoder) {
