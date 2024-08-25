@@ -1,28 +1,33 @@
 package be.intec.CalibrateYourHealth.services;
 
+//import PatientRepository
 import be.intec.CalibrateYourHealth.repositories.PatientRepository;
+//import Patient
+import be.intec.CalibrateYourHealth.model.Patient;
+//import MockitoAnnotations
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+//import utilities
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+//import testing stuff
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 public class PatientServiceImplementationTest {
 
     @Mock
-    private PatientRepository patientRepository;
-
+    public PatientRepository patientRepository;
 
     @InjectMocks
-    private PatientServiceImplementation patientService;
+    public PatientServiceImplementation patientService;
 
     @BeforeEach
     public void setUp() {
@@ -32,7 +37,8 @@ public class PatientServiceImplementationTest {
     @Test
     void getAllPatients_shouldReturnAnEmptyListWhenNoPatientsAreFound() {
 
-// Arrange
+    // Arrange
+        //ensure that patientRepository.findAll returns an empty list
         when(patientRepository.findAll()).thenReturn(Collections.emptyList());
 
         // Act
@@ -54,22 +60,24 @@ void getAllPatients_shouldReturnAListOfPatientsWhenPatientsAreFound() {
         // Assert
         assertEquals(3, result.get().size());
         assertEquals(patient1, result.get().get(0));
+        //get Id of the second patient
+        assertEquals(patient2.getId(), result.get().get(2).getId());
 
 }
 
 
 
     @Test
-    void getPatientById_shouldReturnAPatientWhenPatientIsFound() {
+    void getPatientByIDShouldAlsoProvideUserName() {
         // Arrange
-        Long patientId = 1L;
-        Patient patient = new Patient(patientId, "firstname","secondname",LocalDate.of(1988, 10,25),"password");
+
+        Patient patient = new Patient("firstname","secondname",LocalDate.of(1988, 10,25));
         //add patient to the database
-        when(patientRepository.findById(patientId)).thenReturn(Optional.of(patient));
-        // Act
-        Optional<Patient> result = patientService.getPatientById(patientId);
+        patientRepository.save(patient);
+        String result = patientService.getPatientByUserName(patient.getUsername()).get().getUsername();
         // Assert
-        assertEquals(patient, result.get());
+        assertEquals(patient.getUsername(), result);
+
 
     }
 

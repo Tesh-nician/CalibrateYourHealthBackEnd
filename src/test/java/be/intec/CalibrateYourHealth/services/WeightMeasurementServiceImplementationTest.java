@@ -48,7 +48,7 @@ public class WeightMeasurementServiceImplementationTest {
         Long patientId = 1L;
         WeightMeasurement weightMeasurement1 = new WeightMeasurement(75.5, LocalDate.of(2021, 8, 10), "weightmeasurement 1");
         WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2021, 8, 20), "weightmeasurement 2");
-        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2021, 8, 30), "weightmeasurement 3");
+        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2021, 8, 25), "weightmeasurement 3");
 
         when(weightMeasurementRepository.findWeightMeasurementByPatientId(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
