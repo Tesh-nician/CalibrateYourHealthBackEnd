@@ -1,14 +1,13 @@
 package be.intec.CalibrateYourHealth.model;
 import jakarta.persistence.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.*;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -35,11 +34,19 @@ public class WeightMeasurement {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
+
     public WeightMeasurement() {
     }
 
     public WeightMeasurement( double weight, LocalDate date, String weightComment) {
 
+        this.weight = weight;
+        this.date = date;
+        this.weightComment = weightComment;
+    }
+
+    public WeightMeasurement(Long weightID, double weight, LocalDate date, String weightComment) {
+        this.weightID = weightID;
         this.weight = weight;
         this.date = date;
         this.weightComment = weightComment;

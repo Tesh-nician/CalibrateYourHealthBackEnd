@@ -1,15 +1,8 @@
 package be.intec.CalibrateYourHealth.model;
 
-import be.intec.CalibrateYourHealth.model.Patient;
 import jakarta.persistence.*;
-import lombok.Setter;
-
-import org.springframework.data.annotation.CreatedDate;
 
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

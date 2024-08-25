@@ -1,6 +1,5 @@
 package be.intec.CalibrateYourHealth.services;
 
-import be.intec.CalibrateYourHealth.model.Doctor;
 import be.intec.CalibrateYourHealth.model.Patient;
 import be.intec.CalibrateYourHealth.repositories.DoctorRepository;
 import be.intec.CalibrateYourHealth.repositories.PatientRepository;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

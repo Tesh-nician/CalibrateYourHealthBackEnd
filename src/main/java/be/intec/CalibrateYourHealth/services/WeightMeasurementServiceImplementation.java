@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import be.intec.CalibrateYourHealth.model.WeightMeasurement;
-import be.intec.CalibrateYourHealth.model.Patient;
 import be.intec.CalibrateYourHealth.repositories.WeightMeasurementRepository;
 
 import java.time.LocalDate;

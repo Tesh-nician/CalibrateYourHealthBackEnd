@@ -1,12 +1,10 @@
 package be.intec.CalibrateYourHealth.model;
 import jakarta.persistence.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.*;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
