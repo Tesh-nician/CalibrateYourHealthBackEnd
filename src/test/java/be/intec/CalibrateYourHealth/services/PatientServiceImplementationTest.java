@@ -56,29 +56,9 @@ void getAllPatients_shouldReturnAListOfPatientsWhenPatientsAreFound() {
         assertEquals(patient1, result.get().get(0));
 
 }
-/*
-        // Arrange
-        Patient patient1 = new Patient("firstname", "secondname",LocalDate.of(1988, 10,25));
-        Patient patient2 = new Patient("firstname2", "secondname2",LocalDate.of(1989, 11,26));
-        Patient patient3 = new Patient("firstname3", "secondname3",LocalDate.of(1990, 12,27));
-       //add patients to the database
-        newpatientRepository.save(patient1);
-        newpatientRepository.save(patient2);
-        newpatientRepository.save(patient3);
 
 
-        // Act
-        Optional<List<Patient>> result = patientService.getAllPatients();
 
-        // Assert
-        assertEquals(3, result.get().size());
-        assertEquals(patient1, result.get().get(0));
-        assertEquals(patient2, result.get().get(1));
-        assertEquals(patient3, result.get().get(2));
-    }
-
-
- */
     @Test
     void getPatientById_shouldReturnAPatientWhenPatientIsFound() {
         // Arrange

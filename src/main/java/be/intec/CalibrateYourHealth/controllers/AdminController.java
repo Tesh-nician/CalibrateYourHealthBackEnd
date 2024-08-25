@@ -31,6 +31,8 @@ public class AdminController {
     return "registerAdmin";
     }
 
+
+
     @PostMapping("/saveAdmin")
     public String saveAdmin() {
         //Save admin to database
@@ -44,7 +46,8 @@ public class AdminController {
 
     @PostMapping("/loginAdmin")
     public String loginAdmin() {
-        //Admin logs in
+         //Admin logs in
+        
         //Redirect to admin dashboard
         return "AdminDashboard";
     }
