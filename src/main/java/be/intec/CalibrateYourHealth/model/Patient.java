@@ -32,6 +32,10 @@ public class Patient {
     @NotBlank(message = "date of birth is required")
     private LocalDate dateOfBirth;
 
+    //username is attributed automatically, is used for login. Consists of three first letters of first name and three first letters of last name
+    @Column(unique = true)
+    private String username; // = firstName.substring(0, 3) + lastName.substring(0, 3);
+
 
     @NotBlank(message = "Password is required")
     @Pattern(
@@ -74,6 +78,7 @@ public class Patient {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
         this.password = password;
         //this.myDoctors = myDoctors;
     }
@@ -86,6 +91,8 @@ public class Patient {
 
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
 
     }
 
@@ -114,6 +121,7 @@ public class Patient {
         this.password = encoder.encode(password);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
     }
 
 
@@ -126,6 +134,7 @@ public class Patient {
                 ", dateOfBirth=" + dateOfBirth +
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
+                ", username='" + username + '\'' +
                 //", myDoctors=" + myDoctors +
                 ", myBloodPressureMeasurements=" + myBloodPressureMeasurements +
                 ", myWeightMeasurements=" + myWeightMeasurements +

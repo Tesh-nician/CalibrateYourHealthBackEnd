@@ -10,6 +10,8 @@ public interface AdminService {
 
         Optional<Admin> getAdminById(Long id);
 
+        Optional<Admin> getAdminByUserName(String userName); //used for login
+
         Admin saveAdmin(Admin admin);
 
         Admin updateAdminPassword(Admin admin, String password);

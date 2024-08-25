@@ -12,6 +12,7 @@ public interface DoctorService {
     List<Doctor> getAllDoctors();
 
     Optional<Doctor> getDoctorById(Long id);
+    Optional<Doctor> getDoctorByUserName(String userName); //used for login
 
     Optional <List<Doctor>> getDoctorsByLastnameContaining(String lastnameContains);
 

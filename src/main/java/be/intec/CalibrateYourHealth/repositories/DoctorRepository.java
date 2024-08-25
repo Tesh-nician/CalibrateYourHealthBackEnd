@@ -13,6 +13,8 @@ import be.intec.CalibrateYourHealth.model.Doctor;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Optional<Doctor> findDoctorByDoctorID(Long id); //for patient and admin
+    Optional<Doctor> findDoctorByRizivNumber(long rizivNumber); //for patient and admin
+    Optional<Doctor> findDoctorByUsername(String username); //for patient and admin login
 
     List<Doctor> findAll(); //for admin and patient
 

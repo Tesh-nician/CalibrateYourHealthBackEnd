@@ -44,6 +44,12 @@ public class PatientServiceImplementation implements PatientService {
     }
 
     @Override
+    public Optional<Patient> getPatientByUserName(String userName) { //used for login
+        return newpatientRepository.findPatientByUsername(userName);
+    }
+
+
+    @Override
     public Patient savePatient(Patient patient) {
         return newpatientRepository.save(patient);
     }

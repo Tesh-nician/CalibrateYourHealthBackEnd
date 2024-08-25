@@ -18,6 +18,8 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 
     void deleteAdminById(Long id);// for admin
 
+    Optional<Admin> findAdminByUserName(String userName); //for admin login
+
     // use method in implementation class instead!!:   //Admin updateAdminPassword(Admin admin, String newPassword); //for admin:if admin forgets password, reset password.
 
 }

@@ -35,6 +35,11 @@ public class DoctorServiceImplementation implements DoctorService {
     }
 
     @Override
+    public Optional<Doctor> getDoctorByUserName(String userName) { //used for login
+        return newDoctorRepository.findDoctorByUsername(userName);
+    } //used for login
+
+    @Override
     public Optional<List<Doctor>> getDoctorsByLastnameContaining(String lastnameContains) {
         return Optional.of(newDoctorRepository.findDoctorsByLastNameContaining(lastnameContains));
     }

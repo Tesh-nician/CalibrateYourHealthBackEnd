@@ -30,6 +30,11 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
+    public Optional <Admin> getAdminByUserName(String userName) {
+        return adminRepository.findAdminByUserName(userName); //used for login
+    }
+
+    @Override
     public Admin saveAdmin(Admin admin) {
         return adminRepository.save(admin);
     }

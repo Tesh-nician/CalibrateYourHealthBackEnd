@@ -48,9 +48,16 @@ public class Doctor {
     @Column(length = 60)
     private String password;
 
+    //add username consisting of first 3 letters of first name and first 3 letters of last name
+    @Column(unique = true)
+    private String username; // = firstName.substring(0, 3) + lastName.substring(0, 3);
+
     @Transient
     @NotBlank(message = "Confirm Password is required")
     private String confirmPassword;
+
+
+
 
    /*@Column(unique = true)
     private Set<Patient> myPatients = new Set<>();
@@ -75,6 +82,7 @@ public class Doctor {
         this.lastName = lastName;
         this.rizivNumber = rizivNumber;
         this.setPassword(password);
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
         //this.myPatients = myPatients;
     }
 
@@ -84,6 +92,7 @@ public class Doctor {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rizivNumber = rizivNumber;
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
     }
 
     //Constructor with password and patients
@@ -92,6 +101,7 @@ public class Doctor {
         this.lastName = lastName;
         this.rizivNumber = rizivNumber;
         this.setPassword(password);
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
         //this.myPatients = myPatients;
     }
 
@@ -138,6 +148,10 @@ public class Doctor {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", rizivNumber=" + rizivNumber +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                //", myPatients=" + myPatients +
+
                 '}';
     }
 
