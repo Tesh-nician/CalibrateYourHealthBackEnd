@@ -1,5 +1,6 @@
 package be.intec.CalibrateYourHealth.services;
 
+import be.intec.CalibrateYourHealth.model.Patient;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 
 
 @Service
@@ -26,40 +28,39 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
         return newWeightMeasurementRepository.findAll();
     }
 
+    @Override
+    public List<WeightMeasurement> getWeightMeasurementsByPatientID(Long patientId) {
+        return newWeightMeasurementRepository.findWeightMeasurementByPatientIdMatches(patientId);
+    }
 
 
     //Method that gets the average weight measurement of a patient for the last month
     @Override
     public double getAverageWeightMeasurementByPatientIdForMonth(Long patientId) {
-        List<WeightMeasurement> weightMeasurementsFromTheLastMonth= newWeightMeasurementRepository
-                .findWeightMeasurementByPatientId(patientId)
-                        .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate()
-                        .isAfter(LocalDate.now().minusMonths(1)))
-                        .toList();
-        //calculate average weight from the list of average weight measurements
 
-        double averageWeight = weightMeasurementsFromTheLastMonth
-                .stream().mapToDouble(WeightMeasurement::getWeight)
+        Double averageWeightMeasurementsForMonth = newWeightMeasurementRepository.findWeightMeasurementByPatientIdMatches(patientId)
+        .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusMonths(1)))
+                .toList()
+                .stream()
+                .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
 
-        return averageWeight;
+        return averageWeightMeasurementsForMonth;
+
+
     }
 
     //Method that gets the average weight measurement of a patient for the last year
     @Override
     public double getAverageWeightMeasurementByPatientIdForYear(Long patientId) {
-        List<WeightMeasurement> weightMeasurementsFromTheLastYear= newWeightMeasurementRepository
-                .findWeightMeasurementByPatientId(patientId)
-                        .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate()
-                        .isAfter(LocalDate.now().minusYears(1)))
-                        .toList();
-        //calculate average weight from the list of average weight measurements
-
-        double averageWeight = weightMeasurementsFromTheLastYear
-                .stream().mapToDouble(WeightMeasurement::getWeight)
+        Double averageWeightMeasurementsForYear = newWeightMeasurementRepository.findWeightMeasurementByPatientIdMatches(patientId)
+                .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusYears(1)))
+                .toList()
+                .stream()
+                .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
 
-        return averageWeight;
+        return averageWeightMeasurementsForYear;
     }
 
     //get weight by id of the weight measurement
@@ -69,10 +70,7 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
 
     //get weight measurements by patient id
     }
-   @Override
-    public List<WeightMeasurement> getWeightMeasurementsByPatientId(Long patientId) {
-        return newWeightMeasurementRepository.findWeightMeasurementByPatientId(patientId);
-    }
+
 
 
 
@@ -85,7 +83,6 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     public void deleteWeightMeasurementById(Long id) {
         newWeightMeasurementRepository.deleteById(id);
     }
-
 
 
 

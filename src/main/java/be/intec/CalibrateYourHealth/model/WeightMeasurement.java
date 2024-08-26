@@ -38,11 +38,19 @@ public class WeightMeasurement {
     public WeightMeasurement() {
     }
 
+    public WeightMeasurement(double weight, LocalDate date, String weightComment, Patient patient) {
+        this.weight = weight;
+        this.date = date;
+        this.weightComment = weightComment;
+        this.patient = patient;
+    }
+
     public WeightMeasurement( double weight, LocalDate date, String weightComment) {
 
         this.weight = weight;
         this.date = date;
         this.weightComment = weightComment;
+
     }
 
     public WeightMeasurement(Long weightID, double weight, LocalDate date, String weightComment) {

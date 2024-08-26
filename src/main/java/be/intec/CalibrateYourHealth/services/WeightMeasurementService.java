@@ -15,7 +15,7 @@ public interface WeightMeasurementService {
 
     Optional<WeightMeasurement> getWeightMeasurementById(Long id);
 
-    List<WeightMeasurement> getWeightMeasurementsByPatientId(Long patientId);
+    List<WeightMeasurement> getWeightMeasurementsByPatientID(Long patientId);
 
     WeightMeasurement saveWeightMeasurement(WeightMeasurement weightMeasurement);
 

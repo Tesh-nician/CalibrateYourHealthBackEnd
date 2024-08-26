@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import be.intec.CalibrateYourHealth.model.WeightMeasurement;
 import be.intec.CalibrateYourHealth.repositories.WeightMeasurementRepository;
+import be.intec.CalibrateYourHealth.model.Patient;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -30,7 +31,7 @@ public class WeightMeasurementServiceImplementationTest {
         // Arrange
 
 
-        WeightMeasurement weightMeasurement = new WeightMeasurement(75.5, LocalDate.of(24,8,10), "weightmeasurement 1");
+        WeightMeasurement weightMeasurement = new WeightMeasurement(75.5, LocalDate.of(2024,8,10), "weightmeasurement 1");
 
         when(weightMeasurementRepository.findAll()).thenReturn(Arrays.asList(weightMeasurement));
 
@@ -45,12 +46,13 @@ public class WeightMeasurementServiceImplementationTest {
     @Test
     void getAverageWeightMeasurementByPatientIdForMonth_shouldReturnTheAverageWeightMeasurementForTheLastMonth() {
         // Arrange
-        Long patientId = 1L;
-        WeightMeasurement weightMeasurement1 = new WeightMeasurement(75.5, LocalDate.of(2021, 8, 10), "weightmeasurement 1");
-        WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2021, 8, 20), "weightmeasurement 2");
-        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2021, 8, 25), "weightmeasurement 3");
+        Long patientId = 0L;
+        Patient patient = new Patient(patientId, "firstname", "secondname", LocalDate.of(1988, 10, 25),"Pasword1");
+        WeightMeasurement weightMeasurement1 = new WeightMeasurement(75.5, LocalDate.of(2024, 8, 5), "weightmeasurement 1", patient);
+        WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2024, 8, 10), "weightmeasurement 2", patient);
+        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2024, 8, 15), "weightmeasurement 3", patient);
 
-        when(weightMeasurementRepository.findWeightMeasurementByPatientId(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
+        when(weightMeasurementRepository.findWeightMeasurementByPatientIdMatches(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
         double result = weightMeasurementService.getAverageWeightMeasurementByPatientIdForMonth(patientId);
@@ -62,13 +64,13 @@ public class WeightMeasurementServiceImplementationTest {
     @Test
     void getAverageWeightMeasurementByPatientIdForYear_shouldReturnTheAverageWeightMeasurementforthelastyear() {
         // Arrange
-        Long patientId = 1L;
-        WeightMeasurement weightMeasurement1 = new WeightMeasurement(75.5, LocalDate.of(2024, 8, 10), "weightmeasurement 1");
-        WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2024, 8, 20), "weightmeasurement 2");
-        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2024, 8, 30), "weightmeasurement 3");
-        WeightMeasurement weightMeasurement4 = new WeightMeasurement(78.5, LocalDate.of(2023, 8, 40), "weightmeasurement 4");
+        Long patientId = 0L;
+        Patient patient = new Patient(patientId, "firstname", "secondname", LocalDate.of(1988, 10, 25),"Pasword1");
+        WeightMeasurement weightMeasurement1 = new WeightMeasurement(75.5, LocalDate.of(2024, 1, 10), "weightmeasurement 1",patient);
+        WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2024, 5, 20), "weightmeasurement 2", patient);
+        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2024, 6, 25), "weightmeasurement 3", patient);
 
-        when(weightMeasurementRepository.findWeightMeasurementByPatientId(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
+        when(weightMeasurementRepository.findWeightMeasurementByPatientIdMatches(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
         double result = weightMeasurementService.getAverageWeightMeasurementByPatientIdForYear(patientId);

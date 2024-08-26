@@ -29,11 +29,7 @@ public class PatientServiceImplementation implements PatientService {
     @Override
     public Optional<List<Patient>> getAllPatients() {
 
-        List<Patient> patients =newpatientRepository.findAll();
-        if(patients.isEmpty()){
-            return Optional.empty();
-        }
-        return Optional.of(patients);
+        return Optional.of(newpatientRepository.findAll());
     }
 
     @Override

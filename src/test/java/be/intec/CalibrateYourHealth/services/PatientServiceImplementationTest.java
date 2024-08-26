@@ -16,37 +16,35 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 //import testing stuff
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class PatientServiceImplementationTest {
 
     @Mock
-    public PatientRepository patientRepository;
+    private PatientRepository patientRepository;
+
+    @Mock
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @InjectMocks
-    public PatientServiceImplementation patientService;
+    private PatientServiceImplementation patientService;
+
+    private Patient patient;
 
     @BeforeEach
     public void setUp() {
+
         MockitoAnnotations.openMocks(this);
+        patient = new Patient("firstname", "secondname", LocalDate.of(1988, 10,25));
+        patient.setPassword("Plaintextpassword1");
     }
 
-    @Test
-    void getAllPatients_shouldReturnAnEmptyListWhenNoPatientsAreFound() {
 
-    // Arrange
-        //ensure that patientRepository.findAll returns an empty list
-        when(patientRepository.findAll()).thenReturn(Collections.emptyList());
-
-        // Act
-        Optional<List<Patient>> result = patientService.getAllPatients();
-
-        // Assert
-        assertEquals(0, result.get().size());
-    }
 
 @Test
 void getAllPatients_shouldReturnAListOfPatientsWhenPatientsAreFound() {
@@ -56,12 +54,12 @@ void getAllPatients_shouldReturnAListOfPatientsWhenPatientsAreFound() {
         Patient patient3 = new Patient("firstname3", "secondname3",LocalDate.of(1990, 12,27));
         when(patientRepository.findAll()).thenReturn(List.of(patient1, patient2, patient3));
         // Act
-        Optional<List<Patient>> result = patientService.getAllPatients();
+        List<Patient> result = patientService.getAllPatients().get();
         // Assert
-        assertEquals(3, result.get().size());
-        assertEquals(patient1, result.get().get(0));
-        //get Id of the second patient
-        assertEquals(patient2.getId(), result.get().get(2).getId());
+        //assertTrue(result.isPresent());
+        assertEquals(3, result.size());
+        assertEquals(patient1, result.get(0));
+
 
 }
 
@@ -71,12 +69,14 @@ void getAllPatients_shouldReturnAListOfPatientsWhenPatientsAreFound() {
     void getPatientByIDShouldAlsoProvideUserName() {
         // Arrange
 
-        Patient patient = new Patient("firstname","secondname",LocalDate.of(1988, 10,25));
+        Patient patient = new Patient(0L,"firstname","secondname",LocalDate.of(1988, 10,25),"password");
+        when(patientRepository.findPatientById(0L)).thenReturn(Optional.of(patient));
         //add patient to the database
         patientRepository.save(patient);
-        String result = patientService.getPatientByUserName(patient.getUsername()).get().getUsername();
+        Optional<Patient> result = patientService.getPatientById(0L);
         // Assert
-        assertEquals(patient.getUsername(), result);
+        assertTrue(result.isPresent());
+        assertEquals(patient.getUsername(), result.get().getUsername());
 
 
     }

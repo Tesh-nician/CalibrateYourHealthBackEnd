@@ -17,7 +17,7 @@ public class DoctorServiceImplementation implements DoctorService {
 
 
     @Autowired
-    public DoctorServiceImplementation(DoctorRepository newDoctorRepository, PatientRepository newPatientRepository) {
+    public DoctorServiceImplementation(DoctorRepository newDoctorRepository) {
         this.newDoctorRepository = newDoctorRepository;
 
     }

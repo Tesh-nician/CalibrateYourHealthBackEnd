@@ -23,8 +23,8 @@ public class NeuroMeasurementServiceImplementation implements NeuroMeasurementSe
 
 
     @Override
-    public List<NeuroMeasurement> getAllNeuroMeasurements() {
-        return neuroMeasurementRepository.findAll();
+    public Optional<List<NeuroMeasurement>> getAllNeuroMeasurements() {
+        return Optional.of(neuroMeasurementRepository.findAll());
     }
 
     @Override
