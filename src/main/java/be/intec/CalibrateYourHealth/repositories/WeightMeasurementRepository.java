@@ -6,6 +6,7 @@ import be.intec.CalibrateYourHealth.model.WeightMeasurement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -17,13 +18,10 @@ public interface WeightMeasurementRepository extends JpaRepository<WeightMeasure
 
     List<WeightMeasurement> findWeightMeasurementByPatient(Patient patient); // for patient and doctor
 
-    List<WeightMeasurement> findWeightMeasurementByPatientIdMatches(Long patientId); // for patient and doctor
+    //List<WeightMeasurement> getByPatientIdMatchesRegex(Long patientId); // for patient and doctor
 
 
     void deleteWeightMeasurementByWeightID(Long id);// for patient, delete by weightID
-
-
-
 
 
 
