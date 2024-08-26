@@ -33,6 +33,11 @@ public class PatientServiceImplementation implements PatientService {
     }
 
     @Override
+    public Long getPatientID(Patient patient) {
+        return patient.getId();
+    }
+
+    @Override
     public Optional<Patient> getPatientById(Long id) {
         return newpatientRepository.findPatientById(id);
     }

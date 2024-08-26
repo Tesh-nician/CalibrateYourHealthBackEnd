@@ -1,7 +1,6 @@
 package be.intec.CalibrateYourHealth.services;
 
 import be.intec.CalibrateYourHealth.model.Patient;
-import be.intec.CalibrateYourHealth.repositories.PatientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,17 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Collections.emptyList;
-
 
 @Service
 public class WeightMeasurementServiceImplementation implements WeightMeasurementService{
     private final WeightMeasurementRepository newWeightMeasurementRepository;
-
-
-
-
-
 
 
 
@@ -31,54 +23,50 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
         this.newWeightMeasurementRepository = newWeightMeasurementRepository;
     }
 
+    //make connection to the patient repository
+
+
     @Override
     public List<WeightMeasurement> getAllWeightMeasurements() {
         return newWeightMeasurementRepository.findAll();
     }
 
+
+
     @Override
-    Optional <List<WeightMeasurement>> getWeightMeasurementsByPatientID(Long patientId) {
-        //TODO: implement this method, as the old repository method with regex or MatchByPatientID no longer works
-        //first identify the patient by the patientId using the patient service
-        Patient patient = newPatientService.findPatientById(patientId).orElseThrow();
+    public Optional<List<WeightMeasurement>> getPatientWeightMeasurements(Patient patient) {
 
-        //then get the weight measurements of the patient
-        return Optional.of(newWeightMeasurementRepository.findWeightMeasurementByPatient(patient));
-
-
-        //then get the weight measurements of the patient
-        return newWeightMeasurementRepository.findWeightMeasurementByPatient(patient);
-
+        //get all the weight measurements of the patient
+        Optional<List<WeightMeasurement>> weightMeasurementsResult = Optional.of(newWeightMeasurementRepository.findWeightMeasurementByPatient(patient));
+        return weightMeasurementsResult;
     }
 
 
     //Method that gets the average weight measurement of a patient for the last month
     @Override
-    public double getAverageWeightMeasurementByPatientIdForMonth(Long patientId) {
+    public double getAverageWeightMeasurementByPatientForMonth(Patient patient) {
 
-        Double averageWeightMeasurementsForMonth = newWeightMeasurementRepository.getByPatientIdMatchesRegex(patientId)
-        .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusMonths(1)))
+        return  newWeightMeasurementRepository.findWeightMeasurementByPatient(patient)
+                .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusMonths(1)))
                 .toList()
                 .stream()
                 .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
-
-        return averageWeightMeasurementsForMonth;
 
 
     }
 
     //Method that gets the average weight measurement of a patient for the last year
     @Override
-    public double getAverageWeightMeasurementByPatientIdForYear(Long patientId) {
-        Double averageWeightMeasurementsForYear = newWeightMeasurementRepository.getByPatientIdMatchesRegex(patientId)
+    public double getAverageWeightMeasurementByPatientForYear(Patient patient) {
+
+        return newWeightMeasurementRepository.findWeightMeasurementByPatient(patient)
                 .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusYears(1)))
                 .toList()
                 .stream()
                 .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
 
-        return averageWeightMeasurementsForYear;
     }
 
     //get weight by id of the weight measurement
@@ -86,9 +74,7 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     public Optional<WeightMeasurement> getWeightMeasurementById(Long id) {
         return newWeightMeasurementRepository.findById(id);
 
-    //get weight measurements by patient id
     }
-
 
 
 
@@ -101,7 +87,6 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     public void deleteWeightMeasurementById(Long id) {
         newWeightMeasurementRepository.deleteById(id);
     }
-
 
 
 }

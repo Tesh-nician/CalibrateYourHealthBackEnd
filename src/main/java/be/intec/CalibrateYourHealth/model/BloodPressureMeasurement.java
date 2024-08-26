@@ -52,12 +52,14 @@ public class BloodPressureMeasurement {
 
 
 
-    public BloodPressureMeasurement(int systolicPressure, int diastolicPressure, int pulse, LocalDate date, String bloodPressurebComment) {
+    public BloodPressureMeasurement(int systolicPressure, int diastolicPressure, int pulse, LocalDate date, String bloodPressurebComment, Patient patient) {
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
         this.pulse = pulse;
         this.bloodPressureComment = bloodPressureComment;
         this.date = date;
+        this.patient = patient;
+
     }
 
     //TODO: check later if Constructor with bloodPressureID is necessary

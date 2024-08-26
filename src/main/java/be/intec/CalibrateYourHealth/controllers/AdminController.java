@@ -1,130 +1,123 @@
 package be.intec.CalibrateYourHealth.controllers;
 
-import be.intec.CalibrateYourHealth.services.AdminServiceImplementation;
+import be.intec.CalibrateYourHealth.model.Admin;
+import be.intec.CalibrateYourHealth.model.Doctor;
+import be.intec.CalibrateYourHealth.model.Patient;
+import be.intec.CalibrateYourHealth.services.AdminService;
+import be.intec.CalibrateYourHealth.services.DoctorService;
+import be.intec.CalibrateYourHealth.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admins")
 public class AdminController {
-    private final BCryptPasswordEncoder newPasswordEncoder;
-    private String password;
-    private final AdminServiceImplementation adminServiceImplementation;
+
+    private final AdminService adminService;
+    private final PatientService patientService;
+    private final DoctorService doctorService;
 
     @Autowired
-    public AdminController(BCryptPasswordEncoder newPasswordEncoder, AdminServiceImplementation adminServiceImplementation) {
-        this.newPasswordEncoder = newPasswordEncoder;
-        this.adminServiceImplementation = adminServiceImplementation;
+    public AdminController(AdminService adminService, PatientService patientService, DoctorService doctorService) {
+        this.adminService = adminService;
+        this.patientService = patientService;
+        this.doctorService = doctorService;
     }
 
-
     //Register new Admin
-
-    @GetMapping("/registerAdmin")
+    @PostMapping("/registerAdmin")
     public String registerAdmin() {
         //Create new admin object
         //Set admin details
-    return "registerAdmin";
+        return "registerAdmin";
     }
 
-
-
+    //Save admin to database
     @PostMapping("/saveAdmin")
     public String saveAdmin() {
         //Save admin to database
         //Return success message??
         //Redirect to login page
-
         return "redirect:/login";
     }
 
-    //Admin logs in
-
-    @PostMapping("/loginAdmin")
-    public String loginAdmin() {
-
-        //show login form
-
-
-
-        //Admin logs in
-
-        
-        //Redirect to admin dashboard
-        return "AdminDashboard";
-    }
-
-    //Admin dashboard that shows all patients and doctors
-
-    @GetMapping("/adminDashboard")
-    public String adminDashboard() {
-        //posts lists of all patients and doctors
-        return "adminDashboard";
-    }
-
     //Admin logs out
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout() {
         //Admin logs out
         //Redirect to login page
         return "redirect:/login";
     }
 
-//Admin cannot update patient password, only reset password
+    //Admin resets patient password, only reset password if admin is logged in
     @PostMapping("/resetPatientPassword")
     public String resetPatientPassword() {
-        // Admin clicks on patient to reset password
-        //Admin resets patient password
+        //Reset patient password
+        //Return success message??
         //Redirect to admin dashboard
-        return "adminDashboard";
+        return "redirect:/adminDashboard";
     }
 
 
-
-
-
-
-
-
-
-
-    //Password encoding and matching
-
-    public BCryptPasswordEncoder getNewPasswordEncoder() {
-        return newPasswordEncoder;
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+        Optional<Admin> adminOpt = adminService.getAdminByUserName(username);
+        if (adminOpt.isPresent()) {
+            Admin admin = adminOpt.get();
+            if (admin.getPassword().equals(password)) {
+                return ResponseEntity.ok("Login successful");
+            } else {
+                return ResponseEntity.status(401).body("Invalid password");
+            }
+        } else {
+            return ResponseEntity.status(404).body("User not found");
+        }
+    }
+//Get a list of all patients
+    @GetMapping("/patients")
+    public ResponseEntity<List<Patient>> getAllPatients() {
+        List<Patient> patients = patientService.getAllPatients().orElseThrow(() -> new RuntimeException("No patients found"));
+        return ResponseEntity.ok(patients);
     }
 
-    public String encodePassword(String password) {
-        return newPasswordEncoder.encode(password);
+    //Get a specific patient by id
+    @GetMapping("/patients/{id}")
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
+        Optional<Patient> patient = patientService.getPatientById(id);
+        return ResponseEntity.ok(patient.orElseThrow(() -> new RuntimeException("Patient not found")));
     }
 
-    public boolean matchesPassword(String password, String encodedPassword) {
-        return newPasswordEncoder.matches(password, encodedPassword);
+    //Delete a specific patient by id
+
+    @DeleteMapping("/patients/{id}")
+
+    public ResponseEntity<String> deletePatient(@PathVariable Long id) {
+        patientService.deletePatientById(id);
+        return ResponseEntity.ok("Patient deleted successfully");
+    }
+//Get a list of all doctors
+    @GetMapping("/doctors")
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
+        List<Doctor> doctors = doctorService.getAllDoctors();
+        return ResponseEntity.ok(doctors);
     }
 
-    public void setPassword(String password) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        this.password = encoder.encode(password);
+    //Get a specific doctor by id
+    @GetMapping("/doctors/{id}")
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id) {
+        Optional<Doctor> doctor = doctorService.getDoctorById(id);
+        return ResponseEntity.ok(doctor.orElseThrow(() -> new RuntimeException("Doctor not found")));
     }
 
-    public String getPassword() {
-        return password;
+    //Delete a specific doctor by id
+    @DeleteMapping("/doctors/{id}")
+    public ResponseEntity<String> deleteDoctor(@PathVariable Long id) {
+        doctorService.deleteDoctorById(id);
+        return ResponseEntity.ok("Doctor deleted successfully");
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
-

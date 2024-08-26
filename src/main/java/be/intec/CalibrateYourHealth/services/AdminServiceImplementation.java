@@ -2,6 +2,8 @@ package be.intec.CalibrateYourHealth.services;
 
 import be.intec.CalibrateYourHealth.model.Admin;
 import be.intec.CalibrateYourHealth.repositories.AdminRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,7 +47,6 @@ public class AdminServiceImplementation implements AdminService {
 
         admin.setPassword(password);
         return adminRepository.save(admin);
-
 
     }
 

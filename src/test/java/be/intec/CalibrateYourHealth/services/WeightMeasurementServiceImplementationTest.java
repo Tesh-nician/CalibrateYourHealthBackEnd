@@ -44,7 +44,7 @@ public class WeightMeasurementServiceImplementationTest {
     }
 
     @Test
-    void getAverageWeightMeasurementByPatientIdForMonth_shouldReturnTheAverageWeightMeasurementForTheLastMonth() {
+    void getAverageWeightMeasurementByPatientForMonth_shouldReturnTheAverageWeightMeasurementForTheLastMonth() {
         // Arrange
         Long patientId = 0L;
         Patient patient = new Patient(patientId, "firstname", "secondname", LocalDate.of(1988, 10, 25),"Pasword1");
@@ -52,10 +52,10 @@ public class WeightMeasurementServiceImplementationTest {
         WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2024, 8, 10), "weightmeasurement 2", patient);
         WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2024, 8, 15), "weightmeasurement 3", patient);
 
-        when(weightMeasurementRepository.getByPatientIdMatchesRegex(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
+        when(weightMeasurementRepository.findWeightMeasurementByPatient(patient)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
-        double result = weightMeasurementService.getAverageWeightMeasurementByPatientIdForMonth(patientId);
+        double result = weightMeasurementService.getAverageWeightMeasurementByPatientForMonth(patient);
 
         // Assert
         assertEquals(76.5, result);
@@ -66,14 +66,14 @@ public class WeightMeasurementServiceImplementationTest {
         // Arrange
         Long patientId = 0L;
         Patient patient = new Patient(patientId, "firstname", "secondname", LocalDate.of(1988, 10, 25),"Pasword1");
-        WeightMeasurement weightMeasurement1 = new WeightMeasurement(75.5, LocalDate.of(2024, 1, 10), "weightmeasurement 1",patient);
-        WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2024, 5, 20), "weightmeasurement 2", patient);
-        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2024, 6, 25), "weightmeasurement 3", patient);
+        WeightMeasurement weightMeasurement1 = new WeightMeasurement(75.5, LocalDate.of(2024, 2, 5), "weightmeasurement 1", patient);
+        WeightMeasurement weightMeasurement2 = new WeightMeasurement(76.5, LocalDate.of(2024, 4, 10), "weightmeasurement 2", patient);
+        WeightMeasurement weightMeasurement3 = new WeightMeasurement(77.5, LocalDate.of(2024, 6, 15), "weightmeasurement 3", patient);
 
-        when(weightMeasurementRepository.getByPatientIdMatchesRegex(patientId)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
+        when(weightMeasurementRepository.findWeightMeasurementByPatient(patient)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
-        double result = weightMeasurementService.getAverageWeightMeasurementByPatientIdForYear(patientId);
+        double result = weightMeasurementService.getAverageWeightMeasurementByPatientForYear(patient);
 
         // Assert
         assertEquals(76.5, result);

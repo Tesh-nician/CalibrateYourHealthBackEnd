@@ -1,192 +1,219 @@
 package be.intec.CalibrateYourHealth.controllers;
 
-
+import be.intec.CalibrateYourHealth.model.BloodPressureMeasurement;
+import be.intec.CalibrateYourHealth.model.NeuroMeasurement;
 import be.intec.CalibrateYourHealth.model.Patient;
+import be.intec.CalibrateYourHealth.model.WeightMeasurement;
+import be.intec.CalibrateYourHealth.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/api/patients")
 public class PatientController {
 
-    private final BCryptPasswordEncoder newPasswordEncoder;
-
+    private final PatientService patientService;
+    private final WeightMeasurementServiceImplementation weightMeasurementService;
+    private final BloodPressureMeasurementServiceImplementation bloodPressureMeasurementService;
+    private final NeuroMeasurementServiceImplementation neuroMeasurementService;
 
     @Autowired
-    public PatientController(BCryptPasswordEncoder newPasswordEncoder) {
-        this.newPasswordEncoder = newPasswordEncoder;
+    public PatientController(PatientServiceImplementation patientService
+            , WeightMeasurementServiceImplementation weightMeasurementService
+            , BloodPressureMeasurementServiceImplementation bloodPressureMeasurementService
+            , NeuroMeasurementServiceImplementation neuroMeasurementService) {
+        this.patientService = patientService;
+        this.weightMeasurementService = weightMeasurementService;
+        this.bloodPressureMeasurementService = bloodPressureMeasurementService;
+        this.neuroMeasurementService = neuroMeasurementService;
+    }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerPatient(@RequestBody Patient patient) {
+        patientService.savePatient(patient);
+        return ResponseEntity.ok("Patient registered successfully");
     }
 
 
 
 
-
-        // Method to create a new patient with a hashed password
-        @PostMapping("/registerPatient")
-        public String registerPatient(@RequestBody Patient patient) {
-            String rawPassword = "your_new_password_here"; // This should be passed in as a parameter
-            String hashedPassword = newPasswordEncoder.encode(rawPassword);
-            patient.setPassword(hashedPassword);
-            // Save patient to the database
-            return "registerPatient";
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+        Optional<Patient> patientOpt = patientService.getPatientByUserName(username);
+        if (patientOpt.isPresent()) {
+            Patient patient = patientOpt.get();
+            if (patient.getPassword().equals(password)) {
+                return ResponseEntity.ok("Login successful");
+            } else {
+                return ResponseEntity.status(401).body("Invalid password");
+            }
+        } else {
+            return ResponseEntity.status(404).body("User not found");
         }
-
-
-
-
-
-
-    @PostMapping("/savePatient")
-    public String savePatient() {
-        //Save patient to database
-        //Return success message??
-        //Redirect to login page
-
-        return "redirect:/loginPatient";
     }
 
-
-    //Patient logs in
-    @PostMapping("/loginPatient")
-    public String loginPatient() {
-        //Patient logs in
-        //Redirect to patient dashboard
-        return "PatientDashboard";
-    }
-
-    //Patient dashboard that shows all blood pressure measurements
-    @GetMapping("/patientDashboard")
-    public String patientDashboard() {
-
-        // post average blood pressure for last month
-        // post average weight for last year
-        // post average weightmeasurement for last month
-        // post average weightomeasurements for last year
-        // post average neuromeasurements for last month
-        // post average neuromeasurements for last year
-        // posts list of all blood pressure measurements
-        // post list of weight measurements
-        // post list of all neuromeasurements
-        //posts list of all the patient's doctors
-        return "patientDashboard";
-
-    }
-
-    //Patient adds new blood pressure measurement
-    @GetMapping("/addBloodPressure")
-    public String addBloodPressure() {
-        //Create new blood pressure object
-        //Set blood pressure details
-        return "addBloodPressure";
-    }
-
-    @PostMapping("/saveBloodPressure")
-    public String saveBloodPressure() {
-        //Save blood pressure to database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-    //Patient deletes blood pressure measurement
-    @GetMapping("/deleteBloodPressure")
-    public String deleteBloodPressure() {
-        //Delete blood pressure from database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-    //Patient updates blood pressure measurement
-    @GetMapping("/updateBloodPressure")
-    public String updateBloodPressure() {
-        //Update blood pressure in database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-
-    //Patient adds new weight measurement
-    @GetMapping("/addWeight")
-    public String addWeight() {
-        //Create new weight object
-        //Set weight details
-        return "addWeight";
-    }
-
-    @PostMapping("/saveWeight")
-    public String saveWeight() {
-        //Save weight to database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-
-    //Patient deletes weight measurement
-    @GetMapping("/deleteWeight")
-    public String deleteWeight() {
-        //Delete weight from database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-    //Patient updates weight measurement
-    @GetMapping("/updateWeight")
-    public String updateWeight() {
-        //Update weight in database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-    //Patient adds new neuro measurement
-    @GetMapping("/addNeuro")
-    public String addNeuro() {
-        //Create new neuro object
-        //Set neuro details
-        return "addNeuro";
-    }
-
-    @PostMapping("/saveNeuro")
-    public String saveNeuro() {
-        //Save neuro to database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-    //Patient deletes neuro measurement
-    @GetMapping("/deleteNeuro")
-    public String deleteNeuro() {
-        //Delete neuro from database
-        //Return success message??
-        //Redirect to patient dashboard
-
-        return "redirect:/patientDashboard";
-    }
-
-    //Patient logs out
-    @PostMapping("/logoutPatient")
-    public String logoutPatient() {
+    @PostMapping("/logout")
+    public String logout() {
         //Patient logs out
-        //Redirect to login page
+        //Clear session data, cookies, etc.
+        //Set session timeout to 0 to disable logout functionality
+        //Redirect to home page
+
         return "redirect:/login";
     }
 
-    //TODO Patients adds new doctor
-    //Patients goes to page addDoctorToPatient
-    //Patient enters doctor family name and gets list of doctors whose family begins the given string
+
+    @GetMapping("/{id}/weight-measurements/average-month")
+    public ResponseEntity<Double> getAverageWeightMeasurementByPatientForMonth(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            double averageWeight = weightMeasurementService.getAverageWeightMeasurementByPatientForMonth(patientOpt.get());
+            return ResponseEntity.ok(averageWeight);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/{id}/weight-measurements/average-year")
+    public ResponseEntity<Double> getAverageWeightMeasurementByPatientForYear(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            double averageWeight = weightMeasurementService.getAverageWeightMeasurementByPatientForYear(patientOpt.get());
+            return ResponseEntity.ok(averageWeight);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/weight-measurements/{measurementId}")
+    public ResponseEntity<WeightMeasurement> getWeightMeasurementById(@PathVariable Long measurementId) {
+        Optional<WeightMeasurement> weightMeasurementOpt = weightMeasurementService.getWeightMeasurementById(measurementId);
+        return ResponseEntity.ok(weightMeasurementOpt.orElseThrow(() -> new RuntimeException("Weight measurement not found")));
+    }
+
+    @PostMapping("/weight-measurements")
+    public ResponseEntity<WeightMeasurement> saveWeightMeasurement(@RequestBody WeightMeasurement weightMeasurement) {
+        WeightMeasurement savedMeasurement = weightMeasurementService.saveWeightMeasurement(weightMeasurement);
+        return ResponseEntity.ok(savedMeasurement);
+    }
+
+    @DeleteMapping("/weight-measurements/{measurementId}")
+    public ResponseEntity<String> deleteWeightMeasurementById(@PathVariable Long measurementId) {
+        weightMeasurementService.deleteWeightMeasurementById(measurementId);
+        return ResponseEntity.ok("Weight measurement deleted successfully");
+    }
+
+
+    // Blood Pressure Measurement Endpoints
+    @GetMapping("/{id}/blood-pressure-measurements")
+    public ResponseEntity<List<BloodPressureMeasurement>> getPatientBloodPressureMeasurements(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            List<BloodPressureMeasurement> measurements = bloodPressureMeasurementService.getBloodPressureMeasurementsByPatientId(id);
+            return ResponseEntity.ok(measurements);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/{id}/blood-pressure-measurements/average-month")
+    public ResponseEntity<BloodPressureMeasurement> getAverageBloodPressureMeasurementByPatientForMonth(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            BloodPressureMeasurement averageMeasurement = bloodPressureMeasurementService.getAverageBloodPressureMeasurementsByPatientIdForMonth(id);
+            return ResponseEntity.ok(averageMeasurement);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/{id}/blood-pressure-measurements/average-year")
+    public ResponseEntity<List<BloodPressureMeasurement>> getAverageBloodPressureMeasurementByPatientForYear(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            List<BloodPressureMeasurement> averageMeasurements = bloodPressureMeasurementService.getAverageBloodPressureMeasurementsByPatientIdForYear(id);
+            return ResponseEntity.ok(averageMeasurements);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/blood-pressure-measurements/{measurementId}")
+    public ResponseEntity<BloodPressureMeasurement> getBloodPressureMeasurementById(@PathVariable Long measurementId) {
+        Optional<BloodPressureMeasurement> measurementOpt = bloodPressureMeasurementService.getBloodPressureMeasurementById(measurementId);
+        return ResponseEntity.ok(measurementOpt.orElseThrow(() -> new RuntimeException("Blood pressure measurement not found")));
+    }
+
+    @PostMapping("/blood-pressure-measurements")
+    public ResponseEntity<BloodPressureMeasurement> saveBloodPressureMeasurement(@RequestBody BloodPressureMeasurement measurement) {
+        BloodPressureMeasurement savedMeasurement = bloodPressureMeasurementService.saveBloodPressureMeasurement(measurement);
+        return ResponseEntity.ok(savedMeasurement);
+    }
+
+    @DeleteMapping("/blood-pressure-measurements/{measurementId}")
+    public ResponseEntity<String> deleteBloodPressureMeasurementById(@PathVariable Long measurementId) {
+        bloodPressureMeasurementService.deleteBloodPressureMeasurementById(measurementId);
+        return ResponseEntity.ok("Blood pressure measurement deleted successfully");
+    }
+
+    // Neuro Measurement Endpoints
+    @GetMapping("/{id}/neuro-measurements")
+    public ResponseEntity<List<NeuroMeasurement>> getPatientNeuroMeasurements(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            List<NeuroMeasurement> measurements = neuroMeasurementService.getNeuroMeasurementsByPatient(patientOpt.get()).orElseThrow(() -> new RuntimeException("No neuro measurements found"));
+            return ResponseEntity.ok(measurements);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/{id}/neuro-measurements/average-month")
+    public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForMonth(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            double averageMeasurement = neuroMeasurementService.getAverageNeuroMeasurementByPatientForMonth(patientOpt.get());
+            return ResponseEntity.ok(averageMeasurement);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/{id}/neuro-measurements/average-year")
+    public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForYear(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            double averageMeasurement = neuroMeasurementService.getAverageNeuroMeasurementByPatientForYear(patientOpt.get());
+            return ResponseEntity.ok(averageMeasurement);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @GetMapping("/neuro-measurements/{measurementId}")
+    public ResponseEntity<NeuroMeasurement> getNeuroMeasurementById(@PathVariable Long measurementId) {
+        Optional<NeuroMeasurement> measurementOpt = neuroMeasurementService.getNeuroMeasurementById(measurementId);
+        return ResponseEntity.ok(measurementOpt.orElseThrow(() -> new RuntimeException("Neuro measurement not found")));
+    }
+
+    @PostMapping("/neuro-measurements")
+    public ResponseEntity<NeuroMeasurement> saveNeuroMeasurement(@RequestBody NeuroMeasurement measurement) {
+        NeuroMeasurement savedMeasurement = neuroMeasurementService.saveNeuroMeasurement(measurement);
+        return ResponseEntity.ok(savedMeasurement);
+    }
+
+    @DeleteMapping("/neuro-measurements/{measurementId}")
+    public ResponseEntity<String> deleteNeuroMeasurementById(@PathVariable Long measurementId) {
+        neuroMeasurementService.deleteNeuroMeasurementById(measurementId);
+        return ResponseEntity.ok("Neuro measurement deleted successfully");
+    }
+
+
 
 
 }

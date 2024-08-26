@@ -11,6 +11,9 @@ public interface PatientService {
 
     Optional<Patient> getPatientById(Long id);
 
+    Long getPatientID(Patient patient);
+
+
     Optional <Patient> getPatientByUserName(String userName);
 
     //Optional<List<Patient>> getPatientsByDoctorId(Long doctorId);

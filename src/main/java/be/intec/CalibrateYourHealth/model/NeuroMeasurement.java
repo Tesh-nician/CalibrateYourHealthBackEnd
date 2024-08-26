@@ -20,7 +20,7 @@ public class NeuroMeasurement {
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Balance measurement in seconds must be a number between 0 and 300")
-    private int neuroMeasurement;
+    private double neuroMeasurement;
 
     private String neuroComment;
 
@@ -34,10 +34,11 @@ public class NeuroMeasurement {
     public NeuroMeasurement() {
     }
 
-    public NeuroMeasurement( int neuroMeasurement, LocalDate date, String neuroComment) {
+    public NeuroMeasurement( double neuroMeasurement, LocalDate date, String neuroComment, Patient patient) {
         this.neuroMeasurement = neuroMeasurement;
         this.date = date;
         this.neuroComment = neuroComment;
+        this.patient = patient;
     }
 
     @Override
