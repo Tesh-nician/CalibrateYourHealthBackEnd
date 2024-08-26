@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface NeuroMeasurementService {
 
-    List<NeuroMeasurement> getAllNeuroMeasurements();
+    Optional <List<NeuroMeasurement>> getAllNeuroMeasurements();
 
     double getAverageNeuroMeasurementByPatientIdForMonth(Long patientId);
 

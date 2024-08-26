@@ -38,13 +38,14 @@ public class NeuroMeasurementServiceImplementationTest {
         NeuroMeasurement neuroMeasurement1 = new NeuroMeasurement(15 , LocalDate.of(2023, 8, 10), "neuro measurement 1");
         NeuroMeasurement neuroMeasurement2 = new NeuroMeasurement(25 , LocalDate.of(2024, 7, 20), "neuro measurement 2");
         NeuroMeasurement neuroMeasurement3 = new NeuroMeasurement(35 , LocalDate.of(2024, 1, 30), "neuro measurement 3");
-        when(neuroMeasurementRepository.findAll()).thenReturn(java.util.List.of(neuroMeasurement1, neuroMeasurement2, neuroMeasurement3));
+        when(neuroMeasurementRepository.findAllNeuroMeasurements()).thenReturn(Optional.of(java.util.List.of(neuroMeasurement1, neuroMeasurement2, neuroMeasurement3)));
 
         // Act
         var result = neuroMeasurementService.getAllNeuroMeasurements();
 
         // Assert
-        assertThat(result).containsExactly(neuroMeasurement1, neuroMeasurement2, neuroMeasurement3);
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get()).containsExactly(neuroMeasurement1, neuroMeasurement2, neuroMeasurement3);
     }
 
     //should return the average neuro measurement for the last month
