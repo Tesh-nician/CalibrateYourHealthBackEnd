@@ -33,9 +33,17 @@ public class PatientController {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping("/registerPatient")
     public ResponseEntity<String> registerPatient(@RequestBody Patient patient) {
-        patientService.savePatient(patient);
+        //transfer details to the new patient object
+        Patient newPatient = new Patient();
+        newPatient.setFirstName(patient.getFirstName());
+        newPatient.setLastName(patient.getLastName());
+        newPatient.setDateOfBirth(patient.getDateOfBirth());
+        newPatient.setPassword(patient.getPassword());
+
+        patientService.savePatient(newPatient);
+
         return ResponseEntity.ok("Patient registered successfully");
     }
 

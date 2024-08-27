@@ -24,20 +24,23 @@ public class DoctorController {
 
     //Register new Doctor
     @PostMapping("/registerDoctor")
-    public String registerDoctor() {
-        //Create new doctor object
-        //Set doctor details
-        return "registerDoctor";
+    public ResponseEntity<String> registerDoctor(@RequestBody Doctor doctor) {
+        //transfer details to the new doctor object
+        Doctor newDoctor = new Doctor();
+        newDoctor.setFirstName(doctor.getFirstName());
+        newDoctor.setLastName(doctor.getLastName());
+        newDoctor.setRizivNumber(doctor.getRizivNumber());
+        newDoctor.setPassword(doctor.getPassword());
+
+        //Save doctor to database
+        doctorService.saveDoctor(newDoctor);
+
+        //Return success message??
+        return ResponseEntity.ok("Doctor registered successfully");
+
     }
 
-    //Save doctor to database
-    @PostMapping("/saveDoctor")
-    public String saveDoctor() {
-        //Save doctor to database
-        //Return success message??
-        //Redirect to login page
-        return "redirect:/login";
-    }
+
 
     //Doctor logs out
     @PostMapping("/logout")
@@ -64,15 +67,21 @@ public class DoctorController {
         }
     }
 
-    @DeleteMapping("/patients/{id}")
-    public ResponseEntity<String> deletePatient(@PathVariable Long id) {
-        patientService.deletePatientById(id);
-        return ResponseEntity.ok("Patient deleted successfully");
-    }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteDoctor/{id}")
     public ResponseEntity<String> deleteDoctor(@PathVariable Long id) {
         doctorService.deleteDoctorById(id);
         return ResponseEntity.ok("Doctor deleted successfully");
     }
+
+    //get list of all Patients
+    @GetMapping("/patients")
+    public ResponseEntity<String> getPatients() {
+        return ResponseEntity.ok(patientService.getAllPatients().toString());
+    }
+
+    //TODO add methods to get information by patient
+
+
+
 }

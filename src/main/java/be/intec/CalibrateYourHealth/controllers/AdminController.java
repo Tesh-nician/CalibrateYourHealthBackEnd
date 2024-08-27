@@ -30,20 +30,19 @@ public class AdminController {
 
     //Register new Admin
     @PostMapping("/registerAdmin")
-    public String registerAdmin() {
+    public ResponseEntity<String> registerAdmin(@RequestBody Admin admin) {
+        //transfer details to the new admin object
+        Admin newAdmin = new Admin();
+        newAdmin.setUserName(admin.getUserName());
+        newAdmin.setPassword(admin.getPassword());
+
         //Create new admin object
+        adminService.saveAdmin(newAdmin);
+
         //Set admin details
-        return "registerAdmin";
+        return ResponseEntity.ok("Admin registered successfully");
     }
 
-    //Save admin to database
-    @PostMapping("/saveAdmin")
-    public String saveAdmin() {
-        //Save admin to database
-        //Return success message??
-        //Redirect to login page
-        return "redirect:/login";
-    }
 
     //Admin logs out
     @PostMapping("/logout")
@@ -56,7 +55,16 @@ public class AdminController {
     //Admin resets patient password, only reset password if admin is logged in
     @PostMapping("/resetPatientPassword")
     public String resetPatientPassword() {
-        //Reset patient password
+        //TODO: Reset patient password
+        //Return success message??
+        //Redirect to admin dashboard
+        return "redirect:/adminDashboard";
+    }
+
+    //Admin resets doctor password, only reset password if admin is logged in
+    @PostMapping("/resetDoctorPassword")
+    public String resetDoctorPassword() {
+        //TODO: Reset doctor password
         //Return success message??
         //Redirect to admin dashboard
         return "redirect:/adminDashboard";
@@ -92,9 +100,7 @@ public class AdminController {
     }
 
     //Delete a specific patient by id
-
     @DeleteMapping("/patients/{id}")
-
     public ResponseEntity<String> deletePatient(@PathVariable Long id) {
         patientService.deletePatientById(id);
         return ResponseEntity.ok("Patient deleted successfully");
