@@ -32,6 +32,10 @@ public class AdminController {
     @PostMapping("/registerAdmin")
     public ResponseEntity<String> registerAdmin(@RequestBody Admin admin) {
         //transfer details to the new admin object
+
+        if (admin.getUserName() == null || admin.getPassword() == null) {
+            return ResponseEntity.badRequest().body("Username and password are required");
+        }
         Admin newAdmin = new Admin();
         newAdmin.setUserName(admin.getUserName());
         newAdmin.setPassword(admin.getPassword());
