@@ -13,9 +13,11 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSecurity httpSecurity) throws Exception {
         http.csrf(customizer -> customizer.disable());
+        httpSecurity.cors(customizer -> customizer.disable());;//TODO: enable cors
         http.authorizeHttpRequests(request -> request.anyRequest().permitAll());
+        //For development purposes only. REMOVE IN PRODUCTION!!!!
 
         return http.build();
     }
