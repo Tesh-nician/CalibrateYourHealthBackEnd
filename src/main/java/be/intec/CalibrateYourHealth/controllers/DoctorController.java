@@ -26,11 +26,14 @@ public class DoctorController {
     @PostMapping("/registerDoctor")
     public ResponseEntity<String> registerDoctor(@RequestBody Doctor doctor) {
         //transfer details to the new doctor object
+            //username = first 3 letters of firstname and first 3 letters of lastname
+        String newUsername = doctor.getFirstName().substring(0, 3) + doctor.getLastName().substring(0, 3);
         Doctor newDoctor = new Doctor();
         newDoctor.setFirstName(doctor.getFirstName());
         newDoctor.setLastName(doctor.getLastName());
         newDoctor.setRizivNumber(doctor.getRizivNumber());
         newDoctor.setPassword(doctor.getPassword());
+        newDoctor.setUsername(newUsername);
 
         //Save doctor to database
         doctorService.saveDoctor(newDoctor);

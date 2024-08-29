@@ -36,11 +36,15 @@ public class PatientController {
     @PostMapping("/registerPatient")
     public ResponseEntity<String> registerPatient(@RequestBody Patient patient) {
         //transfer details to the new patient object
+        String newUserName = patient.getFirstName().substring(0, 3) + patient.getLastName().substring(0, 3);
+        //Print new username to console
+        System.out.println("New username: " + newUserName);
         Patient newPatient = new Patient();
         newPatient.setFirstName(patient.getFirstName());
         newPatient.setLastName(patient.getLastName());
         newPatient.setDateOfBirth(patient.getDateOfBirth());
         newPatient.setPassword(patient.getPassword());
+        newPatient.setUsername(newUserName);
 
         patientService.savePatient(newPatient);
 

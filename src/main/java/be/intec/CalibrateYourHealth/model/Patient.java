@@ -92,7 +92,7 @@ public class Patient {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
+        //this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
 
     }
 
