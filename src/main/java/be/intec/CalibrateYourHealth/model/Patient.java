@@ -142,6 +142,13 @@ public class Patient {
                 '}';
     }
 
+    //set password using BCryptPasswordEncoder and make sure username is generated
+    public void setPassword(String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
+    }
+
     /*
     public Doctor getDoctor(long doctorID) {
         for (Doctor doctor : myDoctors) {
