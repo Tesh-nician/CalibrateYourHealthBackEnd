@@ -7,6 +7,7 @@ import be.intec.CalibrateYourHealth.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,8 @@ public class AdminServiceImplementation implements AdminService {
 
 
     @Override
-    public List<Admin> getAllAdmins() {
-        return adminRepository.findAll();
+    public Optional<List<Admin>> getAllAdmins() {
+        return Optional.of(adminRepository.findAll());
     }
 
     @Override
@@ -51,7 +52,8 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
+    @Transactional
     public void deleteAdminById(Long id) {
-        adminRepository.deleteById(id);
+        adminRepository.deleteAdminById(id);
     }
 }

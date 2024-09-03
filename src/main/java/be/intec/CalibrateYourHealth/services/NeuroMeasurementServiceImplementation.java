@@ -5,6 +5,7 @@ import be.intec.CalibrateYourHealth.model.Patient;
 import be.intec.CalibrateYourHealth.repositories.NeuroMeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -73,6 +74,7 @@ public class NeuroMeasurementServiceImplementation implements NeuroMeasurementSe
     }
 
     @Override
+    @Transactional
     public void deleteNeuroMeasurementById(Long id) {
         neuroMeasurementRepository.deleteNeuroMeasurementByNeuroID(id);
     }

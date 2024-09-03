@@ -110,6 +110,21 @@ public class AdminController {
             return ResponseEntity.status(404).body("User not found");
         }
     }
+
+    //get a list of all Admins
+    @GetMapping("/alladmins")
+    public ResponseEntity<List<Admin>> getAllAdmins() {
+        List<Admin> admins = adminService.getAllAdmins().orElseThrow(() -> new RuntimeException("No admins found"));
+        return ResponseEntity.ok(admins);
+    }
+
+    //Delete a specific admin
+    @DeleteMapping("/deleteadmin/{id}")
+    public ResponseEntity<String> deleteAdmin(@PathVariable ("id") Long id) {
+        adminService.deleteAdminById(id);
+        return ResponseEntity.ok("Admin deleted successfully");
+    }
+
 //Get a list of all patients
     @GetMapping("/patients")
     public ResponseEntity<List<Patient>> getAllPatients() {
@@ -126,7 +141,7 @@ public class AdminController {
 
     //Delete a specific patient by id
     @DeleteMapping("/patients/{id}")
-    public ResponseEntity<String> deletePatient(@PathVariable Long id) {
+    public ResponseEntity<String> deletePatient(@PathVariable ("id") Long id) {
         patientService.deletePatientById(id);
         return ResponseEntity.ok("Patient deleted successfully");
     }
@@ -146,9 +161,11 @@ public class AdminController {
 
     //Delete a specific doctor by id
     @DeleteMapping("/doctors/{id}")
-    public ResponseEntity<String> deleteDoctor(@PathVariable Long id) {
+    public ResponseEntity<String> deleteDoctor(@PathVariable ("id") Long id) {
         doctorService.deleteDoctorById(id);
         return ResponseEntity.ok("Doctor deleted successfully");
     }
+
+
 
 }

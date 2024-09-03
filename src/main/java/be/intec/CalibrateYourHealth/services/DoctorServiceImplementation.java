@@ -9,6 +9,7 @@ import be.intec.CalibrateYourHealth.repositories.DoctorRepository;
 import be.intec.CalibrateYourHealth.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DoctorServiceImplementation implements DoctorService {
@@ -90,6 +91,7 @@ public class DoctorServiceImplementation implements DoctorService {
 
 
     @Override
+    @Transactional
     public void deleteDoctorById(Long id) {
         newDoctorRepository.deleteById(id);
     }

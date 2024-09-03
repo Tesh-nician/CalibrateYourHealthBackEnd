@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import be.intec.CalibrateYourHealth.model.WeightMeasurement;
 import be.intec.CalibrateYourHealth.repositories.WeightMeasurementRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -84,6 +85,7 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     }
 
     @Override
+    @Transactional
     public void deleteWeightMeasurementById(Long id) {
         newWeightMeasurementRepository.deleteById(id);
     }

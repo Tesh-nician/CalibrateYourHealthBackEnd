@@ -4,6 +4,7 @@ import be.intec.CalibrateYourHealth.model.BloodPressureMeasurement;
 import be.intec.CalibrateYourHealth.repositories.BloodPressureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -103,6 +104,7 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
     }
 
     @Override
+    @Transactional
     public void deleteBloodPressureMeasurementById(Long id) {
         bloodPressureRepository.deleteBloodPressureFromPatientByBloodPressureID(id);
 
