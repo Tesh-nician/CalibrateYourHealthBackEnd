@@ -6,6 +6,7 @@ import be.intec.CalibrateYourHealth.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -15,11 +16,13 @@ public class DoctorController {
 
     private final DoctorService doctorService;
     private final PatientService patientService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public DoctorController(DoctorService doctorService, PatientService patientService) {
+    public DoctorController(DoctorService doctorService, PatientService patientService, BCryptPasswordEncoder passwordEncoder) {
         this.doctorService = doctorService;
         this.patientService = patientService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //Register new Doctor
@@ -56,11 +59,33 @@ public class DoctorController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<String> login(@RequestParam ("username") String username, @RequestParam ("password") String password) {
         Optional<Doctor> doctorOpt = doctorService.getDoctorByUserName(username);
+        //log doctoropt to console for debugging
+        //System.out.println("DoctorOpt: " + doctorOpt);
+
+
         if (doctorOpt.isPresent()) {
             Doctor doctor = doctorOpt.get();
-            if (doctor.getPassword().equals(password)) {
+
+            System.out.println("Doctor exists"); //debugging
+
+            //Print doctor to console for debugging
+            System.out.println("Doctor: " + doctor);
+            //Print doctor's password to console for debugging
+            System.out.println("\n"+"Doctor's password: " + doctor.getPassword());
+            //print received password to console for debugging
+            System.out.println("\n"+password+ " Received password: ");
+            //Print encoded received password to console for debugging
+            System.out.println("\n"+passwordEncoder.encode(password)+" Encoded received password: " );
+            //Print encoded doctor password to console for debugging
+            System.out.println("\n"+doctor.getPassword()+" Encoded doctor password: " );
+
+
+
+
+
+            if (passwordEncoder.matches(password, doctor.getPassword())) {
                 return ResponseEntity.ok("Login successful");
             } else {
                 return ResponseEntity.status(401).body("Invalid password");

@@ -15,7 +15,11 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Optional<Doctor> findDoctorByRizivNumber(long rizivNumber); //for patient and admin
     Optional<Doctor> findDoctorByUsername(String username); //for patient and admin login
 
-    List<Doctor> findAll(); //for admin and patient
+    List<Doctor> findAll();
+
+    //get the doctor's password using his username
+    String findPasswordByUsername(String username);
+    //for admin and patient
 
     // find list of doctors from patientId
     // Werkt niet: Optional<List<Doctor>> findDoctorsByPatientID(Long patientId); // for patient and patient

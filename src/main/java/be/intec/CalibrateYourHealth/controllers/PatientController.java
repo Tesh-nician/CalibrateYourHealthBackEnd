@@ -7,7 +7,10 @@ import be.intec.CalibrateYourHealth.model.WeightMeasurement;
 import be.intec.CalibrateYourHealth.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -20,16 +23,19 @@ public class PatientController {
     private final WeightMeasurementServiceImplementation weightMeasurementService;
     private final BloodPressureMeasurementServiceImplementation bloodPressureMeasurementService;
     private final NeuroMeasurementServiceImplementation neuroMeasurementService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public PatientController(PatientServiceImplementation patientService
             , WeightMeasurementServiceImplementation weightMeasurementService
             , BloodPressureMeasurementServiceImplementation bloodPressureMeasurementService
-            , NeuroMeasurementServiceImplementation neuroMeasurementService) {
+            , NeuroMeasurementServiceImplementation neuroMeasurementService
+            , BCryptPasswordEncoder passwordEncoder) {
         this.patientService = patientService;
         this.weightMeasurementService = weightMeasurementService;
         this.bloodPressureMeasurementService = bloodPressureMeasurementService;
         this.neuroMeasurementService = neuroMeasurementService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 

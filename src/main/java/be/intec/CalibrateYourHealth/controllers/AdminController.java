@@ -8,6 +8,8 @@ import be.intec.CalibrateYourHealth.services.DoctorService;
 import be.intec.CalibrateYourHealth.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,28 +22,38 @@ public class AdminController {
     private final AdminService adminService;
     private final PatientService patientService;
     private final DoctorService doctorService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminController(AdminService adminService, PatientService patientService, DoctorService doctorService) {
+    public AdminController(AdminService adminService, PatientService patientService, 
+                           DoctorService doctorService, BCryptPasswordEncoder passwordEncoder) {
         this.adminService = adminService;
         this.patientService = patientService;
         this.doctorService = doctorService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //Register new Admin
     @PostMapping("/registerAdmin")
-    public ResponseEntity<String> registerAdmin(@RequestBody Admin admin) {
-        //transfer details to the new admin object
+    public ResponseEntity<String> registerAdmin(@RequestParam ("username") String username, @RequestParam ("password") String password) {
 
-        if (admin.getUserName() == null || admin.getPassword() == null) {
+        //Check that username and password are not null
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             return ResponseEntity.badRequest().body("Username and password are required");
         }
-        Admin newAdmin = new Admin();
-        newAdmin.setUserName(admin.getUserName());
-        newAdmin.setPassword(admin.getPassword());
+        //transfer details to the new admin object
 
+        Admin newAdmin = new Admin();
+        newAdmin.setUserName(username);
+        newAdmin.setPassword(password); //password is encoded in the setter
+
+        //log admin to the console for debugging
+        System.out.println("new Admin before save: " + newAdmin);
         //Create new admin object
         adminService.saveAdmin(newAdmin);
+
+        //log admin to the console for debugging
+        System.out.println("new Admin after save: " + newAdmin);
 
         //Set admin details
         return ResponseEntity.ok("Admin registered successfully");
@@ -76,11 +88,16 @@ public class AdminController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<String> login(@RequestParam ("username") String username, @RequestParam ("password") String password) {
         Optional<Admin> adminOpt = adminService.getAdminByUserName(username);
+
+        //print admin to the console for debugging
+        System.out.println("Admin: " + adminOpt);
+
         if (adminOpt.isPresent()) {
             Admin admin = adminOpt.get();
-            if (admin.getPassword().equals(password)) {
+            if (passwordEncoder.matches(password, admin.getPassword())) {
+
                 return ResponseEntity.ok("Login successful");
             } else {
                 return ResponseEntity.status(401).body("Invalid password");

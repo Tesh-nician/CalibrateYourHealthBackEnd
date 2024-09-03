@@ -22,6 +22,10 @@ public class DoctorServiceImplementation implements DoctorService {
 
     }
 
+    public String getDoctorPasswordByUserName(String userName) {
+        return newDoctorRepository.findPasswordByUsername(userName);
+    }
+
     // Implementing methods for CRUD operations on Doctor entities here
 
     @Override
