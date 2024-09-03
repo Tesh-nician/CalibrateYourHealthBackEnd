@@ -3,10 +3,16 @@ package be.intec.CalibrateYourHealth.controllers;
 import be.intec.CalibrateYourHealth.model.Doctor;
 import be.intec.CalibrateYourHealth.services.DoctorService;
 import be.intec.CalibrateYourHealth.services.PatientService;
+import be.intec.CalibrateYourHealth.model.BloodPressureMeasurement;
+import be.intec.CalibrateYourHealth.model.NeuroMeasurement;
+import be.intec.CalibrateYourHealth.model.Patient;
+import be.intec.CalibrateYourHealth.model.WeightMeasurement;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 
 import java.util.Optional;
@@ -28,7 +34,7 @@ public class DoctorController {
     }
 
     //Register new Doctor
-    @PostMapping("/registerDoctor")
+    @PostMapping("/registerDoctor") // params used because request body gives error with passwordencoder???
     public ResponseEntity<String> registerDoctor(@RequestParam("firstname") String firstname
                                                 , @RequestParam("lastname") String lastname
                                                 , @RequestParam("rizivnumber") long rizivnumber
@@ -40,7 +46,7 @@ public class DoctorController {
         newDoctor.setFirstName(firstname);
         newDoctor.setLastName(lastname);
         newDoctor.setRizivNumber(rizivnumber);
-        newDoctor.setPassword(password);
+        newDoctor.setPassword(password); //is encoded in the model
         newDoctor.setUsername(newUsername);
 
         //Save doctor to database
@@ -73,6 +79,7 @@ public class DoctorController {
         if (doctorOpt.isPresent()) {
             Doctor doctor = doctorOpt.get();
 
+            /*
             System.out.println("Doctor exists"); //debugging
 
             //Print doctor to console for debugging
@@ -86,8 +93,7 @@ public class DoctorController {
             //Print encoded doctor password to console for debugging
             System.out.println("\n"+doctor.getPassword()+" Encoded doctor password: " );
 
-
-
+             */
 
 
             if (passwordEncoder.matches(password, doctor.getPassword())) {

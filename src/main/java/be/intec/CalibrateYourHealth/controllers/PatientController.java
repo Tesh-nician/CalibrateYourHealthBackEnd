@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/patients")
@@ -40,17 +41,20 @@ public class PatientController {
     }
 
 
-    @PostMapping("/registerPatient")
-    public ResponseEntity<String> registerPatient(@RequestBody Patient patient) {
+    @PostMapping("/registerPatient") //params used because request body gives error with passwordenconder???
+    public ResponseEntity<String> registerPatient(@RequestParam("firstname") String firstname
+                                    , @RequestParam("lastname") String lastname
+                                    , @RequestParam("dateofbirth") String dateofbirth
+                                    , @RequestParam("password") String password) {
         //transfer details to the new patient object
-        String newUserName = patient.getFirstName().substring(0, 3) + patient.getLastName().substring(0, 3);
+        String newUserName = firstname.substring(0, 3) + lastname.substring(0, 3);
         //Print new username to console
         System.out.println("New username: " + newUserName);
         Patient newPatient = new Patient();
-        newPatient.setFirstName(patient.getFirstName());
-        newPatient.setLastName(patient.getLastName());
-        newPatient.setDateOfBirth(patient.getDateOfBirth());
-        newPatient.setPassword(patient.getPassword());
+        newPatient.setFirstName(firstname);
+        newPatient.setLastName(lastname);
+        newPatient.setDateOfBirth(LocalDate.parse(dateofbirth)); //TODO: check that the date is correctly parsed
+        newPatient.setPassword(password); //is encoded in the model
         newPatient.setUsername(newUserName);
 
         patientService.savePatient(newPatient);
@@ -62,11 +66,11 @@ public class PatientController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<String> login(@RequestParam ("username") String username, @RequestParam ("password") String password) {
         Optional<Patient> patientOpt = patientService.getPatientByUserName(username);
         if (patientOpt.isPresent()) {
             Patient patient = patientOpt.get();
-            if (patient.getPassword().equals(password)) {
+            if (passwordEncoder.matches(password, patient.getPassword())) {
                 return ResponseEntity.ok("Login successful");
             } else {
                 return ResponseEntity.status(401).body("Invalid password");
