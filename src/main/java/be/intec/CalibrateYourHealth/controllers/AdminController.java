@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admins")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
 
     private final AdminService adminService;
@@ -25,8 +26,10 @@ public class AdminController {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminController(AdminService adminService, PatientService patientService, 
-                           DoctorService doctorService, BCryptPasswordEncoder passwordEncoder) {
+    public AdminController(AdminService adminService
+            , PatientService patientService
+            , DoctorService doctorService
+            , BCryptPasswordEncoder passwordEncoder) {
         this.adminService = adminService;
         this.patientService = patientService;
         this.doctorService = doctorService;
@@ -34,6 +37,7 @@ public class AdminController {
     }
 
     //Register new Admin
+
     @PostMapping("/registerAdmin")
     public ResponseEntity<String> registerAdmin(@RequestParam ("username") String username, @RequestParam ("password") String password) {
 

@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/doctors")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DoctorController {
 
     private final DoctorService doctorService;
@@ -27,15 +29,18 @@ public class DoctorController {
 
     //Register new Doctor
     @PostMapping("/registerDoctor")
-    public ResponseEntity<String> registerDoctor(@RequestBody Doctor doctor) {
+    public ResponseEntity<String> registerDoctor(@RequestParam("firstname") String firstname
+                                                , @RequestParam("lastname") String lastname
+                                                , @RequestParam("rizivnumber") long rizivnumber
+                                                , @RequestParam("password") String password) {
         //transfer details to the new doctor object
             //username = first 3 letters of firstname and first 3 letters of lastname
-        String newUsername = doctor.getFirstName().substring(0, 3) + doctor.getLastName().substring(0, 3);
+        String newUsername = firstname.substring(0, 3) + lastname.substring(0, 3);
         Doctor newDoctor = new Doctor();
-        newDoctor.setFirstName(doctor.getFirstName());
-        newDoctor.setLastName(doctor.getLastName());
-        newDoctor.setRizivNumber(doctor.getRizivNumber());
-        newDoctor.setPassword(doctor.getPassword());
+        newDoctor.setFirstName(firstname);
+        newDoctor.setLastName(lastname);
+        newDoctor.setRizivNumber(rizivnumber);
+        newDoctor.setPassword(password);
         newDoctor.setUsername(newUsername);
 
         //Save doctor to database
