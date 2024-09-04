@@ -9,7 +9,6 @@ import be.intec.CalibrateYourHealth.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,22 +71,86 @@ public class AdminController {
         return "redirect:/login";
     }
 
-    //Admin resets patient password, only reset password if admin is logged in
-    @PostMapping("/resetPatientPassword")
-    public String resetPatientPassword() {
-        //TODO: Reset patient password
-        //Return success message??
-        //Redirect to admin dashboard
-        return "redirect:/adminDashboard";
+
+    //Admin resets admin password by id, only reset password if admin is logged in
+    @PostMapping("/resetAdminPassword/{id}")
+    public ResponseEntity<String> resetAdminPassword(@PathVariable ("id") Long id) {
+        //resets this admin's password to "ChangeMeNow1!"
+        Optional<Admin> adminOpt = adminService.getAdminById(id);
+
+        //print admin to the console for debugging
+        System.out.println("Admin: " + adminOpt);
+
+        if (adminOpt.isPresent()) {
+            Admin admin = adminOpt.get();
+            admin.setPassword("ChangeMeNow1!"); //password is encoded in the setter
+
+            //log admin to the console for debugging
+            System.out.println("Admin after update: " + admin);
+
+            //Update admin password
+            adminService.updateAdminPassword(admin, "ChangeMeNow!");
+
+            //Return success message??
+            return ResponseEntity.ok("Password reset successful");
+        } else {
+            return ResponseEntity.status(404).body("Admin not found");
+        }
+    }
+
+
+    //Admin resets patient password by patient id, only reset password if admin is logged in
+    @PostMapping("/resetPatientPassword/{id}")
+    public ResponseEntity<String> resetPatientPassword(@PathVariable ("id") Long id) {
+        //resets this patient's password to "ChangeMeNow!"
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+
+        //print patient to the console for debugging
+        System.out.println("Patient: " + patientOpt);
+
+        if (patientOpt.isPresent()) {
+            Patient patient = patientOpt.get();
+            patient.setPassword("ChangeMeNow!"); //password is encoded in the setter
+
+            //log patient to the console for debugging
+            System.out.println("Patient after update: " + patient);
+
+            //Update patient password
+            patientService.updatePatientPassword(patient, "ChangeMeNow!");
+
+            //Return success message??
+            return ResponseEntity.ok("Password reset successful");
+        } else {
+            return ResponseEntity.status(404).body("Patient not found");
+        }
+
+
     }
 
     //Admin resets doctor password, only reset password if admin is logged in
-    @PostMapping("/resetDoctorPassword")
-    public String resetDoctorPassword() {
-        //TODO: Reset doctor password
-        //Return success message??
-        //Redirect to admin dashboard
-        return "redirect:/adminDashboard";
+    @PostMapping("/resetDoctorPassword/{id}")
+    public ResponseEntity<String> resetDoctorPassword(@PathVariable ("id") Long id) {
+        //resets this doctor's password to "ChangeMeNow!"
+        Optional<Doctor> doctorOpt = doctorService.getDoctorById(id);
+
+        //print doctor to the console for debugging
+        System.out.println("Doctor: " + doctorOpt);
+
+        if (doctorOpt.isPresent()) {
+            Doctor doctor = doctorOpt.get();
+            doctor.setPassword("ChangeMeNow!"); //password is encoded in the setter
+
+            //log doctor to the console for debugging
+            System.out.println("Doctor after update: " + doctor);
+
+            //Update doctor password
+            doctorService.updateDoctorPassword(doctor, "ChangeMeNow!");
+
+            //Return success message??
+            return ResponseEntity.ok("Password reset successful");
+        } else {
+            return ResponseEntity.status(404).body("Doctor not found");
+        }
     }
 
 
