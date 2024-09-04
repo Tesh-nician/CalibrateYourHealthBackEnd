@@ -35,10 +35,10 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
 
 
     @Override
-    public Optional<List<WeightMeasurement>> getPatientWeightMeasurements(Patient patient) {
+    public Optional<List<WeightMeasurement>> getPatientWeightMeasurementsByPatientID(Long id) {
 
         //get all the weight measurements of the patient
-        Optional<List<WeightMeasurement>> weightMeasurementsResult = Optional.of(newWeightMeasurementRepository.findWeightMeasurementByPatient(patient));
+        Optional<List<WeightMeasurement>> weightMeasurementsResult = Optional.of(newWeightMeasurementRepository.findWeightMeasurementByPatientId(id));
         return weightMeasurementsResult;
     }
 

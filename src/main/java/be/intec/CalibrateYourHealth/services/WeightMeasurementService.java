@@ -10,7 +10,9 @@ public interface WeightMeasurementService {
 
     List<WeightMeasurement> getAllWeightMeasurements();
 
-    Optional<List<WeightMeasurement>> getPatientWeightMeasurements(Patient patient);
+
+    //Optional<List<WeightMeasurement>> getPatientWeightMeasurements(Patient patient);
+    Optional<List<WeightMeasurement>> getPatientWeightMeasurementsByPatientID(Long patientID);
 
     //List<WeightMeasurement> getWeightMeasurementsByPatientID(long patientID);
 

@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.time.LocalDate;
 
 @RestController
@@ -66,17 +65,20 @@ public class PatientController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam ("username") String username, @RequestParam ("password") String password) {
+    public ResponseEntity<Map<String, Object>> login(@RequestParam("username") String username, @RequestParam("password") String password) {
         Optional<Patient> patientOpt = patientService.getPatientByUserName(username);
         if (patientOpt.isPresent()) {
             Patient patient = patientOpt.get();
             if (passwordEncoder.matches(password, patient.getPassword())) {
-                return ResponseEntity.ok("Login successful");
+                Map<String, Object> response = new HashMap<>();
+                response.put("message", "Login successful");
+                response.put("patientId", patient.getId());
+                return ResponseEntity.ok(response);
             } else {
-                return ResponseEntity.status(401).body("Invalid password");
+                return ResponseEntity.status(401).body(Collections.singletonMap("message", "Invalid password"));
             }
         } else {
-            return ResponseEntity.status(404).body("User not found");
+            return ResponseEntity.status(404).body(Collections.singletonMap("message", "User not found"));
         }
     }
 
@@ -90,7 +92,23 @@ public class PatientController {
         return "redirect:/login";
     }
 
+    //get all weight measurements of a specific patient by patient id
+    @GetMapping("/{id}/weight-measurements")
+    public ResponseEntity<List<WeightMeasurement>> getPatientWeightMeasurementsByPatientId(@PathVariable Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        // check if the patient exists and if the list of weight measurements is present
+        if ((patientOpt.isPresent())
+                && (weightMeasurementService.getPatientWeightMeasurementsByPatientID(id).isPresent())) {
 
+                    List<WeightMeasurement> measurements = weightMeasurementService.getPatientWeightMeasurementsByPatientID(id).get();
+                    return ResponseEntity.ok(measurements);
+            } else {
+
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    //get the average weight measurement of a specific patient for the current month
     @GetMapping("/{id}/weight-measurements/average-month")
     public ResponseEntity<Double> getAverageWeightMeasurementByPatientForMonth(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -101,7 +119,7 @@ public class PatientController {
             return ResponseEntity.status(404).body(null);
         }
     }
-
+    //get the average weight measurement of a specific patient for the current year
     @GetMapping("/{id}/weight-measurements/average-year")
     public ResponseEntity<Double> getAverageWeightMeasurementByPatientForYear(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -113,18 +131,34 @@ public class PatientController {
         }
     }
 
+    //get a specific weight measurement by measurement id
     @GetMapping("/weight-measurements/{measurementId}")
     public ResponseEntity<WeightMeasurement> getWeightMeasurementById(@PathVariable Long measurementId) {
         Optional<WeightMeasurement> weightMeasurementOpt = weightMeasurementService.getWeightMeasurementById(measurementId);
         return ResponseEntity.ok(weightMeasurementOpt.orElseThrow(() -> new RuntimeException("Weight measurement not found")));
     }
 
+    //save a new weight measurement
     @PostMapping("/weight-measurements")
     public ResponseEntity<WeightMeasurement> saveWeightMeasurement(@RequestBody WeightMeasurement weightMeasurement) {
-        WeightMeasurement savedMeasurement = weightMeasurementService.saveWeightMeasurement(weightMeasurement);
-        return ResponseEntity.ok(savedMeasurement);
+        if (weightMeasurement.getPatient() == null || weightMeasurement.getPatient().getId() == null) {
+            return ResponseEntity.status(400).body(null); // Bad request if patient or patient ID is null
+        }
+
+        Long patientId = weightMeasurement.getPatient().getId();
+        Optional<Patient> patientOpt = patientService.getPatientById(patientId);
+        if (patientOpt.isPresent()) {
+            weightMeasurement.setPatient(patientOpt.get());
+            WeightMeasurement savedMeasurement = weightMeasurementService.saveWeightMeasurement(weightMeasurement);
+            //return a message that the weight measurement has been saved in a JSON format
+
+            return ResponseEntity.ok(savedMeasurement);
+        } else {
+            return ResponseEntity.status(404).body(null); // Not found if patient does not exist
+        }
     }
 
+    //delete a specific weight measurement by measurement id
     @DeleteMapping("/weight-measurements/{measurementId}")
     public ResponseEntity<String> deleteWeightMeasurementById(@PathVariable Long measurementId) {
         weightMeasurementService.deleteWeightMeasurementById(measurementId);
@@ -133,6 +167,8 @@ public class PatientController {
 
 
     // Blood Pressure Measurement Endpoints
+
+    //get all blood pressure measurements of a patient
     @GetMapping("/{id}/blood-pressure-measurements")
     public ResponseEntity<List<BloodPressureMeasurement>> getPatientBloodPressureMeasurements(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -144,6 +180,7 @@ public class PatientController {
         }
     }
 
+    //get the average blood pressure measurement of a specific patient for the current month
     @GetMapping("/{id}/blood-pressure-measurements/average-month")
     public ResponseEntity<BloodPressureMeasurement> getAverageBloodPressureMeasurementByPatientForMonth(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -155,6 +192,7 @@ public class PatientController {
         }
     }
 
+    //get the average blood pressure measurement of a specific patient for the current year
     @GetMapping("/{id}/blood-pressure-measurements/average-year")
     public ResponseEntity<List<BloodPressureMeasurement>> getAverageBloodPressureMeasurementByPatientForYear(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -166,18 +204,21 @@ public class PatientController {
         }
     }
 
+    //get a specific blood pressure measurement by measurement id
     @GetMapping("/blood-pressure-measurements/{measurementId}")
     public ResponseEntity<BloodPressureMeasurement> getBloodPressureMeasurementById(@PathVariable Long measurementId) {
         Optional<BloodPressureMeasurement> measurementOpt = bloodPressureMeasurementService.getBloodPressureMeasurementById(measurementId);
         return ResponseEntity.ok(measurementOpt.orElseThrow(() -> new RuntimeException("Blood pressure measurement not found")));
     }
 
+    //save a new blood pressure measurement
     @PostMapping("/blood-pressure-measurements")
     public ResponseEntity<BloodPressureMeasurement> saveBloodPressureMeasurement(@RequestBody BloodPressureMeasurement measurement) {
         BloodPressureMeasurement savedMeasurement = bloodPressureMeasurementService.saveBloodPressureMeasurement(measurement);
         return ResponseEntity.ok(savedMeasurement);
     }
 
+    //delete a specific blood pressure measurement by measurement id
     @DeleteMapping("/blood-pressure-measurements/{measurementId}")
     public ResponseEntity<String> deleteBloodPressureMeasurementById(@PathVariable Long measurementId) {
         bloodPressureMeasurementService.deleteBloodPressureMeasurementById(measurementId);
@@ -185,6 +226,8 @@ public class PatientController {
     }
 
     // Neuro Measurement Endpoints
+
+    //get all neuro measurements of a specific patient by patient id
     @GetMapping("/{id}/neuro-measurements")
     public ResponseEntity<List<NeuroMeasurement>> getPatientNeuroMeasurements(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -196,6 +239,7 @@ public class PatientController {
         }
     }
 
+    //get the average neuro measurement of a specific patient for the current month
     @GetMapping("/{id}/neuro-measurements/average-month")
     public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForMonth(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -207,6 +251,7 @@ public class PatientController {
         }
     }
 
+    //get the average neuro measurement of a specific patient for the current year
     @GetMapping("/{id}/neuro-measurements/average-year")
     public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForYear(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
@@ -218,25 +263,25 @@ public class PatientController {
         }
     }
 
+    //get a specific neuro measurement by measurement id
     @GetMapping("/neuro-measurements/{measurementId}")
     public ResponseEntity<NeuroMeasurement> getNeuroMeasurementById(@PathVariable Long measurementId) {
         Optional<NeuroMeasurement> measurementOpt = neuroMeasurementService.getNeuroMeasurementById(measurementId);
         return ResponseEntity.ok(measurementOpt.orElseThrow(() -> new RuntimeException("Neuro measurement not found")));
     }
 
+    //save a new neuro measurement
     @PostMapping("/neuro-measurements")
     public ResponseEntity<NeuroMeasurement> saveNeuroMeasurement(@RequestBody NeuroMeasurement measurement) {
         NeuroMeasurement savedMeasurement = neuroMeasurementService.saveNeuroMeasurement(measurement);
         return ResponseEntity.ok(savedMeasurement);
     }
 
+    //delete a specific neuro measurement by measurement id
     @DeleteMapping("/neuro-measurements/{measurementId}")
     public ResponseEntity<String> deleteNeuroMeasurementById(@PathVariable Long measurementId) {
         neuroMeasurementService.deleteNeuroMeasurementById(measurementId);
         return ResponseEntity.ok("Neuro measurement deleted successfully");
     }
-
-
-
 
 }
