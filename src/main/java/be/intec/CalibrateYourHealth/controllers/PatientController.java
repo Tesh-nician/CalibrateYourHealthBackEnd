@@ -140,21 +140,19 @@ public class PatientController {
 
     //save a new weight measurement
     @PostMapping("/weight-measurements")
-    public ResponseEntity<WeightMeasurement> saveWeightMeasurement(@RequestBody WeightMeasurement weightMeasurement) {
+    public ResponseEntity<String> saveWeightMeasurement(@RequestBody WeightMeasurement weightMeasurement) {
         if (weightMeasurement.getPatient() == null || weightMeasurement.getPatient().getId() == null) {
-            return ResponseEntity.status(400).body(null); // Bad request if patient or patient ID is null
+            return ResponseEntity.status(400).body("Bad request: patient or patient ID is null");
         }
 
         Long patientId = weightMeasurement.getPatient().getId();
         Optional<Patient> patientOpt = patientService.getPatientById(patientId);
         if (patientOpt.isPresent()) {
             weightMeasurement.setPatient(patientOpt.get());
-            WeightMeasurement savedMeasurement = weightMeasurementService.saveWeightMeasurement(weightMeasurement);
-            //return a message that the weight measurement has been saved in a JSON format
-
-            return ResponseEntity.ok(savedMeasurement);
+            weightMeasurementService.saveWeightMeasurement(weightMeasurement);
+            return ResponseEntity.ok("Weight measurement saved successfully");
         } else {
-            return ResponseEntity.status(404).body(null); // Not found if patient does not exist
+            return ResponseEntity.status(404).body("Not found: patient not found");
         }
     }
 
@@ -179,6 +177,8 @@ public class PatientController {
             return ResponseEntity.status(404).body(null);
         }
     }
+
+
 
     //get the average blood pressure measurement of a specific patient for the current month
     @GetMapping("/{id}/blood-pressure-measurements/average-month")
@@ -211,12 +211,31 @@ public class PatientController {
         return ResponseEntity.ok(measurementOpt.orElseThrow(() -> new RuntimeException("Blood pressure measurement not found")));
     }
 
+
+
+
     //save a new blood pressure measurement
     @PostMapping("/blood-pressure-measurements")
-    public ResponseEntity<BloodPressureMeasurement> saveBloodPressureMeasurement(@RequestBody BloodPressureMeasurement measurement) {
-        BloodPressureMeasurement savedMeasurement = bloodPressureMeasurementService.saveBloodPressureMeasurement(measurement);
-        return ResponseEntity.ok(savedMeasurement);
+    public ResponseEntity<String> saveBloodPressureMeasurement(@RequestBody BloodPressureMeasurement bloodPressureMeasurement) {
+
+        if (bloodPressureMeasurement.getPatient() == null || bloodPressureMeasurement.getPatient().getId() == null) {
+            return ResponseEntity.status(400).body("Bad request: patient or patient ID is null");
+        }
+
+        Long patientId = bloodPressureMeasurement.getPatient().getId();
+        Optional<Patient> patientOpt = patientService.getPatientById(patientId);
+        if (patientOpt.isPresent()) {
+            bloodPressureMeasurement.setPatient(patientOpt.get());
+            bloodPressureMeasurementService.saveBloodPressureMeasurement(bloodPressureMeasurement);
+            return ResponseEntity.ok("Blood pressure measurement saved successfully");
+
+        } else {
+            return ResponseEntity.status(404).body("Not found: patient not found");
+        }
+
     }
+
+
 
     //delete a specific blood pressure measurement by measurement id
     @DeleteMapping("/blood-pressure-measurements/{measurementId}")
@@ -272,10 +291,26 @@ public class PatientController {
 
     //save a new neuro measurement
     @PostMapping("/neuro-measurements")
-    public ResponseEntity<NeuroMeasurement> saveNeuroMeasurement(@RequestBody NeuroMeasurement measurement) {
-        NeuroMeasurement savedMeasurement = neuroMeasurementService.saveNeuroMeasurement(measurement);
-        return ResponseEntity.ok(savedMeasurement);
+    public ResponseEntity<String> saveNeuroMeasurement(@RequestBody NeuroMeasurement neuroMeasurement) {
+
+        if (neuroMeasurement.getPatient() == null || neuroMeasurement.getPatient().getId() == null) {
+            return ResponseEntity.status(400).body("Bad request: patient or patient ID is null");
+        }
+
+        Long patientId = neuroMeasurement.getPatient().getId();
+        Optional<Patient> patientOpt = patientService.getPatientById(patientId);
+        if (patientOpt.isPresent()) {
+            neuroMeasurement.setPatient(patientOpt.get());
+            neuroMeasurementService.saveNeuroMeasurement(neuroMeasurement);
+            return ResponseEntity.ok("Neuro measurement saved successfully");
+        } else {
+            return ResponseEntity.status(404).body("Not found: patient not found");
+        }
+
     }
+
+
+
 
     //delete a specific neuro measurement by measurement id
     @DeleteMapping("/neuro-measurements/{measurementId}")

@@ -72,6 +72,8 @@ public class Patient {
     public Patient() {
     }
 
+
+
     //Constructor with all fields
     public Patient(Long patientID, String firstName, String lastName, LocalDate dateOfBirth, String password) {
         this.id = patientID;

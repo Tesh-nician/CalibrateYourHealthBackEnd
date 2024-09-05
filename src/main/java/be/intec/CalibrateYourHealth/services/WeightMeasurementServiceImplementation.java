@@ -39,7 +39,12 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
 
         //get all the weight measurements of the patient
         Optional<List<WeightMeasurement>> weightMeasurementsResult = Optional.of(newWeightMeasurementRepository.findWeightMeasurementByPatientId(id));
+
+        //sort the weight measurements by date
+        weightMeasurementsResult.ifPresent(weightMeasurements -> weightMeasurements.sort((o1, o2) -> o2.getMeasurementDate().compareTo(o1.getMeasurementDate())));
+
         return weightMeasurementsResult;
+
     }
 
 

@@ -94,7 +94,13 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
     //get blood pressure measurements by patient id
     @Override
     public List<BloodPressureMeasurement> getBloodPressureMeasurementsByPatientId(Long patientId) {
-        return bloodPressureRepository.findBloodPressureMeasurementByPatientId(patientId);
+
+        List<BloodPressureMeasurement> bloodPressureMeasurements = bloodPressureRepository.findBloodPressureMeasurementByPatientId(patientId);
+
+        //sort the blood pressure measurements by date
+        bloodPressureMeasurements.sort((o1, o2) -> o2.getMeasurementDate().compareTo(o1.getMeasurementDate()));
+
+        return bloodPressureMeasurements;
     }
 
     @Override
