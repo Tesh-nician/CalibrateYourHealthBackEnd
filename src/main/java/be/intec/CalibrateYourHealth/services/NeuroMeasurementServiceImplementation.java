@@ -35,16 +35,12 @@ public class NeuroMeasurementServiceImplementation implements NeuroMeasurementSe
     }
 
     @Override
-    public Optional<List<NeuroMeasurement>> getNeuroMeasurementsByPatient(Patient patient) {
-
-        List<NeuroMeasurement> neuroMeasurementList = neuroMeasurementRepository.findAllByPatient(patient);
-
-        //sort the neuro measurements by date
-        neuroMeasurementList.sort((o1, o2) -> o2.getMeasurementDate().compareTo(o1.getMeasurementDate()));
-
-
-        return Optional.of(neuroMeasurementRepository.findAllByPatient(patient));
+    public Optional<List<NeuroMeasurement>> getNeuroMeasurementsByPatientID(Long patientID) {
+        return Optional.of(neuroMeasurementRepository.findAllByPatientId(patientID));
     }
+
+
+
 
 
     @Override

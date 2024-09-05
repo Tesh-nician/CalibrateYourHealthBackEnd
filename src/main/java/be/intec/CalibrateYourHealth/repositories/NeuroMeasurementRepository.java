@@ -14,12 +14,11 @@ public interface NeuroMeasurementRepository extends JpaRepository<NeuroMeasureme
 
    NeuroMeasurement findNeuroMeasurementByNeuroID(Long id); //for doctor and patient
 
+    List<NeuroMeasurement> findAll(); //for doctor and patient
 
-   List<NeuroMeasurement> findAll(); //for doctor and patient
+    List <NeuroMeasurement> findAllByPatientId(Long patientID); //for doctor and patient
 
-
-
-   List<NeuroMeasurement> findAllByPatient(Patient patient); // for patient and doctor
+    List<NeuroMeasurement> findAllByPatient(Patient patient); // for patient and doctor
 
     void deleteNeuroMeasurementByNeuroID(Long id);// for patient, delete by neuroID
 }

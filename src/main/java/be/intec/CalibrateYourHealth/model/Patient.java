@@ -1,5 +1,6 @@
 package be.intec.CalibrateYourHealth.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -57,14 +58,17 @@ public class Patient {
 
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<BloodPressureMeasurement> myBloodPressureMeasurements;
 
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<WeightMeasurement> myWeightMeasurements;
 
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<NeuroMeasurement> myNeuroMeasurements;
 
 

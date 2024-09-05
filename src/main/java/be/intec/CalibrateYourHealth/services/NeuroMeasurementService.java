@@ -18,7 +18,9 @@ public interface NeuroMeasurementService {
 
    Optional<NeuroMeasurement> getNeuroMeasurementById(Long id);
 
-    Optional<List<NeuroMeasurement>> getNeuroMeasurementsByPatient(Patient patient);
+   Optional<List<NeuroMeasurement>> getNeuroMeasurementsByPatientID(Long patientID);
+
+    //Optional<List<NeuroMeasurement>> getNeuroMeasurementsByPatient(Patient patient);
 
     NeuroMeasurement saveNeuroMeasurement(NeuroMeasurement neuroMeasurement);
 

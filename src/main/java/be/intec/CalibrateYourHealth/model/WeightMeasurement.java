@@ -1,4 +1,5 @@
 package be.intec.CalibrateYourHealth.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class WeightMeasurement {
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
+    @JsonBackReference
     private Patient patient;
 
 

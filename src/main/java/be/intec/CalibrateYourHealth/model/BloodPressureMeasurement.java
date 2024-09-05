@@ -1,4 +1,5 @@
 package be.intec.CalibrateYourHealth.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -44,6 +45,7 @@ public class BloodPressureMeasurement {
 
     @ManyToOne
     @JoinColumn(name ="patient_id")
+    @JsonBackReference
     private Patient patient;
 
     public BloodPressureMeasurement() {
