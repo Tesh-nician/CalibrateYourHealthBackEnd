@@ -92,7 +92,7 @@ public class PatientController {
         return "redirect:/login";
     }
 
-    //get all weight measurements of a specific patient by patient id
+    //get all weight measurements of a specific patient by patient id // TODO: probably need to add pathvariable ('id')
     @GetMapping("/{id}/weight-measurements")
     public ResponseEntity<List<WeightMeasurement>> getPatientWeightMeasurementsByPatientId(@PathVariable Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
