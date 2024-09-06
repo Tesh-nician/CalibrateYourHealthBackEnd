@@ -111,10 +111,14 @@ public class PatientController {
     //get the average weight measurement of a specific patient for the current month
     @GetMapping("/{id}/weight-measurements/average-month")
     public ResponseEntity<Double> getAverageWeightMeasurementByPatientForMonth(@PathVariable ("id") Long id) {
+
+
         Optional<Patient> patientOpt = patientService.getPatientById(id);
         if (patientOpt.isPresent()) {
             double averageWeight = weightMeasurementService.getAverageWeightMeasurementByPatientForMonth(patientOpt.get());
+            System.out.println("Average weight: " + averageWeight);
             return ResponseEntity.ok(averageWeight);
+
         } else {
             return ResponseEntity.status(404).body(null);
         }
@@ -125,6 +129,7 @@ public class PatientController {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
         if (patientOpt.isPresent()) {
             double averageWeight = weightMeasurementService.getAverageWeightMeasurementByPatientForYear(patientOpt.get());
+            System.out.println("Average weight: " + averageWeight);
             return ResponseEntity.ok(averageWeight);
         } else {
             return ResponseEntity.status(404).body(null);
@@ -157,9 +162,9 @@ public class PatientController {
     }
 
     //delete a specific weight measurement by measurement id
-    @DeleteMapping("/weight-measurements/{measurementId}")
-    public ResponseEntity<String> deleteWeightMeasurementById(@PathVariable ("measurementId") Long measurementId) {
-        weightMeasurementService.deleteWeightMeasurementById(measurementId);
+    @DeleteMapping("/weight-measurements/{id}")
+    public ResponseEntity<String> deleteWeightMeasurementById(@PathVariable ("id") Long id) {
+        weightMeasurementService.deleteWeightMeasurementById(id);
         return ResponseEntity.ok("Weight measurement deleted successfully");
     }
 
