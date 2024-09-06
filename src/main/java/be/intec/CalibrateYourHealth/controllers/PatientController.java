@@ -157,9 +157,9 @@ public class PatientController {
     }
 
     //delete a specific weight measurement by measurement id
-    @DeleteMapping("/weight-measurements/{measurementId}")
-    public ResponseEntity<String> deleteWeightMeasurementById(@PathVariable ("measurementId") Long measurementId) {
-        weightMeasurementService.deleteWeightMeasurementById(measurementId);
+    @DeleteMapping("/weight-measurements/{id}")
+    public ResponseEntity<String> deleteWeightMeasurementById(@PathVariable ("id") Long id) {
+        weightMeasurementService.deleteWeightMeasurementById(id);
         return ResponseEntity.ok("Weight measurement deleted successfully");
     }
 
