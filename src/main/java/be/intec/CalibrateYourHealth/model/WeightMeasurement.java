@@ -74,7 +74,7 @@ public class WeightMeasurement {
                 ", weight=" + weight +
                 ", weightComment='" + weightComment + '\'' +
                 ", date=" + date +
-                ", patient=" + patient +
+                //", patient=" + patient +
                 '}';
     }
     //get the measurement date, needed to calculate the average weight of a patient

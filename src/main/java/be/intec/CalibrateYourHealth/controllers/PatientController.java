@@ -108,25 +108,48 @@ public class PatientController {
         }
     }
 
+
+    //TEMPORARY, MOVE TO PLACEHOLDER LATER
+
+
+    //get the average neuro measurement of a specific patient for the current month
+    @GetMapping("/{id}/neuro-measurements/average-month")
+    public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForMonth(@PathVariable ("id") Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            double averageMeasurement = neuroMeasurementService.getAverageNeuroMeasurementByPatientForMonth(patientOpt.get());
+            return ResponseEntity.ok(averageMeasurement);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
     //get the average weight measurement of a specific patient for the current month
     @GetMapping("/{id}/weight-measurements/average-month")
     public ResponseEntity<Double> getAverageWeightMeasurementByPatientForMonth(@PathVariable ("id") Long id) {
 
 
         Optional<Patient> patientOpt = patientService.getPatientById(id);
+
+        //System.out.println("Patient: " + patientOpt);
+
         if (patientOpt.isPresent()) {
             double averageWeight = weightMeasurementService.getAverageWeightMeasurementByPatientForMonth(patientOpt.get());
-            System.out.println("Average weight: " + averageWeight);
+            //System.out.println("Average weight: " + averageWeight);
             return ResponseEntity.ok(averageWeight);
 
         } else {
             return ResponseEntity.status(404).body(null);
         }
+
     }
     //get the average weight measurement of a specific patient for the current year
     @GetMapping("/{id}/weight-measurements/average-year")
     public ResponseEntity<Double> getAverageWeightMeasurementByPatientForYear(@PathVariable ("id")  Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
+
+        //System.out.println("Patient: " + patientOpt);
+
         if (patientOpt.isPresent()) {
             double averageWeight = weightMeasurementService.getAverageWeightMeasurementByPatientForYear(patientOpt.get());
             System.out.println("Average weight: " + averageWeight);
@@ -263,17 +286,8 @@ public class PatientController {
         }
     }
 
-    //get the average neuro measurement of a specific patient for the current month
-    @GetMapping("/{id}/neuro-measurements/average-month")
-    public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForMonth(@PathVariable ("id") Long id) {
-        Optional<Patient> patientOpt = patientService.getPatientById(id);
-        if (patientOpt.isPresent()) {
-            double averageMeasurement = neuroMeasurementService.getAverageNeuroMeasurementByPatientForMonth(patientOpt.get());
-            return ResponseEntity.ok(averageMeasurement);
-        } else {
-            return ResponseEntity.status(404).body(null);
-        }
-    }
+    //PLACEHOLDER NEURO MEASUREMENT AVERAGE PER MONTH
+
 
     //get the average neuro measurement of a specific patient for the current year
     @GetMapping("/{id}/neuro-measurements/average-year")

@@ -42,7 +42,7 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
 
         //sort the weight measurements by date
         weightMeasurementsResult.ifPresent(weightMeasurements -> weightMeasurements.sort((o1, o2) -> o2.getMeasurementDate().compareTo(o1.getMeasurementDate())));
-
+        System.out.println("Weight measurements sorted by date: " + weightMeasurementsResult);
         return weightMeasurementsResult;
 
     }
@@ -53,15 +53,42 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     @Override
     public double getAverageWeightMeasurementByPatientForMonth(Patient patient) {
 
-        return  newWeightMeasurementRepository.findWeightMeasurementByPatient(patient)
+        double result = newWeightMeasurementRepository.findWeightMeasurementByPatient(patient)
                 .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusMonths(1)))
                 .toList()
                 .stream()
                 .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
 
+        System.out.println("Average weight of patient for the last month: " + result);
+
+        return result;
 
     }
+
+
+
+
+    //Method that gets the average weight measurement of a patientId for the last month
+
+    @Override
+    public double getAverageWeightMeasurementsByPatientIdForMonth(Long patientId) {
+
+        double result = newWeightMeasurementRepository.findWeightMeasurementsByPatientId(patientId)
+                .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusMonths(1)))
+                .toList()
+                .stream()
+                .mapToDouble(WeightMeasurement::getWeight)
+                .average().orElse(0.0);
+
+        System.out.println("Average weight of patient for the last month: " + result);
+
+        return result;
+
+    };
+
+
+
 
     //Method that gets the average weight measurement of a patient for the last year
     @Override
@@ -75,6 +102,25 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
                 .average().orElse(0.0);
 
     }
+
+
+
+
+    public double getAverageWeightMeasurementByPatientIdForYear(Long patientId) {
+
+        double result = newWeightMeasurementRepository.findWeightMeasurementsByPatientId(patientId)
+                .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusYears(1)))
+                .toList()
+                .stream()
+                .mapToDouble(WeightMeasurement::getWeight)
+                .average().orElse(0.0);
+
+        System.out.println("Average weight of patient for the last year: " + result);
+
+        return result;
+
+    };
+
 
     //get weight by id of the weight measurement
     @Override

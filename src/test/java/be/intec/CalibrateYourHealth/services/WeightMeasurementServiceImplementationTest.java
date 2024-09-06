@@ -44,7 +44,7 @@ public class WeightMeasurementServiceImplementationTest {
     }
 
     @Test
-    void getAverageWeightMeasurementByPatientForMonth_shouldReturnTheAverageWeightMeasurementForTheLastMonth() {
+    void getAverageWeightMeasurementByPatientIdForMonth_shouldReturnTheAverageWeightMeasurementForTheLastMonth() {
         // Arrange
         Long patientId = 0L;
         Patient patient = new Patient(patientId, "firstname", "secondname", LocalDate.of(1988, 10, 25),"Pasword1");
@@ -55,11 +55,12 @@ public class WeightMeasurementServiceImplementationTest {
         when(weightMeasurementRepository.findWeightMeasurementByPatient(patient)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
-        double result = weightMeasurementService.getAverageWeightMeasurementByPatientForMonth(patient);
+        double result = weightMeasurementService.getAverageWeightMeasurementsByPatientIdForMonth(patientId);
 
         // Assert
         assertEquals(76.5, result);
     }
+
 
     @Test
     void getAverageWeightMeasurementByPatientIdForYear_shouldReturnTheAverageWeightMeasurementforthelastyear() {
@@ -73,7 +74,7 @@ public class WeightMeasurementServiceImplementationTest {
         when(weightMeasurementRepository.findWeightMeasurementByPatient(patient)).thenReturn(Arrays.asList(weightMeasurement1, weightMeasurement2, weightMeasurement3));
 
         // Act
-        double result = weightMeasurementService.getAverageWeightMeasurementByPatientForYear(patient);
+        double result = weightMeasurementService.getAverageWeightMeasurementByPatientIdForYear(patientId);
 
         // Assert
         assertEquals(76.5, result);

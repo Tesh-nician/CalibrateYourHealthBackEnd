@@ -11,14 +11,19 @@ public interface WeightMeasurementService {
     List<WeightMeasurement> getAllWeightMeasurements();
 
 
-    //Optional<List<WeightMeasurement>> getPatientWeightMeasurements(Patient patient);
+
     Optional<List<WeightMeasurement>> getPatientWeightMeasurementsByPatientID(Long patientID);
 
-    //List<WeightMeasurement> getWeightMeasurementsByPatientID(long patientID);
 
     double getAverageWeightMeasurementByPatientForMonth(Patient patient);
 
+    double getAverageWeightMeasurementsByPatientIdForMonth(Long patientId);
+
     double getAverageWeightMeasurementByPatientForYear(Patient patient);
+
+
+    double getAverageWeightMeasurementByPatientIdForYear(Long patientId);
+
 
     Optional<WeightMeasurement> getWeightMeasurementById(Long id);
 
