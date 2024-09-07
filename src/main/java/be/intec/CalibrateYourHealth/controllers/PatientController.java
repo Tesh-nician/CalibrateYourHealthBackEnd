@@ -82,6 +82,21 @@ public class PatientController {
         }
     }
 
+    //update patient password
+    @PutMapping("/{id}/update-password")
+    public ResponseEntity<String> updatePatientPassword(@PathVariable ("id") Long id, @RequestParam("password") String password) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            Patient patient = patientOpt.get();
+            patient.setPassword(password);
+            patientService.savePatient(patient);
+            return ResponseEntity.ok("Password updated successfully");
+        } else {
+            return ResponseEntity.status(404).body("Patient not found");
+        }
+    }
+
+
     @PostMapping("/logout")
     public String logout() {
         //Patient logs out
