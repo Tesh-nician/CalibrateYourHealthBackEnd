@@ -139,12 +139,13 @@ public class AdminController {
         if (doctorOpt.isPresent()) {
             Doctor doctor = doctorOpt.get();
             doctor.setPassword("ChangeMeNow!"); //password is encoded in the setter
+            doctorService.saveDoctor(doctor);
 
             //log doctor to the console for debugging
             System.out.println("Doctor after update: " + doctor);
 
             //Update doctor password
-            doctorService.updateDoctorPassword(doctor, "ChangeMeNow!");
+            //doctorService.updateDoctorPassword(doctor, "ChangeMeNow!");
 
             //Return success message??
             return ResponseEntity.ok("Password reset successful");

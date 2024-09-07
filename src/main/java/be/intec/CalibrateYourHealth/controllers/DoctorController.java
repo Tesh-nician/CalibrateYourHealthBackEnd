@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -70,39 +72,21 @@ public class DoctorController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam ("username") String username, @RequestParam ("password") String password) {
+    public ResponseEntity<Map<String, Object>> login(@RequestParam("username") String username, @RequestParam("password") String password) {
         Optional<Doctor> doctorOpt = doctorService.getDoctorByUserName(username);
-        //log doctoropt to console for debugging
-        //System.out.println("DoctorOpt: " + doctorOpt);
-
 
         if (doctorOpt.isPresent()) {
             Doctor doctor = doctorOpt.get();
-
-            /*
-            System.out.println("Doctor exists"); //debugging
-
-            //Print doctor to console for debugging
-            System.out.println("Doctor: " + doctor);
-            //Print doctor's password to console for debugging
-            System.out.println("\n"+"Doctor's password: " + doctor.getPassword());
-            //print received password to console for debugging
-            System.out.println("\n"+password+ " Received password: ");
-            //Print encoded received password to console for debugging
-            System.out.println("\n"+passwordEncoder.encode(password)+" Encoded received password: " );
-            //Print encoded doctor password to console for debugging
-            System.out.println("\n"+doctor.getPassword()+" Encoded doctor password: " );
-
-             */
-
-
             if (passwordEncoder.matches(password, doctor.getPassword())) {
-                return ResponseEntity.ok("Login successful");
+                Map<String, Object> response = new HashMap<>();
+                response.put("message", "Login successful");
+                response.put("doctorId", doctor.getDoctorID());
+                return ResponseEntity.ok(response);
             } else {
-                return ResponseEntity.status(401).body("Invalid password");
+                return ResponseEntity.status(401).body(Collections.singletonMap("message", "Invalid password"));
             }
         } else {
-            return ResponseEntity.status(404).body("User not found");
+            return ResponseEntity.status(404).body(Collections.singletonMap("message", "User not found"));
         }
     }
 

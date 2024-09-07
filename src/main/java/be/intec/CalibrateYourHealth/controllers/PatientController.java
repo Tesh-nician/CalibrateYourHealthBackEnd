@@ -222,11 +222,11 @@ public class PatientController {
 
     //get the average blood pressure measurement of a specific patient for the current year
     @GetMapping("/{id}/blood-pressure-measurements/average-year")
-    public ResponseEntity<List<BloodPressureMeasurement>> getAverageBloodPressureMeasurementByPatientForYear(@PathVariable ("id") Long id) {
+    public ResponseEntity<BloodPressureMeasurement> getAverageBloodPressureMeasurementByPatientForYear(@PathVariable ("id") Long id) {
         Optional<Patient> patientOpt = patientService.getPatientById(id);
         if (patientOpt.isPresent()) {
-            List<BloodPressureMeasurement> averageMeasurements = bloodPressureMeasurementService.getAverageBloodPressureMeasurementsByPatientIdForYear(id);
-            return ResponseEntity.ok(averageMeasurements);
+            BloodPressureMeasurement averageMeasurement = bloodPressureMeasurementService.getAverageBloodPressureMeasurementByPatientIdForYear(id);
+            return ResponseEntity.ok(averageMeasurement);
         } else {
             return ResponseEntity.status(404).body(null);
         }
