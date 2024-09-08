@@ -1,6 +1,6 @@
 This is the backend component of my final project after a year training at Intec Brussels as a Java Enterprise Developer.
-It integrates most of the stuff we learned, as well as a few new tricks such as using mokito (not a fan :-(), CORS configuration, some basic aurthentification. I also learned about DTOs and 
-how this can belved with simple but nifty Spring annoitations that let me simplify my code a bit.
+It integrates most of the stuff we learned, as well as a few new tricks such as using mokito (not a fan :-(), CORS configuration, some basic authentification. I also learned about DTOs and 
+how this can belved with simple but nifty Spring annotations that let me simplify my code a bit.
 
 The basic technology is Java Spring, MySQL and an Angular-based frontend.
 
