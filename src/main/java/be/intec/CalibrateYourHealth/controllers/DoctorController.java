@@ -91,6 +91,20 @@ public class DoctorController {
     }
 
 
+    @PutMapping("/{id}/update-password")
+    public ResponseEntity<String> updateDoctorPassword(@PathVariable ("id") Long id, @RequestParam("password") String password) {
+        Optional<Doctor> doctortOpt = doctorService.getDoctorById(id);
+        if (doctortOpt.isPresent()) {
+          Doctor doctort = doctortOpt.get();
+            doctort.setPassword(password);
+            doctorService.saveDoctor(doctort);
+            return ResponseEntity.ok("Password updated successfully");
+        } else {
+            return ResponseEntity.status(404).body("Doctor not found");
+        }
+    }
+
+
     @DeleteMapping("/deleteDoctor/{id}")
     public ResponseEntity<String> deleteDoctor(@PathVariable Long id) {
         doctorService.deleteDoctorById(id);
