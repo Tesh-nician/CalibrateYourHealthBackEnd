@@ -1,7 +1,7 @@
 package be.intec.CalibrateYourHealth.services;
 
 import be.intec.CalibrateYourHealth.model.Doctor;
-import be.intec.CalibrateYourHealth.model.Patient;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +13,11 @@ public interface DoctorService {
 
     Optional<Doctor> getDoctorById(Long id);
     Optional<Doctor> getDoctorByUserName(String userName); //used for login
+
+    //get doctors password by username
+    String getDoctorPasswordByUserName(String userName);
+
+
 
     Optional <List<Doctor>> getDoctorsByLastnameContaining(String lastnameContains);
 

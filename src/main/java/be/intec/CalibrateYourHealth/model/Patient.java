@@ -1,5 +1,6 @@
 package be.intec.CalibrateYourHealth.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -57,20 +58,25 @@ public class Patient {
 
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<BloodPressureMeasurement> myBloodPressureMeasurements;
 
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<WeightMeasurement> myWeightMeasurements;
 
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<NeuroMeasurement> myNeuroMeasurements;
 
 
 
     public Patient() {
     }
+
+
 
     //Constructor with all fields
     public Patient(Long patientID, String firstName, String lastName, LocalDate dateOfBirth, String password) {
@@ -92,7 +98,7 @@ public class Patient {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
+        //this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
 
     }
 
@@ -140,6 +146,13 @@ public class Patient {
                 ", myWeightMeasurements=" + myWeightMeasurements +
                 ", myNeuroMeasurements=" + myNeuroMeasurements +
                 '}';
+    }
+
+    //set password using BCryptPasswordEncoder and make sure username is generated
+    public void setPassword(String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
+        this.username = firstName.substring(0, 3) + lastName.substring(0, 3);
     }
 
     /*

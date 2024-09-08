@@ -1,14 +1,14 @@
 package be.intec.CalibrateYourHealth.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.*;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -33,13 +33,30 @@ public class WeightMeasurement {
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
+    @JsonBackReference
     private Patient patient;
+
 
     public WeightMeasurement() {
     }
 
+    public WeightMeasurement(double weight, LocalDate date, String weightComment, Patient patient) {
+        this.weight = weight;
+        this.date = date;
+        this.weightComment = weightComment;
+        this.patient = patient;
+    }
+
     public WeightMeasurement( double weight, LocalDate date, String weightComment) {
 
+        this.weight = weight;
+        this.date = date;
+        this.weightComment = weightComment;
+
+    }
+
+    public WeightMeasurement(Long weightID, double weight, LocalDate date, String weightComment) {
+        this.weightID = weightID;
         this.weight = weight;
         this.date = date;
         this.weightComment = weightComment;
@@ -57,7 +74,7 @@ public class WeightMeasurement {
                 ", weight=" + weight +
                 ", weightComment='" + weightComment + '\'' +
                 ", date=" + date +
-                ", patient=" + patient +
+                //", patient=" + patient +
                 '}';
     }
     //get the measurement date, needed to calculate the average weight of a patient

@@ -19,8 +19,7 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
+
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z0-9]{3,}$", message = "Username must be at least 3 characters long and contain only letters and numbers")
     private String userName;
@@ -36,6 +35,11 @@ public class Admin {
 
     public Admin(Long id, String userName, String password) {
         this.id = id;
+        this.userName = userName;
+        this.password = password;
+    }
+
+    public Admin(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }

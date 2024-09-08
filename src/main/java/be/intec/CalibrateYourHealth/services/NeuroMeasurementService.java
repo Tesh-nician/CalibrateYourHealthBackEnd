@@ -1,21 +1,26 @@
 package be.intec.CalibrateYourHealth.services;
 
 import be.intec.CalibrateYourHealth.model.NeuroMeasurement;
+import be.intec.CalibrateYourHealth.model.Patient;
+
 import java.util.List;
 import java.util.Optional;
 
 
 public interface NeuroMeasurementService {
 
-    List<NeuroMeasurement> getAllNeuroMeasurements();
+    Optional <List<NeuroMeasurement>> getAllNeuroMeasurements();
 
-    double getAverageNeuroMeasurementByPatientIdForMonth(Long patientId);
+    double getAverageNeuroMeasurementByPatientForMonth(Patient patient);
 
-    double getAverageNeuroMeasurementByPatientIdForYear(Long patientId);
+    double getAverageNeuroMeasurementByPatientForYear(Patient patient);
 
-    Optional<NeuroMeasurement> getNeuroMeasurementById(Long id);
 
-    List<NeuroMeasurement> getNeuroMeasurementsByPatientId(Long patientId);
+   Optional<NeuroMeasurement> getNeuroMeasurementById(Long id);
+
+   Optional<List<NeuroMeasurement>> getNeuroMeasurementsByPatientID(Long patientID);
+
+    //Optional<List<NeuroMeasurement>> getNeuroMeasurementsByPatient(Patient patient);
 
     NeuroMeasurement saveNeuroMeasurement(NeuroMeasurement neuroMeasurement);
 

@@ -1,12 +1,11 @@
 package be.intec.CalibrateYourHealth.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.*;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +21,7 @@ public class NeuroMeasurement {
 
     @NotBlank
     @Pattern(regexp = "^[0-9]{2,3}", message = "Balance measurement in seconds must be a number between 0 and 300")
-    private int neuroMeasurement;
+    private double neuroMeasurement;
 
     private String neuroComment;
 
@@ -31,15 +30,17 @@ public class NeuroMeasurement {
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
+    @JsonBackReference
     private Patient patient;
 
     public NeuroMeasurement() {
     }
 
-    public NeuroMeasurement( int neuroMeasurement, LocalDate date, String neuroComment) {
+    public NeuroMeasurement( double neuroMeasurement, LocalDate date, String neuroComment, Patient patient) {
         this.neuroMeasurement = neuroMeasurement;
         this.date = date;
         this.neuroComment = neuroComment;
+        this.patient = patient;
     }
 
     @Override

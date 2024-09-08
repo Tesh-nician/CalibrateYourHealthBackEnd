@@ -4,6 +4,7 @@ import be.intec.CalibrateYourHealth.model.BloodPressureMeasurement;
 import be.intec.CalibrateYourHealth.repositories.BloodPressureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,9 +36,6 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
        return bloodPressureRepository.findAll();
     }
 
-
-
-    //Method that gets the average blood pressure measurements of a patient for the last month
     @Override
     public BloodPressureMeasurement getAverageBloodPressureMeasurementsByPatientIdForMonth(Long patientId) {
         List<BloodPressureMeasurement> bloodPressureMeasurementsFromTheLastMonth = bloodPressureRepository
@@ -60,26 +58,32 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
     }
 
 
+    //Method that gets the average blood pressure measurements of a patient for the last month
+
+
+
     //Method that gets the average blood pressure measurements of a patient for the last year
     @Override
-    public List<BloodPressureMeasurement> getAverageBloodPressureMeasurementsByPatientIdForYear(Long patientId) {
-        List<BloodPressureMeasurement> bloodPressureMeasurementsFromTheLastYear= bloodPressureRepository
-                .findBloodPressureMeasurementByPatientId(patientId)
+    public BloodPressureMeasurement getAverageBloodPressureMeasurementByPatientIdForYear(Long patientId) {
+        //List of blood pressure measurements from the last year
+        List<BloodPressureMeasurement> annualBloodPressureMeasurements= bloodPressureRepository
+                        .findBloodPressureMeasurementByPatientId(patientId)
                         .stream().filter(bloodPressureMeasurement -> bloodPressureMeasurement.getMeasurementDate()
                         .isAfter(LocalDate.now().minusYears(1)))
                         .toList();
-        //calculate average blood pressures from the list of average blood pressure measurements
 
-        double averageSystolicPressure = bloodPressureMeasurementsFromTheLastYear
+
+        //calculate average blood pressures from the list of average blood pressure measurements
+        double averageSystolicPressure = annualBloodPressureMeasurements
                 .stream().mapToDouble(BloodPressureMeasurement::getSystolicPressure)
                 .average().orElse(0.0);
-        double averageDiastolicPressure = bloodPressureMeasurementsFromTheLastYear
+        double averageDiastolicPressure = annualBloodPressureMeasurements
                 .stream().mapToDouble(BloodPressureMeasurement::getDiastolicPressure)
                 .average().orElse(0.0);
-        double averagePulse = bloodPressureMeasurementsFromTheLastYear
+        double averagePulse = annualBloodPressureMeasurements
                 .stream().mapToDouble(BloodPressureMeasurement::getPulse)
                 .average().orElse(0.0);
-        return List.of(new BloodPressureMeasurement (averageSystolicPressure, averageDiastolicPressure, averagePulse));
+        return new BloodPressureMeasurement (averageSystolicPressure, averageDiastolicPressure, averagePulse);
 
     }
 
@@ -93,7 +97,13 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
     //get blood pressure measurements by patient id
     @Override
     public List<BloodPressureMeasurement> getBloodPressureMeasurementsByPatientId(Long patientId) {
-        return bloodPressureRepository.findBloodPressureMeasurementByPatientId(patientId);
+
+        List<BloodPressureMeasurement> bloodPressureMeasurements = bloodPressureRepository.findBloodPressureMeasurementByPatientId(patientId);
+
+        //sort the blood pressure measurements by date
+        bloodPressureMeasurements.sort((o1, o2) -> o2.getMeasurementDate().compareTo(o1.getMeasurementDate()));
+
+        return bloodPressureMeasurements;
     }
 
     @Override
@@ -103,6 +113,7 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
     }
 
     @Override
+    @Transactional
     public void deleteBloodPressureMeasurementById(Long id) {
         bloodPressureRepository.deleteBloodPressureFromPatientByBloodPressureID(id);
 

@@ -1,14 +1,13 @@
 package be.intec.CalibrateYourHealth.services;
 
-import be.intec.CalibrateYourHealth.model.Doctor;
 import be.intec.CalibrateYourHealth.model.Patient;
 import be.intec.CalibrateYourHealth.repositories.DoctorRepository;
 import be.intec.CalibrateYourHealth.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +30,12 @@ public class PatientServiceImplementation implements PatientService {
     @Override
     public Optional<List<Patient>> getAllPatients() {
 
-        List<Patient> patients =newpatientRepository.findAll();
-        if(patients.isEmpty()){
-            return Optional.empty();
-        }
-        return Optional.of(patients);
+        return Optional.of(newpatientRepository.findAll());
+    }
+
+    @Override
+    public Long getPatientID(Patient patient) {
+        return patient.getId();
     }
 
     @Override
@@ -62,6 +62,7 @@ public class PatientServiceImplementation implements PatientService {
 
 
     @Override
+    @Transactional
     public void deletePatientById(Long id) {
         newpatientRepository.deleteById(id);
     }
@@ -96,15 +97,6 @@ public class PatientServiceImplementation implements PatientService {
     }
 
 
-
-
-
   */
-
-
-
-
-
-
 
 }
