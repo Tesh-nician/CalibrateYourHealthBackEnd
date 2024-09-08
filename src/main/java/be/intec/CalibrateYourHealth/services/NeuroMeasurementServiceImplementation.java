@@ -58,14 +58,16 @@ public class NeuroMeasurementServiceImplementation implements NeuroMeasurementSe
 
     @Override
     public double getAverageNeuroMeasurementByPatientForYear(Patient patient) {
-        double neuroMeasurementsFromTheLastYear = neuroMeasurementRepository
+
+        // Calculate average neuro measurement for the last year from the given patient
+        double averageNeuroMeasurementForYear = neuroMeasurementRepository
                 .findAllByPatient(patient).stream()
                 .filter(neuroMeasurement -> neuroMeasurement.getMeasurementDate()
                 .isAfter(LocalDate.now().minusYears(1))).
                 mapToDouble(NeuroMeasurement::getNeuroMeasurement).
                 average().orElse(0.0);
 
-        return neuroMeasurementsFromTheLastYear;
+        return averageNeuroMeasurementForYear;
     }
 
 

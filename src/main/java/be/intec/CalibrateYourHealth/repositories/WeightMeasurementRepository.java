@@ -26,7 +26,5 @@ public interface WeightMeasurementRepository extends JpaRepository<WeightMeasure
     void deleteWeightMeasurementByWeightID(Long id);// for patient, delete by weightID
 
 
-
-
 }
 

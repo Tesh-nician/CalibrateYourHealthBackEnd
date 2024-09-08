@@ -15,9 +15,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSecurity httpSecurity) throws Exception {
         http.csrf(customizer -> customizer.disable());
-        httpSecurity.cors(customizer -> customizer.disable());;//TODO: enable cors
+        httpSecurity.cors(customizer -> customizer.disable());
         http.authorizeHttpRequests(request -> request.anyRequest().permitAll());
-        //For development purposes only. REMOVE IN PRODUCTION!!!!
+        //These settings are for development purposes only. AUTHENTICATION MUST BE ENABLED IN PRODUCTION!!!!
 
         return http.build();
     }

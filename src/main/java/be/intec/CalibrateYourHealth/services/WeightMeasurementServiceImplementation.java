@@ -76,8 +76,6 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
 
         double result = newWeightMeasurementRepository.findWeightMeasurementsByPatientId(patientId)
                 .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusMonths(1)))
-                .toList()
-                .stream()
                 .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
 
@@ -94,30 +92,42 @@ public class WeightMeasurementServiceImplementation implements WeightMeasurement
     @Override
     public double getAverageWeightMeasurementByPatientForYear(Patient patient) {
 
-        return newWeightMeasurementRepository.findWeightMeasurementByPatient(patient)
+        /*
+           // Calculate average neuro measurement for the last year from the given patient
+        double averageNeuroMeasurementForYear = neuroMeasurementRepository
+                .findAllByPatient(patient).stream()
+                .filter(neuroMeasurement -> neuroMeasurement.getMeasurementDate()
+                .isAfter(LocalDate.now().minusYears(1))).
+                mapToDouble(NeuroMeasurement::getNeuroMeasurement).
+                average().orElse(0.0);
+
+        return result;
+
+         */
+        //calculate the average weight measurement of the patient for the last year
+
+        double averageWeightForYear = newWeightMeasurementRepository.findWeightMeasurementByPatient(patient)
                 .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusYears(1)))
-                .toList()
-                .stream()
                 .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
 
+        return averageWeightForYear;
     }
 
 
 
-
+ //This method is not being used!!!
     public double getAverageWeightMeasurementByPatientIdForYear(Long patientId) {
 
         double result = newWeightMeasurementRepository.findWeightMeasurementsByPatientId(patientId)
                 .stream().filter(weightMeasurement -> weightMeasurement.getMeasurementDate().isAfter(LocalDate.now().minusYears(1)))
-                .toList()
-                .stream()
                 .mapToDouble(WeightMeasurement::getWeight)
                 .average().orElse(0.0);
 
         System.out.println("Average weight of patient for the last year: " + result);
 
-        return result;
+       return result;
+
 
     };
 

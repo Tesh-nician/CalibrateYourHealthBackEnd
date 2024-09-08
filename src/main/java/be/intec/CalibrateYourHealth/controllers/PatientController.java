@@ -128,17 +128,6 @@ public class PatientController {
     //TEMPORARY, MOVE TO PLACEHOLDER LATER
 
 
-    //get the average neuro measurement of a specific patient for the current month
-    @GetMapping("/{id}/neuro-measurements/average-month")
-    public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForMonth(@PathVariable ("id") Long id) {
-        Optional<Patient> patientOpt = patientService.getPatientById(id);
-        if (patientOpt.isPresent()) {
-            double averageMeasurement = neuroMeasurementService.getAverageNeuroMeasurementByPatientForMonth(patientOpt.get());
-            return ResponseEntity.ok(averageMeasurement);
-        } else {
-            return ResponseEntity.status(404).body(null);
-        }
-    }
 
     //get the average weight measurement of a specific patient for the current month
     @GetMapping("/{id}/weight-measurements/average-month")
@@ -303,6 +292,19 @@ public class PatientController {
     }
 
     //PLACEHOLDER NEURO MEASUREMENT AVERAGE PER MONTH
+
+
+    //get the average neuro measurement of a specific patient for the current month
+    @GetMapping("/{id}/neuro-measurements/average-month")
+    public ResponseEntity<Double> getAverageNeuroMeasurementByPatientForMonth(@PathVariable ("id") Long id) {
+        Optional<Patient> patientOpt = patientService.getPatientById(id);
+        if (patientOpt.isPresent()) {
+            double averageMeasurement = neuroMeasurementService.getAverageNeuroMeasurementByPatientForMonth(patientOpt.get());
+            return ResponseEntity.ok(averageMeasurement);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
 
 
     //get the average neuro measurement of a specific patient for the current year
