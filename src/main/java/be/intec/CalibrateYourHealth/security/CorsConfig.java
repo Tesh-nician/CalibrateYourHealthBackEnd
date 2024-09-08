@@ -1,6 +1,7 @@
 package be.intec.CalibrateYourHealth.security;
 
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,6 +24,7 @@ public class CorsConfig implements WebMvcConfigurer {
     }
 
     //Solution to configuration problems: https://stackoverflow.com/questions/36968963/how-to-configure-cors-in-a-spring-boot-spring-security-application
+
 
 
 }

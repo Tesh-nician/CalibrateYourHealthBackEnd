@@ -26,6 +26,7 @@ public class PatientController {
     private final NeuroMeasurementServiceImplementation neuroMeasurementService;
     private final BCryptPasswordEncoder passwordEncoder;
 
+
     @Autowired
     public PatientController(PatientServiceImplementation patientService
             , WeightMeasurementServiceImplementation weightMeasurementService
