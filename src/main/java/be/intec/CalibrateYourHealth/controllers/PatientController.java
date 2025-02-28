@@ -41,7 +41,7 @@ public class PatientController {
     }
 
 
-    @PostMapping("/registerPatient") //params used because request body gives error with passwordenconder???
+    @PostMapping("/registerPatient") //params used because request body gives error with passwordencoder???
     public ResponseEntity<String> registerPatient(@RequestParam("firstname") String firstname
                                     , @RequestParam("lastname") String lastname
                                     , @RequestParam("dateofbirth") String dateofbirth
@@ -53,7 +53,7 @@ public class PatientController {
         Patient newPatient = new Patient();
         newPatient.setFirstName(firstname);
         newPatient.setLastName(lastname);
-        newPatient.setDateOfBirth(LocalDate.parse(dateofbirth)); //TODO: check that the date is correctly parsed
+        newPatient.setDateOfBirth(LocalDate.parse(dateofbirth)); //TODO: check that the date is correctly parsed = DONE
         newPatient.setPassword(password); //is encoded in the model
         newPatient.setUsername(newUserName);
 
