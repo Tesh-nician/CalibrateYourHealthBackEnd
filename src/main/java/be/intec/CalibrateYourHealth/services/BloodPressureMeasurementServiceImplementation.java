@@ -30,7 +30,7 @@ public class BloodPressureMeasurementServiceImplementation implements BloodPress
 
 
 
-    //Returns a list of ALL blood pressure measurements, only for use by admin. Is this necessary?
+    //Returns a list of ALL blood pressure measurements, only for use by admin. Is this really necessary?
     @Override
     public List<BloodPressureMeasurement> getAllBloodPressureMeasurements() {
        return bloodPressureRepository.findAll();
